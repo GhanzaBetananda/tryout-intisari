@@ -1,0 +1,393 @@
+:root {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --bg-color: #f3f4f6;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #4b5563;
+  --border-color: #e5e7eb;
+  --form-height: 420px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.login-container {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(79, 70, 229, 0.15),
+      transparent 35%
+    ),
+    linear-gradient(
+      to right,
+      #ffffff 0%,
+      #f8fafc 40%,
+      #eff6ff 70%,
+      #dbeafe 100%
+    );
+  color: var(--text-main);
+  line-height: 1.5;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 900px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  padding: 0;
+}
+
+.registrasi-wrapper {
+  display: flex;
+  min-height: var(--form-height);
+}
+
+.registrasi-image {
+  flex: 0 0 45%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 25px;
+  position: relative;
+  overflow: hidden;
+}
+
+.registrasi-image img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.registrasi-image .image-text {
+  color: var(--text-main);
+  text-align: center;
+  margin-top: 15px;
+}
+
+.registrasi-image .image-text h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--primary-color);
+}
+
+.registrasi-image .image-text p {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  color: var(--text-muted);
+}
+
+.registrasi-form {
+  flex: 1;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: white;
+}
+
+.registrasi-form h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.registrasi-form .subtitle {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  background: #fafbfc;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 4px;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --form-height: auto;
+  }
+
+  .registrasi-wrapper {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .registrasi-image {
+    flex: 0 0 auto;
+    padding: 25px 20px;
+    min-height: 180px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .registrasi-image img {
+    max-width: 130px;
+  }
+
+  .registrasi-image .image-text h3 {
+    font-size: 1.2rem;
+  }
+
+  .registrasi-form {
+    padding: 24px 20px;
+  }
+
+  .registrasi-form h2 {
+    font-size: 1.4rem;
+  }
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.loading-overlay.active {
+  display: flex;
+}
+
+/* Dot Loader Container */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border: none;
+  width: auto;
+  height: auto;
+  animation: none;
+}
+
+/* Dot Styling */
+.loading-spinner .dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4361ee, #3a0ca3);
+  animation: dotBounce 1.4s ease-in-out infinite both;
+  box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+}
+
+.loading-spinner .dot:nth-child(1) {
+  animation-delay: -0.32s;
+  background: linear-gradient(135deg, #4361ee, #3a0ca3);
+}
+
+.loading-spinner .dot:nth-child(2) {
+  animation-delay: -0.16s;
+  background: linear-gradient(135deg, #7209b7, #4361ee);
+}
+
+.loading-spinner .dot:nth-child(3) {
+  animation-delay: 0s;
+  background: linear-gradient(135deg, #f72585, #7209b7);
+}
+
+/* Animasi Bounce */
+@keyframes dotBounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.5);
+    opacity: 0.3;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Loading Text */
+.loading-text {
+  margin-top: 24px;
+  color: #2d3748;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  animation: pulseText 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseText {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Efek tambahan: floating dots */
+.loading-spinner .dot {
+  position: relative;
+}
+
+.loading-spinner .dot::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.2;
+  filter: blur(8px);
+  z-index: -1;
+  animation: glowPulse 1.4s ease-in-out infinite both;
+}
+
+@keyframes glowPulse {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.2;
+  }
+  40% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+
+/* Responsive untuk mobile */
+@media (max-width: 768px) {
+  .loading-spinner .dot {
+    width: 14px;
+    height: 14px;
+    gap: 10px;
+  }
+
+  .loading-text {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+}
+
+/* Dark mode support (opsional) */
+@media (prefers-color-scheme: dark) {
+  .loading-overlay {
+    background: rgba(26, 32, 44, 0.95);
+  }
+
+  .loading-text {
+    color: #e2e8f0;
+  }
+}
+
+.error-message {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  display: none;
+  font-size: 0.875rem;
+}
+
+.error-message.show {
+  display: block;
+}
+
+.success-message {
+  background: #d1fae5;
+  border: 1px solid #6ee7b7;
+  color: #065f46;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  display: none;
+  font-size: 0.875rem;
+}
+
+.success-message.show {
+  display: block;
+}
