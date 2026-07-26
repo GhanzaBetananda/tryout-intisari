@@ -174,6 +174,31 @@ const Admin = () => {
     peserta: users.filter((u) => u.role === "peserta").length, // Diubah dari "user" menjadi "peserta"
   };
 
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Logout?",
+      text: "Apakah Anda yakin ingin keluar?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Logout",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#6c757d",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Hapus semua session
+        sessionStorage.removeItem("isLoggedIn");
+        sessionStorage.removeItem("userId");
+        sessionStorage.removeItem("userRole");
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+
+        // Redirect seperti halaman peserta
+        window.location.href = "/login";
+      }
+    });
+  };
+
   return (
     <div className="admin-account-container">
       {/* Header */}
@@ -182,9 +207,20 @@ const Admin = () => {
           <h1>Pengaturan Akun Bimbel Intisari</h1>
           <p>Kelola semua akun pengguna sistem</p>
         </div>
-        <div className="header-right">
+        <div
+          className="header-right"
+          style={{
+            display: "flex",
+            gap: "10px",
+            alignItems: "center",
+          }}
+        >
           <button className="btn btn-primary" onClick={() => openModal("add")}>
-            ➕ Tambah Peserta {/* Diubah dari "User" menjadi "Peserta" */}
+            ➕ Tambah Peserta
+          </button>
+
+          <button className="btn btn-danger" onClick={handleLogout}>
+            Logout
           </button>
         </div>
       </div>

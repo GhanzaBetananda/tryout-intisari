@@ -1,5 +1,6 @@
 import React from "react";
 import BreadCrumps from "../components/BreadCrumps";
+
 function About() {
   return (
     <div>
@@ -70,7 +71,6 @@ function About() {
           </div>
         </div>
       </section>
-
       <section className="w3l-aboutblock1 py-5" id="about">
         <div className="container py-lg-5 py-md-4 py-2">
           <div className="row">
@@ -182,7 +182,6 @@ function About() {
           </div>
         </div>
       </section>
-
       <section className="w3l-block py-5" id="">
         <div className="container py-lg-5 py-md-3">
           <div className="row">
@@ -231,6 +230,165 @@ function About() {
                 alt=""
                 className="img-fluid radius-image hover-image"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="w3l-contact py-5" id="contact">
+        <style>{`
+    .w3l-contact {
+      background: #f8fafc;
+    }
+
+    .contact-info-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid #f1f5f9;
+      transition: all 0.3s ease;
+    }
+
+    .contact-info-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      border-color: #e2e8f0;
+    }
+
+    .contact-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 50%;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2563EB;
+      font-size: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-info-item:hover .contact-icon {
+      background: #2563EB;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    .contact-info-text {
+      flex: 1;
+    }
+
+    .contact-info-text h5 {
+      margin: 0 0 4px 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .contact-info-text p {
+      margin: 0;
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .w3l-contact {
+        padding: 40px 0;
+      }
+
+      .contact-info-item {
+        padding: 16px 18px;
+      }
+
+      .contact-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 16px;
+      }
+
+      .contact-info-text h5 {
+        font-size: 14px;
+      }
+
+      .contact-info-text p {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-info-item {
+        padding: 14px 16px;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .contact-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        font-size: 14px;
+      }
+
+      .contact-info-text h5 {
+        font-size: 13px;
+      }
+
+      .contact-info-text p {
+        font-size: 12px;
+      }
+    }
+  `}</style>
+
+        <div className="container py-lg-5 py-md-4 py-2">
+          <div className="row">
+            {/* LEFT COLUMN - Teks Deskripsi */}
+            <div className="col-lg-6 align-self">
+              <span className="title-small mb-2">Hubungi Kami</span>
+              <h3 className="title-big mx-0">
+                Siap Membantu Perjalanan Belajar Anda
+              </h3>
+              <p className="mt-lg-4 mt-3 mb-lg-5 mb-4">
+                Tim Bimbel Intisari siap membantu memberikan informasi mengenai
+                program pembelajaran, try out CAT BKN & Basarnas, serta proses
+                pendaftaran peserta.
+              </p>
+            </div>
+
+            {/* RIGHT COLUMN - Email + Telepon */}
+            <div className="col-lg-6 mt-lg-0 mt-5">
+              <div className="contact-info-wrapper">
+                <div className="contact-info-item">
+                  <div className="contact-icon">
+                    <span className="fa fa-envelope"></span>
+                  </div>
+                  <div className="contact-info-text">
+                    <h5>Email</h5>
+                    <p>bimbelintisari@gmail.com</p>
+                  </div>
+                </div>
+
+                <div className="contact-info-item">
+                  <div className="contact-icon">
+                    <span className="fa fa-phone"></span>
+                  </div>
+                  <div className="contact-info-text">
+                    <h5>Telepon</h5>
+
+                    <p>+62 857-0752-3262</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

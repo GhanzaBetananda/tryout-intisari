@@ -9,8 +9,19 @@ function Header() {
   }
 
   const navigate = useNavigate();
+  const userRole = sessionStorage.getItem("userRole");
   const [checked, setChecked] = useState(currentTheme === "dark");
+  const handleAccountClick = (e) => {
+    e.preventDefault();
 
+    if (userRole === "admin") {
+      navigate("/admin");
+    } else if (userRole === "peserta") {
+      navigate("/peserta");
+    } else {
+      navigate("/login");
+    }
+  };
   function changeTheme(e) {
     if (e.target.checked) {
       document.documentElement.setAttribute("data-theme", "dark");
@@ -110,11 +121,11 @@ function Header() {
                     Courses
                   </a>
                 </li>
-                <li className="nav-item @@contact__active">
+                {/* <li className="nav-item @@contact__active">
                   <a className="nav-link" href="/contact">
                     Contact
                   </a>
-                </li>
+                </li> */}
               </ul>
 
               {/*/search-right*/}
@@ -159,8 +170,9 @@ function Header() {
                     border: "2px solid #fff",
                     borderRadius: "30px",
                     padding: "8px 20px",
+                    background: "transparent",
                   }}
-                  onClick={() => navigate("/admin")}
+                  onClick={handleAccountClick}
                 >
                   <span className="fa fa-user"></span> Akun
                 </a>

@@ -13,13 +13,13 @@ import Courses from "./pages/Courses";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import TryOut1 from "./daftartryout/tryout1";
-import TryOut2 from "./daftartryout/tryout2";
+import TryOut1 from "./daftartryout/LENGKAP/tryout1";
+import TryOut2 from "./daftartryout/LENGKAP/tryout2";
 import Admin from "./akun/admin";
 import Peserta from "./akun/peserta";
-import TIU from "./daftartryout/tiu";
-import TWK from "./daftartryout/twk";
-import TKP from "./daftartryout/tkp";
+import TIU from "./daftartryout/TIU/tiu";
+import TWK from "./daftartryout/TWK/twk";
+import TKP from "./daftartryout/TKP/tkp";
 
 function AppContent({ isLoggedIn, setIsLoggedIn }) {
   const location = useLocation();

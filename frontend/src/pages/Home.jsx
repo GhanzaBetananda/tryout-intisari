@@ -1,5 +1,4 @@
 import React from "react";
-
 function Home() {
   return (
     <div>
@@ -599,7 +598,18 @@ function Home() {
               <div id="owl-demo1" className="owl-two owl-carousel owl-theme">
                 <div className="item">
                   <div className="testimonial-content">
-                    <div className="testimonial">
+                    <div
+                      className="testimonial"
+                      style={{
+                        height: "340px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        background: "#ffffff", // <--- TAMBAHKAN INI
+                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
+                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
+                      }}
+                    >
                       <blockquote>
                         <q>
                           Materi yang disampaikan sangat terstruktur dan mudah
@@ -624,9 +634,21 @@ function Home() {
                     </div>
                   </div>
                 </div>
+
                 <div className="item">
                   <div className="testimonial-content">
-                    <div className="testimonial">
+                    <div
+                      className="testimonial"
+                      style={{
+                        height: "340px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        background: "#ffffff", // <--- TAMBAHKAN INI
+                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
+                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
+                      }}
+                    >
                       <blockquote>
                         <q>
                           Bank soal yang tersedia sangat beragam dan
@@ -650,9 +672,21 @@ function Home() {
                     </div>
                   </div>
                 </div>
+
                 <div className="item">
                   <div className="testimonial-content">
-                    <div className="testimonial">
+                    <div
+                      className="testimonial"
+                      style={{
+                        height: "340px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        background: "#ffffff", // <--- TAMBAHKAN INI
+                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
+                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
+                      }}
+                    >
                       <blockquote>
                         <q>
                           Pengajar menjelaskan setiap materi dengan sabar dan
@@ -676,9 +710,21 @@ function Home() {
                     </div>
                   </div>
                 </div>
+
                 <div className="item">
                   <div className="testimonial-content">
-                    <div className="testimonial">
+                    <div
+                      className="testimonial"
+                      style={{
+                        height: "340px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        background: "#ffffff", // <--- TAMBAHKAN INI
+                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
+                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
+                      }}
+                    >
                       <blockquote>
                         <q>
                           Fitur analisis nilai sangat membantu untuk melihat
@@ -703,9 +749,21 @@ function Home() {
                     </div>
                   </div>
                 </div>
+
                 <div className="item">
                   <div className="testimonial-content">
-                    <div className="testimonial">
+                    <div
+                      className="testimonial"
+                      style={{
+                        height: "340px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        background: "#ffffff", // <--- TAMBAHKAN INI
+                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
+                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
+                      }}
+                    >
                       <blockquote>
                         <q>
                           Platformnya mudah digunakan dan try out berjalan
@@ -729,9 +787,21 @@ function Home() {
                     </div>
                   </div>
                 </div>
+
                 <div className="item">
                   <div className="testimonial-content">
-                    <div className="testimonial">
+                    <div
+                      className="testimonial"
+                      style={{
+                        height: "340px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        background: "#ffffff", // <--- TAMBAHKAN INI
+                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
+                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
+                      }}
+                    >
                       <blockquote>
                         <q>
                           Materi selalu diperbarui dan sesuai dengan kebutuhan
@@ -756,9 +826,21 @@ function Home() {
                     </div>
                   </div>
                 </div>
+
                 <div className="item">
                   <div className="testimonial-content">
-                    <div className="testimonial">
+                    <div
+                      className="testimonial"
+                      style={{
+                        height: "340px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        background: "#ffffff", // <--- TAMBAHKAN INI
+                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
+                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
+                      }}
+                    >
                       <blockquote>
                         <q>
                           Pendampingan dari mentor sangat membantu selama proses
@@ -782,9 +864,21 @@ function Home() {
                     </div>
                   </div>
                 </div>
+
                 <div className="item">
                   <div className="testimonial-content">
-                    <div className="testimonial">
+                    <div
+                      className="testimonial"
+                      style={{
+                        height: "340px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        background: "#ffffff", // <--- TAMBAHKAN INI
+                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
+                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
+                      }}
+                    >
                       <blockquote>
                         <q>
                           Belajar di Bimbel Intisari memberikan pengalaman yang

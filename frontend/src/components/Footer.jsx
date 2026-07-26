@@ -13,11 +13,10 @@ function Footer() {
         <section className="w3l-copyright text-center">
           <div className="container">
             <p className="copy-footer-29">
-              © 2026 Study Course Bimbel Intisari. All rights reserved. Design
-              by
-              <a rel="noreferrer" href="https://w3layouts.com/" target="_blank">
+              © 2026 Study Course Bimbel Intisari. All rights reserved.
+              {/* <a rel="noreferrer" href="https://w3layouts.com/" target="_blank">
                 . Michael as Web Developer
-              </a>
+              </a> */}
             </p>
           </div>
 

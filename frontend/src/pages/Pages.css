@@ -1,0 +1,4 @@
+.courses-wrapper {
+  display: flex;
+  row-gap: 24px;
+}

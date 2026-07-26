@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class HasilTryout extends Model
 {
-    protected $table="hasil_tryouts";
+    protected $table="hasil_tryout";
 
 protected $fillable=[
 
