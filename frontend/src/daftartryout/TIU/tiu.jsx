@@ -1,393 +1,117 @@
-// src/pages/tiu.jsx
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../tryout.css";
+import api from "../../api/api";
 
 // ========================================================================
-// DATA SOAL TIU (Tes Inteligensia Umum)
-// Jumlah soal TIU: 35 soal
-// TIU: pilihan ganda A-E, 1 jawaban benar (skor benar = 5, salah/kosong = 0)
+// DATA SOAL — TIU SAJA (35 SOAL SEMUA DIKOSONGKAN)
 // ========================================================================
 
-// --- Helper untuk membuat soal placeholder TIU ---
-const buatSoalTIU = (nomorAwal, jumlah, kunciPola) =>
-  Array.from({ length: jumlah }, (_, i) => {
-    const nomor = nomorAwal + i;
-    const kunci = kunciPola[i % kunciPola.length];
-    return {
-      id: nomor,
-      section: "TIU",
-      soal: `[TIU] Contoh pertanyaan nomor ${nomor}. Ganti teks ini dengan soal asli.`,
-      opsi: {
-        A: "Pilihan jawaban A",
-        B: "Pilihan jawaban B",
-        C: "Pilihan jawaban C",
-        D: "Pilihan jawaban D",
-        E: "Pilihan jawaban E",
-      },
-      jawaban: kunci,
-    };
-  });
+// --- Helper untuk membuat soal TIU kosong ---
+const buatSoalTIU = (jumlah) =>
+  Array.from({ length: jumlah }, (_, i) => ({
+    id: i + 1,
+    section: "TIU",
+    soal: "",
+    opsi: {
+      A: "",
+      B: "",
+      C: "",
+      D: "",
+      E: "",
+    },
+    jawaban: "",
+  }));
 
-// --- Contoh soal TIU asli (15 soal pertama) ---
-const soalTIUAsli = [
-  {
-    id: 1,
-    section: "TIU",
-    soal: "Jika harga suatu barang naik 20% dan kemudian turun 20% dari harga baru, maka harga akhir barang tersebut dibandingkan harga awal adalah...",
-    opsi: {
-      A: "Sama dengan harga awal",
-      B: "Naik 4%",
-      C: "Turun 4%",
-      D: "Naik 20%",
-      E: "Turun 20%",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 2,
-    section: "TIU",
-    soal: "Sinonim dari kata 'akurat' adalah...",
-    opsi: {
-      A: "Cermat",
-      B: "Lambat",
-      C: "Samar",
-      D: "Ragu",
-      E: "Kasar",
-    },
-    jawaban: "A",
-  },
-  {
-    id: 3,
-    section: "TIU",
-    soal: "Antonim dari kata 'kontraktif' adalah...",
-    opsi: {
-      A: "Ekspansif",
-      B: "Reduktif",
-      C: "Deduktif",
-      D: "Restriktif",
-      E: "Represif",
-    },
-    jawaban: "A",
-  },
-  {
-    id: 4,
-    section: "TIU",
-    soal: "Nilai dari 25% dari 480 adalah...",
-    opsi: {
-      A: "100",
-      B: "110",
-      C: "120",
-      D: "130",
-      E: "140",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 5,
-    section: "TIU",
-    soal: "Deret bilangan berikut: 2, 6, 12, 20, 30, ... bilangan selanjutnya adalah...",
-    opsi: {
-      A: "40",
-      B: "42",
-      C: "44",
-      D: "46",
-      E: "48",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 6,
-    section: "TIU",
-    soal: "Jika x = 5 dan y = 3, maka nilai dari 2x² + 3y - 4 adalah...",
-    opsi: {
-      A: "55",
-      B: "56",
-      C: "57",
-      D: "58",
-      E: "59",
-    },
-    jawaban: "A",
-  },
-  {
-    id: 7,
-    section: "TIU",
-    soal: "Kata yang tidak termasuk dalam kelompoknya adalah...",
-    opsi: {
-      A: "Mobil",
-      B: "Motor",
-      C: "Sepeda",
-      D: "Kapal",
-      E: "Pesawat",
-    },
-    jawaban: "D",
-  },
-  {
-    id: 8,
-    section: "TIU",
-    soal: "Jika A = 1, B = 2, C = 3, ..., Z = 26, maka nilai dari kata 'BUKU' adalah...",
-    opsi: {
-      A: "50",
-      B: "51",
-      C: "52",
-      D: "53",
-      E: "54",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 9,
-    section: "TIU",
-    soal: "Rata-rata dari 5, 7, 9, 11, 13 adalah...",
-    opsi: {
-      A: "7",
-      B: "8",
-      C: "9",
-      D: "10",
-      E: "11",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 10,
-    section: "TIU",
-    soal: "Jika 2x + 3 = 11, maka nilai x adalah...",
-    opsi: {
-      A: "2",
-      B: "3",
-      C: "4",
-      D: "5",
-      E: "6",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 11,
-    section: "TIU",
-    soal: "Sinonim dari kata 'cepat' adalah...",
-    opsi: {
-      A: "Lambat",
-      B: "Perlahan",
-      C: "Kilat",
-      D: "Lama",
-      E: "Santai",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 12,
-    section: "TIU",
-    soal: "Antonim dari kata 'baik' adalah...",
-    opsi: {
-      A: "Bagus",
-      B: "Buruk",
-      C: "Indah",
-      D: "Cantik",
-      E: "Elok",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 13,
-    section: "TIU",
-    soal: "Jumlah dari 15 + 25 + 35 + 45 + 55 adalah...",
-    opsi: {
-      A: "165",
-      B: "170",
-      C: "175",
-      D: "180",
-      E: "185",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 14,
-    section: "TIU",
-    soal: "Jika hari ini adalah hari Selasa, maka 100 hari lagi adalah hari...",
-    opsi: {
-      A: "Senin",
-      B: "Selasa",
-      C: "Rabu",
-      D: "Kamis",
-      E: "Jumat",
-    },
-    jawaban: "D",
-  },
-  {
-    id: 15,
-    section: "TIU",
-    soal: "Bilangan yang habis dibagi 3 dan 5 adalah...",
-    opsi: {
-      A: "10",
-      B: "15",
-      C: "20",
-      D: "25",
-      E: "30",
-    },
-    jawaban: "B",
-  },
-];
-
-// --- Tambahan soal TIU (10 soal lagi) ---
-const soalTIUTambahan = [
-  {
-    id: 16,
-    section: "TIU",
-    soal: "Jika 3x + 5 = 20, maka nilai x adalah...",
-    opsi: {
-      A: "3",
-      B: "4",
-      C: "5",
-      D: "6",
-      E: "7",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 17,
-    section: "TIU",
-    soal: "Kata yang memiliki makna sama dengan 'kompleks' adalah...",
-    opsi: {
-      A: "Sederhana",
-      B: "Rumit",
-      C: "Mudah",
-      D: "Ringan",
-      E: "Enteng",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 18,
-    section: "TIU",
-    soal: "Jika sebuah persegi memiliki sisi 8 cm, maka luasnya adalah...",
-    opsi: {
-      A: "56 cm²",
-      B: "60 cm²",
-      C: "64 cm²",
-      D: "68 cm²",
-      E: "72 cm²",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 19,
-    section: "TIU",
-    soal: "Antonim dari kata 'berani' adalah...",
-    opsi: {
-      A: "Gagah",
-      B: "Perkasa",
-      C: "Penakut",
-      D: "Tangguh",
-      E: "Kuat",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 20,
-    section: "TIU",
-    soal: "Hasil dari 8 × 7 ÷ 2 + 5 adalah...",
-    opsi: {
-      A: "30",
-      B: "31",
-      C: "32",
-      D: "33",
-      E: "34",
-    },
-    jawaban: "D",
-  },
-  {
-    id: 21,
-    section: "TIU",
-    soal: "Jika umur Ayah 3 kali umur anaknya, dan jumlah umur mereka 60 tahun, maka umur anak adalah...",
-    opsi: {
-      A: "10 tahun",
-      B: "15 tahun",
-      C: "20 tahun",
-      D: "25 tahun",
-      E: "30 tahun",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 22,
-    section: "TIU",
-    soal: "Sinonim dari kata 'cerdas' adalah...",
-    opsi: {
-      A: "Bodoh",
-      B: "Pintar",
-      C: "Kurang",
-      D: "Lemah",
-      E: "Lambat",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 23,
-    section: "TIU",
-    soal: "Jika hari ini tanggal 15 Januari, maka 30 hari lagi adalah...",
-    opsi: {
-      A: "13 Februari",
-      B: "14 Februari",
-      C: "15 Februari",
-      D: "16 Februari",
-      E: "17 Februari",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 24,
-    section: "TIU",
-    soal: "Perbandingan 2 : 3 sama dengan...",
-    opsi: {
-      A: "4 : 9",
-      B: "6 : 9",
-      C: "8 : 12",
-      D: "10 : 15",
-      E: "12 : 18",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 25,
-    section: "TIU",
-    soal: "Kata yang tidak sesuai dengan kata lainnya adalah...",
-    opsi: {
-      A: "Meja",
-      B: "Kursi",
-      C: "Lemari",
-      D: "Mobil",
-      E: "Rak",
-    },
-    jawaban: "D",
-  },
-];
-
-// --- Gabungkan soal asli + tambahan + placeholder ---
-const soalTIU = [
-  ...soalTIUAsli,
-  ...soalTIUTambahan,
-  ...buatSoalTIU(26, 10, ["D", "E", "A", "B", "C", "D", "E", "A", "B", "C"]),
-];
+// --- Semua soal TIU dikosongkan (35 soal) ---
+const soalTIU = buatSoalTIU(35);
 
 // ========================================================================
 // KONFIGURASI
 // ========================================================================
-const DURASI_MENIT = 55;
-const JUMLAH_SOAL = soalTIU.length;
-const PASSING_GRADE = 80;
+const DURASI_MENIT = 35; // 35 menit untuk 35 soal TIU
+const JUMLAH_TIU = soalTIU.length;
+
+const PASSING_GRADE = { TIU: 80 };
+
+const SECTION_LABEL = {
+  TIU: "Tes Inteligensia Umum",
+};
+
+// ==================== STORAGE KEYS ====================
+const userId = sessionStorage.getItem("userId");
+
+const STORAGE_KEYS = {
+  ANSWERS: `tryout_tiu_answers_${userId}`,
+  TIME_LEFT: `tryout_tiu_time_left_${userId}`,
+  CURRENT_INDEX: `tryout_tiu_current_index_${userId}`,
+  IS_FINISHED: `tryout_tiu_is_finished_${userId}`,
+};
 
 const TIU = () => {
   const navigate = useNavigate();
 
-  // ================== STATE ==================
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [timeLeft, setTimeLeft] = useState(DURASI_MENIT * 60);
-  const [isFinished, setIsFinished] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+  // ==================== AMBIL DATA DARI STORAGE ====================
+  const getInitialAnswers = () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.ANSWERS);
+    return saved ? JSON.parse(saved) : {};
+  };
 
-  const currentSoal = soalTIU[currentIndex];
+  const getInitialTimeLeft = () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.TIME_LEFT);
+    if (saved) {
+      const parsed = parseInt(saved, 10);
+      if (parsed > 0 && parsed <= DURASI_MENIT * 60) {
+        return parsed;
+      }
+    }
+    return DURASI_MENIT * 60;
+  };
+
+  const getInitialIndex = () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.CURRENT_INDEX);
+    return saved ? parseInt(saved, 10) : 0;
+  };
+
+  const getInitialIsFinished = () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.IS_FINISHED);
+    return saved ? JSON.parse(saved) : false;
+  };
+
+  // ==================== STATE ====================
+  const [currentIndex, setCurrentIndex] = useState(getInitialIndex);
+  const [answers, setAnswers] = useState(getInitialAnswers);
+  const [timeLeft, setTimeLeft] = useState(getInitialTimeLeft);
+  const [isFinished, setIsFinished] = useState(getInitialIsFinished);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const userId = sessionStorage.getItem("userId");
   const totalSoal = soalTIU.length;
+  const currentSoal = soalTIU[currentIndex];
+
+  // ==================== SIMPAN KE STORAGE ====================
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.ANSWERS, JSON.stringify(answers));
+  }, [answers]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.CURRENT_INDEX, currentIndex.toString());
+  }, [currentIndex]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.TIME_LEFT, timeLeft.toString());
+  }, [timeLeft]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.IS_FINISHED, JSON.stringify(isFinished));
+  }, [isFinished]);
+
+  // ==================== CEK APAKAH SUDAH FINISH ====================
+  useEffect(() => {
+    const savedIsFinished = localStorage.getItem(STORAGE_KEYS.IS_FINISHED);
+    if (savedIsFinished === "true") {
+      setIsFinished(true);
+    }
+  }, []);
 
   // ================== TIMER ==================
   useEffect(() => {
@@ -399,7 +123,11 @@ const TIU = () => {
     }
 
     const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+      setTimeLeft((prev) => {
+        const newTime = prev - 1;
+        localStorage.setItem(STORAGE_KEYS.TIME_LEFT, newTime.toString());
+        return newTime;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
@@ -415,7 +143,7 @@ const TIU = () => {
       .padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   };
 
-  // ================== HANDLER ==================
+  // ================== HANDLER JAWABAN ==================
   const handleSelectAnswer = (opsi) => {
     setAnswers((prev) => ({
       ...prev,
@@ -426,116 +154,116 @@ const TIU = () => {
   const goToQuestion = (index) => setCurrentIndex(index);
 
   const handleNext = () => {
-    if (currentIndex < totalSoal - 1) {
-      setCurrentIndex((prev) => prev + 1);
-    }
+    if (currentIndex < totalSoal - 1) setCurrentIndex((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
-  };
-
-  const handleRaguRagu = () => {
-    if (currentIndex < totalSoal - 1) {
-      setCurrentIndex((prev) => prev + 1);
-    }
+    if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
   };
 
   // ================== HITUNG SKOR ==================
   const hitungSkor = useCallback(() => {
-    let benar = 0;
-    let salah = 0;
-    let tidakDijawab = 0;
-
+    let tiuBenar = 0;
     soalTIU.forEach((soal) => {
-      const jawabanUser = answers[soal.id];
-      if (jawabanUser === soal.jawaban) {
-        benar += 1;
-      } else if (jawabanUser) {
-        salah += 1;
-      } else {
-        tidakDijawab += 1;
-      }
+      if (answers[soal.id] === soal.jawaban) tiuBenar += 1;
     });
+    const tiuSalahKosong = JUMLAH_TIU - tiuBenar;
+    const tiuNilai = tiuBenar * 5;
 
-    const nilai = benar * 5;
-    const nilaiMaks = JUMLAH_SOAL * 5;
+    const nilaiMaksTIU = JUMLAH_TIU * 5;
 
     return {
-      benar,
-      salah,
-      tidakDijawab,
-      nilai,
-      nilaiMaks,
-      persentase: (nilai / nilaiMaks) * 100,
-      lulus: nilai >= PASSING_GRADE,
+      tiu: {
+        benar: tiuBenar,
+        salahKosong: tiuSalahKosong,
+        nilai: tiuNilai,
+        maks: nilaiMaksTIU,
+      },
+      total: tiuNilai,
+      totalMaks: nilaiMaksTIU,
     };
   }, [answers]);
 
-  const handleFinish = () => {
-    setIsFinished(true);
-    setShowConfirm(false);
+  // ==================== CLEAR STORAGE ====================
+  const clearTryoutStorage = () => {
+    Object.values(STORAGE_KEYS).forEach((key) => {
+      localStorage.removeItem(key);
+    });
+  };
+
+  // ==================== handleFinish ====================
+  const handleFinish = async () => {
+    try {
+      const hasil = hitungSkor();
+
+      const payload = {
+        user_id: userId,
+        jenis_tryout: "TIU",
+        total_nilai: hasil.total,
+        durasi: DURASI_MENIT * 60 - timeLeft,
+        detail: [
+          {
+            kategori: "TIU",
+            benar: hasil.tiu.benar,
+            salah: hasil.tiu.salahKosong,
+            terjawab: null,
+            nilai: hasil.tiu.nilai,
+          },
+        ],
+      };
+
+      await api.post("/hasil-tryout", payload);
+      console.log(payload);
+
+      clearTryoutStorage();
+
+      setIsFinished(true);
+      setShowConfirm(false);
+    } catch (error) {
+      console.log(error);
+      alert("Gagal menyimpan hasil tryout");
+    }
   };
 
   const jumlahTerjawab = Object.keys(answers).length;
 
-  // ================== RESET ==================
-  const resetTryout = () => {
-    setAnswers({});
-    setCurrentIndex(0);
-    setTimeLeft(DURASI_MENIT * 60);
-    setIsFinished(false);
-    setShowConfirm(false);
-  };
-
   // ================== TAMPILAN HASIL ==================
   if (isFinished) {
     const hasil = hitungSkor();
+    const lulusTIU = hasil.tiu.nilai >= PASSING_GRADE.TIU;
 
     return (
       <div className="tryout-container">
         <div className="hasil-card">
-          <h2>Hasil Tes TIU</h2>
+          <h2>Hasil Try Out TIU</h2>
 
           <div className="nilai-total-box">
-            <div className="nilai-besar">{hasil.nilai}</div>
+            <div className="nilai-besar">{hasil.total}</div>
             <p className="nilai-label">
-              Total Nilai (dari maksimal {hasil.nilaiMaks})
+              Total Nilai (dari maksimal {hasil.totalMaks})
             </p>
           </div>
 
           <div className="hasil-section-grid">
             <div className="hasil-section-card">
-              <h4>Total Benar</h4>
-              <p className="section-nilai">{hasil.benar}</p>
-              <p className="section-sub">dari {JUMLAH_SOAL} soal</p>
-            </div>
-
-            <div className="hasil-section-card">
-              <h4>Presentase</h4>
-              <p className="section-nilai">{hasil.persentase.toFixed(1)}%</p>
-              <p className="section-sub">Nilai: {hasil.nilai}</p>
-            </div>
-
-            <div className="hasil-section-card">
-              <h4>Status</h4>
-              <p
-                className={`section-nilai ${
-                  hasil.lulus ? "status-lulus" : "status-belum"
-                }`}
-              >
-                {hasil.lulus ? "✅ LULUS" : "❌ BELUM"}
+              <h4>TIU</h4>
+              <p className="section-nilai">{hasil.tiu.nilai}</p>
+              <p className="section-sub">
+                Benar {hasil.tiu.benar} dari {JUMLAH_TIU} soal
               </p>
-              <p className="section-sub">Passing Grade: {PASSING_GRADE}</p>
+              <p className="section-sub">
+                Passing grade: {PASSING_GRADE.TIU}{" "}
+                <span className={lulusTIU ? "status-lulus" : "status-belum"}>
+                  {lulusTIU ? "Tercapai" : "Belum tercapai"}
+                </span>
+              </p>
             </div>
           </div>
 
-          <p className={`status-akhir ${hasil.lulus ? "lulus" : "belum"}`}>
-            {hasil.lulus
-              ? "🎉 Selamat! Nilai Anda memenuhi passing grade TIU."
-              : "💪 Terus berlatih! Nilai Anda belum memenuhi passing grade."}
+          <p className={`status-akhir ${lulusTIU ? "lulus" : "belum"}`}>
+            {lulusTIU
+              ? "Selamat! Nilai kamu memenuhi passing grade TIU."
+              : "Nilai kamu belum memenuhi passing grade TIU. Terus berlatih!"}
           </p>
 
           <div className="hasil-actions">
@@ -548,22 +276,20 @@ const TIU = () => {
     );
   }
 
-  // ================== TAMPILAN SOAL (1 PER 1) ==================
+  // ================== TAMPILAN SOAL ==================
   return (
     <div className="tryout-container">
-      {/* Header */}
       <div className="tryout-header">
         <div>
           <h2>Try Out TIU</h2>
-          <span className="badge badge-tiu">Tes Inteligensia Umum</span>
+          <span className="badge badge-tiu">TIU — {SECTION_LABEL.TIU}</span>
         </div>
         <div className={`timer ${timeLeft < 300 ? "timer-warning" : ""}`}>
           ⏱ {formatTime(timeLeft)}
         </div>
       </div>
 
-      <div className="tryout-body">
-        {/* Panel navigasi nomor soal */}
+      <div className="tryout-body1">
         <div className="nomor-panel">
           <p className="nomor-panel-title">
             Terjawab: {jumlahTerjawab}/{totalSoal}
@@ -596,13 +322,35 @@ const TIU = () => {
           </button>
         </div>
 
-        {/* Konten soal - 1 SOAL PER TAMPILAN */}
         <div className="soal-panel">
           <p className="soal-nomor">
             Soal {currentSoal.id} dari {totalSoal} (TIU)
           </p>
-          <p className="soal-teks">{currentSoal.soal}</p>
+          <div className="soal-teks">
+            {Array.isArray(currentSoal.soal) ? (
+              currentSoal.soal.map((item, index) => <p key={index}>{item}</p>)
+            ) : (
+              <p>{currentSoal.soal}</p>
+            )}
 
+            {currentSoal.gambar &&
+              (Array.isArray(currentSoal.gambar) ? (
+                currentSoal.gambar.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img}
+                    alt={`Soal ${currentSoal.id}`}
+                    className="gambar-soal"
+                  />
+                ))
+              ) : (
+                <img
+                  src={currentSoal.gambar}
+                  alt={`Soal ${currentSoal.id}`}
+                  className="gambar-soal"
+                />
+              ))}
+          </div>
           <div className="opsi-list">
             {Object.entries(currentSoal.opsi).map(([key, value]) => (
               <label
@@ -632,6 +380,7 @@ const TIU = () => {
             >
               ← Sebelumnya
             </button>
+
             <button
               className="btn btn-primary"
               onClick={handleNext}
@@ -643,10 +392,9 @@ const TIU = () => {
         </div>
       </div>
 
-      {/* Modal konfirmasi */}
       {showConfirm && (
-        <div className="modal-overlay" onClick={() => setShowConfirm(false)}>
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-overlay">
+          <div className="modal-box">
             <h3>Selesaikan Try Out?</h3>
             <p>
               Kamu sudah menjawab {jumlahTerjawab} dari {totalSoal} soal.

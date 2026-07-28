@@ -4,111 +4,37 @@ import "../tryout.css";
 import api from "../../api/api";
 
 // ========================================================================
-// DATA SOAL — SKD CPNS (SEMUA DIKOSONGKAN)
+// DATA SOAL — TKP SAJA (45 SOAL SEMUA DIKOSONGKAN)
 // ========================================================================
 
-// --- Helper untuk membuat soal placeholder kosong TWK/TIU ---
-const buatSoalPG = (section, nomorAwal, jumlah) =>
-  Array.from({ length: jumlah }, (_, i) => {
-    const nomor = nomorAwal + i;
-    return {
-      id: nomor,
-      section,
-      soal: "",
-      opsi: {
-        A: "",
-        B: "",
-        C: "",
-        D: "",
-        E: "",
-      },
-      jawaban: "",
-    };
-  });
-
-// --- Helper untuk membuat soal placeholder kosong TKP ---
-const buatSoalTKP = (nomorAwal, jumlah) =>
-  Array.from({ length: jumlah }, (_, i) => {
-    const nomor = nomorAwal + i;
-    return {
-      id: nomor,
-      section: "TKP",
-      soal: "",
-      opsi: {
-        A: "",
-        B: "",
-        C: "",
-        D: "",
-        E: "",
-      },
-      bobot: { A: "", B: "", C: "", D: "", E: "" },
-    };
-  });
-
-// --- Semua soal TWK dikosongkan (30 soal) ---
-const soalTWKAsli = Array.from({ length: 30 }, (_, i) => ({
-  id: i + 1,
-  section: "TWK",
-  soal: "",
-  opsi: {
-    A: "",
-    B: "",
-    C: "",
-    D: "",
-    E: "",
-  },
-  jawaban: "",
-}));
-
-// --- Semua soal TIU dikosongkan (35 soal) ---
-const soalTIUAsli = Array.from({ length: 35 }, (_, i) => ({
-  id: i + 31,
-  section: "TIU",
-  soal: "",
-  opsi: {
-    A: "",
-    B: "",
-    C: "",
-    D: "",
-    E: "",
-  },
-  jawaban: "",
-}));
+// --- Helper untuk membuat soal TKP kosong ---
+const buatSoalTKP = (jumlah) =>
+  Array.from({ length: jumlah }, (_, i) => ({
+    id: i + 1,
+    section: "TKP",
+    soal: "",
+    opsi: {
+      A: "",
+      B: "",
+      C: "",
+      D: "",
+      E: "",
+    },
+    bobot: { A: "", B: "", C: "", D: "", E: "" },
+  }));
 
 // --- Semua soal TKP dikosongkan (45 soal) ---
-const soalTKPAsli = Array.from({ length: 45 }, (_, i) => ({
-  id: i + 66,
-  section: "TKP",
-  soal: "",
-  opsi: {
-    A: "",
-    B: "",
-    C: "",
-    D: "",
-    E: "",
-  },
-  bobot: { A: "", B: "", C: "", D: "", E: "" },
-}));
-
-// --- Gabungkan soal ---
-const soalTWK = [...soalTWKAsli];
-const soalTIU = [...soalTIUAsli];
-const soalTKP = [...soalTKPAsli];
-const soalData = [...soalTWK, ...soalTIU, ...soalTKP];
+const soalTKP = buatSoalTKP(45);
 
 // ========================================================================
 // KONFIGURASI
 // ========================================================================
-const DURASI_MENIT = 110;
-const JUMLAH_TWK = soalTWK.length;
-const JUMLAH_TIU = soalTIU.length;
+const DURASI_MENIT = 45; // 45 menit untuk 45 soal TKP
 const JUMLAH_TKP = soalTKP.length;
 
-const PASSING_GRADE = { TWK: 65, TIU: 80, TKP: 166 };
+const PASSING_GRADE = { TKP: 166 };
 
 const SECTION_LABEL = {
-  TWK: "Tes Wawasan Kebangsaan",
-  TIU: "Tes Inteligensia Umum",
   TKP: "Tes Karakteristik Pribadi",
 };
 
@@ -116,13 +42,13 @@ const SECTION_LABEL = {
 const userId = sessionStorage.getItem("userId");
 
 const STORAGE_KEYS = {
-  ANSWERS: `tryout_answers_${userId}`,
-  TIME_LEFT: `tryout_time_left_${userId}`,
-  CURRENT_INDEX: `tryout_current_index_${userId}`,
-  IS_FINISHED: `tryout_is_finished_${userId}`,
+  ANSWERS: `tryout_tkp_answers_${userId}`,
+  TIME_LEFT: `tryout_tkp_time_left_${userId}`,
+  CURRENT_INDEX: `tryout_tkp_current_index_${userId}`,
+  IS_FINISHED: `tryout_tkp_is_finished_${userId}`,
 };
 
-const TryOut1 = () => {
+const TTKP = () => {
   const navigate = useNavigate();
 
   // ==================== AMBIL DATA DARI STORAGE ====================
@@ -159,8 +85,8 @@ const TryOut1 = () => {
   const [isFinished, setIsFinished] = useState(getInitialIsFinished);
   const [showConfirm, setShowConfirm] = useState(false);
   const userId = sessionStorage.getItem("userId");
-  const totalSoal = soalData.length;
-  const currentSoal = soalData[currentIndex];
+  const totalSoal = soalTKP.length;
+  const currentSoal = soalTKP[currentIndex];
 
   // ==================== SIMPAN KE STORAGE ====================
   useEffect(() => {
@@ -237,52 +163,26 @@ const TryOut1 = () => {
 
   // ================== HITUNG SKOR ==================
   const hitungSkor = useCallback(() => {
-    let twkBenar = 0;
-    soalTWK.forEach((soal) => {
-      if (answers[soal.id] === soal.jawaban) twkBenar += 1;
-    });
-    const twkSalahKosong = JUMLAH_TWK - twkBenar;
-    const twkNilai = twkBenar * 5;
-
-    let tiuBenar = 0;
-    soalTIU.forEach((soal) => {
-      if (answers[soal.id] === soal.jawaban) tiuBenar += 1;
-    });
-    const tiuSalahKosong = JUMLAH_TIU - tiuBenar;
-    const tiuNilai = tiuBenar * 5;
-
     let tkpNilai = 0;
     let tkpTerjawab = 0;
     soalTKP.forEach((soal) => {
       const jawabanUser = answers[soal.id];
       if (jawabanUser) {
-        tkpNilai += soal.bobot[jawabanUser] || 0;
+        tkpNilai += parseInt(soal.bobot[jawabanUser]) || 0;
         tkpTerjawab += 1;
       }
     });
 
-    const nilaiMaksTWK = JUMLAH_TWK * 5;
-    const nilaiMaksTIU = JUMLAH_TIU * 5;
     const nilaiMaksTKP = JUMLAH_TKP * 5;
-    const totalNilai = twkNilai + tiuNilai + tkpNilai;
-    const totalNilaiMaks = nilaiMaksTWK + nilaiMaksTIU + nilaiMaksTKP;
 
     return {
-      twk: {
-        benar: twkBenar,
-        salahKosong: twkSalahKosong,
-        nilai: twkNilai,
-        maks: nilaiMaksTWK,
+      tkp: {
+        terjawab: tkpTerjawab,
+        nilai: tkpNilai,
+        maks: nilaiMaksTKP,
       },
-      tiu: {
-        benar: tiuBenar,
-        salahKosong: tiuSalahKosong,
-        nilai: tiuNilai,
-        maks: nilaiMaksTIU,
-      },
-      tkp: { terjawab: tkpTerjawab, nilai: tkpNilai, maks: nilaiMaksTKP },
-      total: totalNilai,
-      totalMaks: totalNilaiMaks,
+      total: tkpNilai,
+      totalMaks: nilaiMaksTKP,
     };
   }, [answers]);
 
@@ -300,24 +200,10 @@ const TryOut1 = () => {
 
       const payload = {
         user_id: userId,
-        jenis_tryout: "TRYOUT_LENGKAP",
+        jenis_tryout: "TKP",
         total_nilai: hasil.total,
         durasi: DURASI_MENIT * 60 - timeLeft,
         detail: [
-          {
-            kategori: "TWK",
-            benar: hasil.twk.benar,
-            salah: hasil.twk.salahKosong,
-            terjawab: null,
-            nilai: hasil.twk.nilai,
-          },
-          {
-            kategori: "TIU",
-            benar: hasil.tiu.benar,
-            salah: hasil.tiu.salahKosong,
-            terjawab: null,
-            nilai: hasil.tiu.nilai,
-          },
           {
             kategori: "TKP",
             benar: null,
@@ -346,15 +232,12 @@ const TryOut1 = () => {
   // ================== TAMPILAN HASIL ==================
   if (isFinished) {
     const hasil = hitungSkor();
-    const lulusTWK = hasil.twk.nilai >= PASSING_GRADE.TWK;
-    const lulusTIU = hasil.tiu.nilai >= PASSING_GRADE.TIU;
     const lulusTKP = hasil.tkp.nilai >= PASSING_GRADE.TKP;
-    const lulusSemua = lulusTWK && lulusTIU && lulusTKP;
 
     return (
       <div className="tryout-container">
         <div className="hasil-card">
-          <h2>Hasil Try Out SKD CPNS</h2>
+          <h2>Hasil Try Out TKP</h2>
 
           <div className="nilai-total-box">
             <div className="nilai-besar">{hasil.total}</div>
@@ -364,34 +247,6 @@ const TryOut1 = () => {
           </div>
 
           <div className="hasil-section-grid">
-            <div className="hasil-section-card">
-              <h4>TWK</h4>
-              <p className="section-nilai">{hasil.twk.nilai}</p>
-              <p className="section-sub">
-                Benar {hasil.twk.benar} dari {JUMLAH_TWK} soal
-              </p>
-              <p className="section-sub">
-                Passing grade: {PASSING_GRADE.TWK}{" "}
-                <span className={lulusTWK ? "status-lulus" : "status-belum"}>
-                  {lulusTWK ? "Tercapai" : "Belum tercapai"}
-                </span>
-              </p>
-            </div>
-
-            <div className="hasil-section-card">
-              <h4>TIU</h4>
-              <p className="section-nilai">{hasil.tiu.nilai}</p>
-              <p className="section-sub">
-                Benar {hasil.tiu.benar} dari {JUMLAH_TIU} soal
-              </p>
-              <p className="section-sub">
-                Passing grade: {PASSING_GRADE.TIU}{" "}
-                <span className={lulusTIU ? "status-lulus" : "status-belum"}>
-                  {lulusTIU ? "Tercapai" : "Belum tercapai"}
-                </span>
-              </p>
-            </div>
-
             <div className="hasil-section-card">
               <h4>TKP</h4>
               <p className="section-nilai">{hasil.tkp.nilai}</p>
@@ -407,10 +262,10 @@ const TryOut1 = () => {
             </div>
           </div>
 
-          <p className={`status-akhir ${lulusSemua ? "lulus" : "belum"}`}>
-            {lulusSemua
-              ? "Selamat! Nilai kamu memenuhi seluruh passing grade."
-              : "Nilai kamu belum memenuhi seluruh passing grade. Terus berlatih!"}
+          <p className={`status-akhir ${lulusTKP ? "lulus" : "belum"}`}>
+            {lulusTKP
+              ? "Selamat! Nilai kamu memenuhi passing grade TKP."
+              : "Nilai kamu belum memenuhi passing grade TKP. Terus berlatih!"}
           </p>
 
           <div className="hasil-actions">
@@ -428,10 +283,8 @@ const TryOut1 = () => {
     <div className="tryout-container">
       <div className="tryout-header">
         <div>
-          <h2>Try Out SKD CPNS</h2>
-          <span className={`badge badge-${currentSoal.section.toLowerCase()}`}>
-            {currentSoal.section} — {SECTION_LABEL[currentSoal.section]}
-          </span>
+          <h2>Try Out TKP</h2>
+          <span className="badge badge-tkp">TKP — {SECTION_LABEL.TKP}</span>
         </div>
         <div className={`timer ${timeLeft < 300 ? "timer-warning" : ""}`}>
           ⏱ {formatTime(timeLeft)}
@@ -444,30 +297,24 @@ const TryOut1 = () => {
             Terjawab: {jumlahTerjawab}/{totalSoal}
           </p>
 
-          {["TWK", "TIU", "TKP"].map((section) => (
-            <div key={section} className="nomor-group">
-              <p className={`nomor-group-title badge-${section.toLowerCase()}`}>
-                {section} (
-                {soalData.filter((s) => s.section === section).length} soal)
-              </p>
-              <div className="nomor-grid">
-                {soalData
-                  .map((soal, idx) => ({ soal, idx }))
-                  .filter(({ soal }) => soal.section === section)
-                  .map(({ soal, idx }) => (
-                    <button
-                      key={soal.id}
-                      className={`nomor-btn ${
-                        idx === currentIndex ? "active" : ""
-                      } ${answers[soal.id] ? "terjawab" : ""}`}
-                      onClick={() => goToQuestion(idx)}
-                    >
-                      {soal.id}
-                    </button>
-                  ))}
-              </div>
+          <div className="nomor-group">
+            <p className="nomor-group-title badge-tkp">
+              TKP ({totalSoal} soal)
+            </p>
+            <div className="nomor-grid">
+              {soalTKP.map((soal, idx) => (
+                <button
+                  key={soal.id}
+                  className={`nomor-btn ${
+                    idx === currentIndex ? "active" : ""
+                  } ${answers[soal.id] ? "terjawab" : ""}`}
+                  onClick={() => goToQuestion(idx)}
+                >
+                  {soal.id}
+                </button>
+              ))}
             </div>
-          ))}
+          </div>
 
           <button
             className="btn btn-selesai"
@@ -479,7 +326,7 @@ const TryOut1 = () => {
 
         <div className="soal-panel">
           <p className="soal-nomor">
-            Soal {currentSoal.id} dari {totalSoal} ({currentSoal.section})
+            Soal {currentSoal.id} dari {totalSoal} (TKP)
           </p>
           <div className="soal-teks">
             {Array.isArray(currentSoal.soal) ? (
@@ -574,4 +421,4 @@ const TryOut1 = () => {
   );
 };
 
-export default TryOut1;
+export default TTKP;

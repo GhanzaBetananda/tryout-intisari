@@ -1,283 +1,109 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../tryout.css";
+import api from "../../api/api";
 
 // ========================================================================
-// DATA SOAL — SKD CPNS
-// Struktur SKD CPNS: TWK 30 soal, TIU 35 soal, TKP 45 soal = 110 soal
-// - TWK & TIU  : pilihan ganda A-E, 1 jawaban benar (skor benar = 5, salah/kosong = 0)
-// - TKP        : pilihan ganda A-E, SEMUA opsi punya bobot nilai 1-5 (tidak ada yang salah)
+// DATA SOAL — SKD CPNS (SEMUA DIKOSONGKAN)
 // ========================================================================
 
-// --- Helper untuk membuat soal placeholder TWK/TIU (silakan ganti dengan soal asli) ---
-const buatSoalPG = (section, nomorAwal, jumlah, kunciPola) =>
+// --- Helper untuk membuat soal placeholder kosong TWK/TIU ---
+const buatSoalPG = (section, nomorAwal, jumlah) =>
   Array.from({ length: jumlah }, (_, i) => {
     const nomor = nomorAwal + i;
-    const kunci = kunciPola[i % kunciPola.length];
     return {
       id: nomor,
       section,
-      soal: `[${section}] Contoh pertanyaan nomor ${nomor}. Ganti teks ini dengan soal asli.`,
+      soal: "",
       opsi: {
-        A: "Pilihan jawaban A",
-        B: "Pilihan jawaban B",
-        C: "Pilihan jawaban C",
-        D: "Pilihan jawaban D",
-        E: "Pilihan jawaban E",
+        A: "",
+        B: "",
+        C: "",
+        D: "",
+        E: "",
       },
-      jawaban: kunci,
+      jawaban: "",
     };
   });
 
-// --- Helper untuk membuat soal placeholder TKP (bobot 1-5 di semua opsi) ---
+// --- Helper untuk membuat soal placeholder kosong TKP ---
 const buatSoalTKP = (nomorAwal, jumlah) =>
   Array.from({ length: jumlah }, (_, i) => {
     const nomor = nomorAwal + i;
-    // rotasi bobot supaya jawaban "terbaik" (5) berpindah-pindah huruf
-    const urutanHuruf = ["A", "B", "C", "D", "E"];
-    const geser = i % 5;
-    const nilaiUrut = [3, 4, 2, 5, 1]; // pola bobot: bisa disesuaikan per soal asli
-    const bobot = {};
-    urutanHuruf.forEach((huruf, idx) => {
-      const hurufTergeser = urutanHuruf[(idx + geser) % 5];
-      bobot[hurufTergeser] = nilaiUrut[idx];
-    });
-
     return {
       id: nomor,
       section: "TKP",
-      soal: `[TKP] Contoh situasi nomor ${nomor - 65}. Ganti teks ini dengan soal TKP asli.`,
+      soal: "",
       opsi: {
-        A: "Contoh respons/sikap A",
-        B: "Contoh respons/sikap B",
-        C: "Contoh respons/sikap C",
-        D: "Contoh respons/sikap D",
-        E: "Contoh respons/sikap E",
+        A: "",
+        B: "",
+        C: "",
+        D: "",
+        E: "",
       },
-      bobot, // { A: 1-5, B: 1-5, C: 1-5, D: 1-5, E: 1-5 }
+      bobot: { A: "", B: "", C: "", D: "", E: "" },
     };
   });
 
-// --- Contoh soal TWK asli (5 soal pertama), sisanya placeholder ---
-const soalTWKAsli = [
-  {
-    id: 1,
-    section: "TWK",
-    soal: "Pancasila sebagai dasar negara Indonesia pertama kali disahkan secara resmi pada tanggal...",
-    opsi: {
-      A: "1 Juni 1945",
-      B: "22 Juni 1945",
-      C: "17 Agustus 1945",
-      D: "18 Agustus 1945",
-      E: "29 Mei 1945",
-    },
-    jawaban: "D",
+// --- Semua soal TWK dikosongkan (30 soal) ---
+const soalTWKAsli = Array.from({ length: 30 }, (_, i) => ({
+  id: i + 1,
+  section: "TWK",
+  soal: "",
+  opsi: {
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+    E: "",
   },
-  {
-    id: 2,
-    section: "TWK",
-    soal: "Lembaga negara yang memiliki kewenangan menguji undang-undang terhadap Undang-Undang Dasar 1945 adalah...",
-    opsi: {
-      A: "Mahkamah Agung",
-      B: "Mahkamah Konstitusi",
-      C: "Komisi Yudisial",
-      D: "DPR",
-      E: "DPD",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 3,
-    section: "TWK",
-    soal: "Semboyan 'Bhinneka Tunggal Ika' yang menjadi identitas bangsa Indonesia berasal dari kitab...",
-    opsi: {
-      A: "Negarakertagama",
-      B: "Sutasoma",
-      C: "Pararaton",
-      D: "Arjunawiwaha",
-      E: "Baratayuda",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 4,
-    section: "TWK",
-    soal: "Sila keempat Pancasila mengandung nilai dasar tentang...",
-    opsi: {
-      A: "Keadilan sosial",
-      B: "Ketuhanan Yang Maha Esa",
-      C: "Kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan",
-      D: "Persatuan Indonesia",
-      E: "Kemanusiaan yang adil dan beradab",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 5,
-    section: "TWK",
-    soal: "Ibu kota negara Indonesia yang baru, Nusantara, terletak di provinsi...",
-    opsi: {
-      A: "Kalimantan Barat",
-      B: "Kalimantan Selatan",
-      C: "Kalimantan Timur",
-      D: "Kalimantan Tengah",
-      E: "Kalimantan Utara",
-    },
-    jawaban: "C",
-  },
-];
+  jawaban: "",
+}));
 
-// --- Contoh soal TIU asli (5 soal pertama), sisanya placeholder ---
-const soalTIUAsli = [
-  {
-    id: 31,
-    section: "TIU",
-    soal: "Jika harga suatu barang naik 20% dan kemudian turun 20% dari harga baru, maka harga akhir barang tersebut dibandingkan harga awal adalah...",
-    opsi: {
-      A: "Sama dengan harga awal",
-      B: "Naik 4%",
-      C: "Turun 4%",
-      D: "Naik 20%",
-      E: "Turun 20%",
-    },
-    jawaban: "C",
+// --- Semua soal TIU dikosongkan (35 soal) ---
+const soalTIUAsli = Array.from({ length: 35 }, (_, i) => ({
+  id: i + 31,
+  section: "TIU",
+  soal: "",
+  opsi: {
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+    E: "",
   },
-  {
-    id: 32,
-    section: "TIU",
-    soal: "Sinonim dari kata 'akurat' adalah...",
-    opsi: {
-      A: "Cermat",
-      B: "Lambat",
-      C: "Samar",
-      D: "Ragu",
-      E: "Kasar",
-    },
-    jawaban: "A",
-  },
-  {
-    id: 33,
-    section: "TIU",
-    soal: "Antonim dari kata 'kontraktif' adalah...",
-    opsi: {
-      A: "Ekspansif",
-      B: "Reduktif",
-      C: "Deduktif",
-      D: "Restriktif",
-      E: "Represif",
-    },
-    jawaban: "A",
-  },
-  {
-    id: 34,
-    section: "TIU",
-    soal: "Nilai dari 25% dari 480 adalah...",
-    opsi: {
-      A: "100",
-      B: "110",
-      C: "120",
-      D: "130",
-      E: "140",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 35,
-    section: "TIU",
-    soal: "Deret bilangan berikut: 2, 6, 12, 20, 30, ... bilangan selanjutnya adalah...",
-    opsi: {
-      A: "40",
-      B: "42",
-      C: "44",
-      D: "46",
-      E: "48",
-    },
-    jawaban: "B",
-  },
-];
+  jawaban: "",
+}));
 
-// --- Contoh soal TKP asli (3 soal pertama), sisanya placeholder ---
-const soalTKPAsli = [
-  {
-    id: 66,
-    section: "TKP",
-    soal: "Rekan kerja Anda melakukan kesalahan dalam laporan yang berdampak pada tim. Sikap Anda adalah...",
-    opsi: {
-      A: "Diam saja karena bukan urusan saya",
-      B: "Menegur di depan tim agar jadi pelajaran bersama",
-      C: "Membicarakan secara pribadi dan membantu memperbaiki",
-      D: "Melaporkan langsung ke atasan tanpa konfirmasi",
-      E: "Ikut menyalahkan rekan tersebut ke tim lain",
-    },
-    bobot: { A: 2, B: 3, C: 5, D: 4, E: 1 },
+// --- Semua soal TKP dikosongkan (45 soal) ---
+const soalTKPAsli = Array.from({ length: 45 }, (_, i) => ({
+  id: i + 66,
+  section: "TKP",
+  soal: "",
+  opsi: {
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+    E: "",
   },
-  {
-    id: 67,
-    section: "TKP",
-    soal: "Atasan Anda memberikan instruksi yang menurut Anda kurang tepat. Yang Anda lakukan adalah...",
-    opsi: {
-      A: "Tetap menjalankan tanpa berkomentar",
-      B: "Menyampaikan pendapat dengan data pendukung secara sopan",
-      C: "Menolak secara terang-terangan",
-      D: "Mengabaikan instruksi tersebut",
-      E: "Membicarakan ke rekan kerja lain terlebih dahulu",
-    },
-    bobot: { A: 3, B: 5, C: 1, D: 2, E: 4 },
-  },
-  {
-    id: 68,
-    section: "TKP",
-    soal: "Ketika menghadapi tenggat waktu pekerjaan yang sangat ketat, Anda akan...",
-    opsi: {
-      A: "Menunda pekerjaan lain untuk fokus menyelesaikannya",
-      B: "Meminta perpanjangan waktu tanpa alasan jelas",
-      C: "Mengerjakan seadanya asal selesai",
-      D: "Membuat skala prioritas dan bekerja lebih efisien",
-      E: "Menyerahkan sepenuhnya ke rekan kerja",
-    },
-    bobot: { A: 4, B: 2, C: 1, D: 5, E: 3 },
-  },
-];
+  bobot: { A: "", B: "", C: "", D: "", E: "" },
+}));
 
-// --- Gabungkan soal asli + placeholder hingga mencapai jumlah standar SKD ---
-const soalTWK = [
-  ...soalTWKAsli,
-  ...buatSoalPG("TWK", soalTWKAsli.length + 1, 30 - soalTWKAsli.length, [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-  ]),
-];
-
-const soalTIU = [
-  ...soalTIUAsli,
-  ...buatSoalPG("TIU", 30 + soalTIUAsli.length + 1, 35 - soalTIUAsli.length, [
-    "B",
-    "C",
-    "D",
-    "E",
-    "A",
-  ]),
-];
-
-const soalTKP = [
-  ...soalTKPAsli,
-  ...buatSoalTKP(65 + soalTKPAsli.length + 1, 45 - soalTKPAsli.length),
-];
-
+// --- Gabungkan soal ---
+const soalTWK = [...soalTWKAsli];
+const soalTIU = [...soalTIUAsli];
+const soalTKP = [...soalTKPAsli];
 const soalData = [...soalTWK, ...soalTIU, ...soalTKP];
 
 // ========================================================================
 // KONFIGURASI
 // ========================================================================
-const DURASI_MENIT = 110; // Total durasi SKD CPNS: 110 menit
-const JUMLAH_TWK = soalTWK.length; // 30
-const JUMLAH_TIU = soalTIU.length; // 35
-const JUMLAH_TKP = soalTKP.length; // 45
+const DURASI_MENIT = 110;
+const JUMLAH_TWK = soalTWK.length;
+const JUMLAH_TIU = soalTIU.length;
+const JUMLAH_TKP = soalTKP.length;
 
-// Passing grade SKD CPNS (opsional, untuk referensi tampilan hasil)
 const PASSING_GRADE = { TWK: 65, TIU: 80, TKP: 166 };
 
 const SECTION_LABEL = {
@@ -286,29 +112,96 @@ const SECTION_LABEL = {
   TKP: "Tes Karakteristik Pribadi",
 };
 
+// ==================== STORAGE KEYS ====================
+const userId = sessionStorage.getItem("userId");
+
+const STORAGE_KEYS = {
+  ANSWERS: `tryout_answers_${userId}`,
+  TIME_LEFT: `tryout_time_left_${userId}`,
+  CURRENT_INDEX: `tryout_current_index_${userId}`,
+  IS_FINISHED: `tryout_is_finished_${userId}`,
+};
+
 const TryOut2 = () => {
   const navigate = useNavigate();
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState({}); // { id: "A" | "B" | ... }
-  const [timeLeft, setTimeLeft] = useState(DURASI_MENIT * 60); // dalam detik
-  const [isFinished, setIsFinished] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+  // ==================== AMBIL DATA DARI STORAGE ====================
+  const getInitialAnswers = () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.ANSWERS);
+    return saved ? JSON.parse(saved) : {};
+  };
 
-  const totalSoal = soalData.length; // 110
+  const getInitialTimeLeft = () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.TIME_LEFT);
+    if (saved) {
+      const parsed = parseInt(saved, 10);
+      if (parsed > 0 && parsed <= DURASI_MENIT * 60) {
+        return parsed;
+      }
+    }
+    return DURASI_MENIT * 60;
+  };
+
+  const getInitialIndex = () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.CURRENT_INDEX);
+    return saved ? parseInt(saved, 10) : 0;
+  };
+
+  const getInitialIsFinished = () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.IS_FINISHED);
+    return saved ? JSON.parse(saved) : false;
+  };
+
+  // ==================== STATE ====================
+  const [currentIndex, setCurrentIndex] = useState(getInitialIndex);
+  const [answers, setAnswers] = useState(getInitialAnswers);
+  const [timeLeft, setTimeLeft] = useState(getInitialTimeLeft);
+  const [isFinished, setIsFinished] = useState(getInitialIsFinished);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const userId = sessionStorage.getItem("userId");
+  const totalSoal = soalData.length;
   const currentSoal = soalData[currentIndex];
 
-  // ================== TIMER (AUTO SUBMIT SAAT HABIS) ==================
+  // ==================== SIMPAN KE STORAGE ====================
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.ANSWERS, JSON.stringify(answers));
+  }, [answers]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.CURRENT_INDEX, currentIndex.toString());
+  }, [currentIndex]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.TIME_LEFT, timeLeft.toString());
+  }, [timeLeft]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.IS_FINISHED, JSON.stringify(isFinished));
+  }, [isFinished]);
+
+  // ==================== CEK APAKAH SUDAH FINISH ====================
+  useEffect(() => {
+    const savedIsFinished = localStorage.getItem(STORAGE_KEYS.IS_FINISHED);
+    if (savedIsFinished === "true") {
+      setIsFinished(true);
+    }
+  }, []);
+
+  // ================== TIMER ==================
   useEffect(() => {
     if (isFinished) return;
 
     if (timeLeft <= 0) {
-      handleFinish(); // auto submit
+      handleFinish();
       return;
     }
 
     const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+      setTimeLeft((prev) => {
+        const newTime = prev - 1;
+        localStorage.setItem(STORAGE_KEYS.TIME_LEFT, newTime.toString());
+        return newTime;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
@@ -342,11 +235,8 @@ const TryOut2 = () => {
     if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
   };
 
-  const handleRaguRagu = () => handleNext();
-
-  // ================== HITUNG SKOR (TWK/TIU/TKP terpisah) ==================
+  // ================== HITUNG SKOR ==================
   const hitungSkor = useCallback(() => {
-    // --- TWK ---
     let twkBenar = 0;
     soalTWK.forEach((soal) => {
       if (answers[soal.id] === soal.jawaban) twkBenar += 1;
@@ -354,7 +244,6 @@ const TryOut2 = () => {
     const twkSalahKosong = JUMLAH_TWK - twkBenar;
     const twkNilai = twkBenar * 5;
 
-    // --- TIU ---
     let tiuBenar = 0;
     soalTIU.forEach((soal) => {
       if (answers[soal.id] === soal.jawaban) tiuBenar += 1;
@@ -362,7 +251,6 @@ const TryOut2 = () => {
     const tiuSalahKosong = JUMLAH_TIU - tiuBenar;
     const tiuNilai = tiuBenar * 5;
 
-    // --- TKP (semua opsi punya bobot, tidak ada "benar/salah") ---
     let tkpNilai = 0;
     let tkpTerjawab = 0;
     soalTKP.forEach((soal) => {
@@ -373,11 +261,11 @@ const TryOut2 = () => {
       }
     });
 
-    const nilaiMaksTWK = JUMLAH_TWK * 5; // 150
-    const nilaiMaksTIU = JUMLAH_TIU * 5; // 175
-    const nilaiMaksTKP = JUMLAH_TKP * 5; // 225
+    const nilaiMaksTWK = JUMLAH_TWK * 5;
+    const nilaiMaksTIU = JUMLAH_TIU * 5;
+    const nilaiMaksTKP = JUMLAH_TKP * 5;
     const totalNilai = twkNilai + tiuNilai + tkpNilai;
-    const totalNilaiMaks = nilaiMaksTWK + nilaiMaksTIU + nilaiMaksTKP; // 550
+    const totalNilaiMaks = nilaiMaksTWK + nilaiMaksTIU + nilaiMaksTKP;
 
     return {
       twk: {
@@ -398,9 +286,59 @@ const TryOut2 = () => {
     };
   }, [answers]);
 
-  const handleFinish = () => {
-    setIsFinished(true);
-    setShowConfirm(false);
+  // ==================== CLEAR STORAGE ====================
+  const clearTryoutStorage = () => {
+    Object.values(STORAGE_KEYS).forEach((key) => {
+      localStorage.removeItem(key);
+    });
+  };
+
+  // ==================== handleFinish ====================
+  const handleFinish = async () => {
+    try {
+      const hasil = hitungSkor();
+
+      const payload = {
+        user_id: userId,
+        jenis_tryout: "TRYOUT_LENGKAP",
+        total_nilai: hasil.total,
+        durasi: DURASI_MENIT * 60 - timeLeft,
+        detail: [
+          {
+            kategori: "TWK",
+            benar: hasil.twk.benar,
+            salah: hasil.twk.salahKosong,
+            terjawab: null,
+            nilai: hasil.twk.nilai,
+          },
+          {
+            kategori: "TIU",
+            benar: hasil.tiu.benar,
+            salah: hasil.tiu.salahKosong,
+            terjawab: null,
+            nilai: hasil.tiu.nilai,
+          },
+          {
+            kategori: "TKP",
+            benar: null,
+            salah: null,
+            terjawab: hasil.tkp.terjawab,
+            nilai: hasil.tkp.nilai,
+          },
+        ],
+      };
+
+      await api.post("/hasil-tryout", payload);
+      console.log(payload);
+
+      clearTryoutStorage();
+
+      setIsFinished(true);
+      setShowConfirm(false);
+    } catch (error) {
+      console.log(error);
+      alert("Gagal menyimpan hasil tryout");
+    }
   };
 
   const jumlahTerjawab = Object.keys(answers).length;
@@ -426,7 +364,6 @@ const TryOut2 = () => {
           </div>
 
           <div className="hasil-section-grid">
-            {/* TWK */}
             <div className="hasil-section-card">
               <h4>TWK</h4>
               <p className="section-nilai">{hasil.twk.nilai}</p>
@@ -441,7 +378,6 @@ const TryOut2 = () => {
               </p>
             </div>
 
-            {/* TIU */}
             <div className="hasil-section-card">
               <h4>TIU</h4>
               <p className="section-nilai">{hasil.tiu.nilai}</p>
@@ -456,7 +392,6 @@ const TryOut2 = () => {
               </p>
             </div>
 
-            {/* TKP */}
             <div className="hasil-section-card">
               <h4>TKP</h4>
               <p className="section-nilai">{hasil.tkp.nilai}</p>
@@ -482,17 +417,6 @@ const TryOut2 = () => {
             <button className="btn btn-outline" onClick={() => navigate("/")}>
               Kembali ke Home
             </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                setAnswers({});
-                setCurrentIndex(0);
-                setTimeLeft(DURASI_MENIT * 60);
-                setIsFinished(false);
-              }}
-            >
-              Ulangi Try Out
-            </button>
           </div>
         </div>
       </div>
@@ -502,7 +426,6 @@ const TryOut2 = () => {
   // ================== TAMPILAN SOAL ==================
   return (
     <div className="tryout-container">
-      {/* Header info */}
       <div className="tryout-header">
         <div>
           <h2>Try Out SKD CPNS</h2>
@@ -515,8 +438,7 @@ const TryOut2 = () => {
         </div>
       </div>
 
-      <div className="tryout-body">
-        {/* Panel navigasi nomor soal, dikelompokkan per section */}
+      <div className="tryout-body1">
         <div className="nomor-panel">
           <p className="nomor-panel-title">
             Terjawab: {jumlahTerjawab}/{totalSoal}
@@ -555,13 +477,35 @@ const TryOut2 = () => {
           </button>
         </div>
 
-        {/* Konten soal */}
         <div className="soal-panel">
           <p className="soal-nomor">
             Soal {currentSoal.id} dari {totalSoal} ({currentSoal.section})
           </p>
-          <p className="soal-teks">{currentSoal.soal}</p>
+          <div className="soal-teks">
+            {Array.isArray(currentSoal.soal) ? (
+              currentSoal.soal.map((item, index) => <p key={index}>{item}</p>)
+            ) : (
+              <p>{currentSoal.soal}</p>
+            )}
 
+            {currentSoal.gambar &&
+              (Array.isArray(currentSoal.gambar) ? (
+                currentSoal.gambar.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img}
+                    alt={`Soal ${currentSoal.id}`}
+                    className="gambar-soal"
+                  />
+                ))
+              ) : (
+                <img
+                  src={currentSoal.gambar}
+                  alt={`Soal ${currentSoal.id}`}
+                  className="gambar-soal"
+                />
+              ))}
+          </div>
           <div className="opsi-list">
             {Object.entries(currentSoal.opsi).map(([key, value]) => (
               <label
@@ -591,9 +535,7 @@ const TryOut2 = () => {
             >
               ← Sebelumnya
             </button>
-            <button className="btn btn-ragu" onClick={handleRaguRagu}>
-              Tandai & Lanjut
-            </button>
+
             <button
               className="btn btn-primary"
               onClick={handleNext}
@@ -605,7 +547,6 @@ const TryOut2 = () => {
         </div>
       </div>
 
-      {/* Modal konfirmasi selesai */}
       {showConfirm && (
         <div className="modal-overlay">
           <div className="modal-box">

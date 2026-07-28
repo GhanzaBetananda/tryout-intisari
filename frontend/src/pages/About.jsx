@@ -155,7 +155,7 @@ function About() {
               </div>
               <div className="progress-info info1">
                 <h6 className="progress-tittle">
-                  CAT BASARNAS <span className="">xx Soal</span>
+                  CAT BASARNAS <span className="">100 Soal</span>
                 </h6>
                 <div className="progress">
                   <div

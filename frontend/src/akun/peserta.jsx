@@ -92,6 +92,78 @@ export default function Peserta() {
       ? riwayat.reduce((a, r) => a + (parseInt(r.durasi) || 0), 0)
       : 0;
 
+  const isReleased = (releaseDate) => {
+    return new Date() >= new Date(releaseDate);
+  };
+  const openPembahasan = (file) => {
+    window.open(file, "_blank");
+  };
+
+  // ===============================
+  // Mapping Pembahasan PDF
+  // ===============================
+  const pembahasanMap = {
+    TRYOUT_LENGKAP: {
+      file: "/pdf/pembahasan1.pdf",
+      releaseDate: "2026-07-26",
+    },
+
+    TWK: {
+      file: "/pdf/pembahasan2.pdf",
+      releaseDate: "2026-08-03",
+    },
+
+    "Tryout 3": {
+      file: "/pdf/pembahasan3.pdf",
+      releaseDate: "2026-08-10",
+    },
+
+    "Tryout 4": {
+      file: "/pdf/pembahasan4.pdf",
+      releaseDate: "2026-08-17",
+    },
+
+    "Tryout 5": {
+      file: "/pdf/pembahasan5.pdf",
+      releaseDate: "2026-08-24",
+    },
+
+    "Tryout 6": {
+      file: "/pdf/pembahasan6.pdf",
+      releaseDate: "2026-08-31",
+    },
+
+    "Tryout 7": {
+      file: "/pdf/pembahasan7.pdf",
+      releaseDate: "2026-09-07",
+    },
+
+    "Tryout 8": {
+      file: "/pdf/pembahasan8.pdf",
+      releaseDate: "2026-09-14",
+    },
+
+    "Tryout 9": {
+      file: "/pdf/pembahasan9.pdf",
+      releaseDate: "2026-09-21",
+    },
+
+    "Tryout 10": {
+      file: "/pdf/pembahasan10.pdf",
+      releaseDate: "2026-09-28",
+    },
+
+    "Tryout 11": {
+      file: "/pdf/pembahasan11.pdf",
+      releaseDate: "2026-10-05",
+    },
+
+    "Tryout 12": {
+      file: "/pdf/pembahasan12.pdf",
+      releaseDate: "2026-10-12",
+    },
+  };
+
   return (
     <>
       <style>{`
@@ -833,6 +905,57 @@ export default function Peserta() {
           transform: translateY(-2px);
           box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
         }
+          .pdf-actions{
+    display:flex;
+    justify-content:center;
+}
+
+.btn-view-pdf{
+    background:#dc2626;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:8px 18px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-view-pdf:hover{
+    background:#b91c1c;
+}
+
+.btn-view-pdf i{
+    margin-right:8px;
+}
+
+.btn-disabled{
+    background:#e5e7eb;
+    color:#9ca3af;
+    border:none;
+    border-radius:8px;
+    padding:8px 18px;
+    cursor:not-allowed;
+    font-size:14px;
+    font-weight:600;
+}
+
+.btn-disabled i{
+    margin-right:8px;
+}
+
+.release-info{
+    margin-top:8px;
+    text-align:center;
+    font-size:12px;
+    color:#64748b;
+}
+
+.release-info.available{
+    color:#16a34a;
+    font-weight:600;
+}
 
         /* ----- RESPONSIVE ----- */
         @media (max-width: 1024px) {
@@ -1032,6 +1155,7 @@ export default function Peserta() {
 
               {/* TRYOUT LIST */}
               {riwayat.map((item) => {
+                const pembahasan = pembahasanMap[item.jenis_tryout];
                 const isOpen = expandedId === item.id;
                 const scoreColor = getScoreColor(item.total_nilai);
                 const scoreLabel = getScoreLabel(item.total_nilai);
@@ -1106,10 +1230,10 @@ export default function Peserta() {
                             <tbody>
                               {item.detail.map((d, idx) => {
                                 const icons = {
-                                  TWK: "🇮🇩",
-                                  TIU: "🧠",
-                                  TKP: "💼",
-                                  BASARNAS: "🚁",
+                                  TWK: "",
+                                  TIU: "",
+                                  TKP: "",
+                                  BASARNAS: "",
                                 };
                                 return (
                                   <tr key={idx}>
@@ -1125,13 +1249,45 @@ export default function Peserta() {
                                     <td className="nilai-cell">{d.nilai}</td>
                                     <td>
                                       <div className="pdf-actions">
-                                        <a
-                                          href="/pdf/CV_GHANZA BETANANDA DILVA.pdf"
-                                          download
-                                          className="btn-download-pdf"
-                                        >
-                                          Download
-                                        </a>
+                                        {!pembahasan ? (
+                                          <>
+                                            <button
+                                              className="btn-disabled"
+                                              disabled
+                                            >
+                                              <i className="fa fa-ban"></i>
+                                              Pembahasan belum tersedia
+                                            </button>
+                                          </>
+                                        ) : isReleased(
+                                            pembahasan.releaseDate,
+                                          ) ? (
+                                          <>
+                                            <button
+                                              className="btn-view-pdf"
+                                              onClick={() =>
+                                                openPembahasan(pembahasan.file)
+                                              }
+                                            >
+                                              <i className="fa fa-file-pdf-o"></i>
+                                              Lihat Pembahasan
+                                            </button>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <p className="release-info">
+                                              Pembahasan dibuka
+                                              <br />
+                                              {new Date(
+                                                pembahasan.releaseDate,
+                                              ).toLocaleDateString("id-ID", {
+                                                day: "numeric",
+                                                month: "long",
+                                                year: "numeric",
+                                              })}
+                                            </p>
+                                          </>
+                                        )}
                                       </div>
                                     </td>
                                   </tr>

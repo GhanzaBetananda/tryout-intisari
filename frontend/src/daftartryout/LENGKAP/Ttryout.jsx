@@ -122,7 +122,7 @@ const STORAGE_KEYS = {
   IS_FINISHED: `tryout_is_finished_${userId}`,
 };
 
-const TryOut1 = () => {
+const TTryOut = () => {
   const navigate = useNavigate();
 
   // ==================== AMBIL DATA DARI STORAGE ====================
@@ -256,7 +256,7 @@ const TryOut1 = () => {
     soalTKP.forEach((soal) => {
       const jawabanUser = answers[soal.id];
       if (jawabanUser) {
-        tkpNilai += soal.bobot[jawabanUser] || 0;
+        tkpNilai += Number(soal.bobot[jawabanUser] || 0);
         tkpTerjawab += 1;
       }
     });
@@ -574,4 +574,4 @@ const TryOut1 = () => {
   );
 };
 
-export default TryOut1;
+export default TTryOut;

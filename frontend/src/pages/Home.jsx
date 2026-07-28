@@ -345,7 +345,7 @@ function Home() {
         </div>
       </section>
 
-      <div className="w3l-homeblock3 py-5">
+      {/* <div className="w3l-homeblock3 py-5">
         <div className="container py-lg-5 py-md-4 py-2">
           <h5 className="title-small text-center mb-1">Informasi Terkini</h5>
           <h3 className="title-big text-center mb-sm-5 mb-4">
@@ -420,16 +420,16 @@ function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          {/* <div className="mt-md-5 mt-4 text-more text-center">
+      {/* <div className="mt-md-5 mt-4 text-more text-center">
             <a href="contact">
               Lihat Semua Berita
               <span className="pl-2 fa fa-long-arrow-right"></span>
             </a>
           </div> */}
-        </div>
-      </div>
+      {/* </div>
+      </div> */}
       {/* //middle */}
       <section className="w3l-team py-5" id="team">
         <div className="call-w3 py-lg-5 py-md-4">
@@ -465,7 +465,7 @@ function Home() {
                     <div className="box16">
                       <a href="#url">
                         <img
-                          src="assets/images/michael.jpeg"
+                          src="assets/images/lego2.jpg"
                           alt=""
                           className="img-fluid radius-image"
                         />
@@ -477,14 +477,7 @@ function Home() {
                         <span className="post">Pendamping 1</span>
                         <ul className="social">
                           <li>
-                            <a href="#link" className="facebook">
-                              <span className="fa fa-facebook-f"></span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#link" className="twitter">
-                              <span className="fa fa-twitter"></span>
-                            </a>
+                            <a>-</a>
                           </li>
                         </ul>
                       </div>
@@ -494,7 +487,7 @@ function Home() {
                     <div className="box16">
                       <a href="#url">
                         <img
-                          src="assets/images/michael1.jpeg"
+                          src="assets/images/lego1.jpg"
                           alt=""
                           className="img-fluid radius-image"
                         />
@@ -506,14 +499,7 @@ function Home() {
                         <span className="post">General Admin</span>
                         <ul className="social">
                           <li>
-                            <a href="#link" className="facebook">
-                              <span className="fa fa-facebook-f"></span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#link" className="twitter">
-                              <span className="fa fa-twitter"></span>
-                            </a>
+                            <a>-</a>
                           </li>
                         </ul>
                       </div>
@@ -523,7 +509,7 @@ function Home() {
                     <div className="box16">
                       <a href="#url">
                         <img
-                          src="assets/images/michael2.jpeg"
+                          src="assets/images/lego3.jpg"
                           alt=""
                           className="img-fluid radius-image"
                         />
@@ -535,14 +521,7 @@ function Home() {
                         <span className="post">Team IT</span>
                         <ul className="social">
                           <li>
-                            <a href="#link" className="facebook">
-                              <span className="fa fa-facebook-f"></span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#link" className="twitter">
-                              <span className="fa fa-twitter"></span>
-                            </a>
+                            <a>-</a>
                           </li>
                         </ul>
                       </div>
@@ -552,7 +531,7 @@ function Home() {
                     <div className="box16">
                       <a href="#url">
                         <img
-                          src="assets/images/michael.jpeg"
+                          src="assets/images/lego4.jpg"
                           alt=""
                           className="img-fluid radius-image"
                         />
@@ -564,14 +543,7 @@ function Home() {
                         <span className="post">Pendamping 2</span>
                         <ul className="social">
                           <li>
-                            <a href="#link" className="facebook">
-                              <span className="fa fa-facebook-f"></span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#link" className="twitter">
-                              <span className="fa fa-twitter"></span>
-                            </a>
+                            <a>-</a>
                           </li>
                         </ul>
                       </div>

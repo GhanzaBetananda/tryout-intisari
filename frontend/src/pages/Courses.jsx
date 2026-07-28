@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import BreadCrumps from "../components/BreadCrumps";
 import { useNavigate } from "react-router-dom";
-import "./Pages.css";
 
 function Courses() {
   const navigate = useNavigate();
@@ -15,8 +14,9 @@ function Courses() {
     {
       id: 1,
       title: "Tryout 1",
+      subtitle: "TO BKN Paket 1",
       category: "CAT BKN",
-      date: "30 Juni 2026",
+      date: "27 Juni 2026",
       duration: 110,
       totalSoal: 110,
       status: "completed",
@@ -29,27 +29,29 @@ function Courses() {
     {
       id: 2,
       title: "Tryout 2",
+      subtitle: "TO BKN Paket 2",
       category: "CAT BKN",
-      date: "20 Juli 2026",
+      date: "3 Juli 2026",
       duration: 110,
       totalSoal: 110,
-      status: "upcoming",
+      status: "completed",
       badge: "bkn",
-      onClick: () => navigate("/tryout1"),
-      disabled: false,
-      buttonText: "Mulai Tryout",
-      buttonClass: "primary",
+      onClick: null,
+      disabled: true,
+      buttonText: "Selesai",
+      buttonClass: "secondary",
     },
     {
       id: 3,
       title: "Tryout 3",
+      subtitle: "TO BKN Paket 3",
       category: "CAT BKN",
       date: "Segera",
       duration: 110,
       totalSoal: 110,
       status: "upcoming",
       badge: "bkn",
-      onClick: () => navigate("/twk"),
+      onClick: () => navigate("/tryout3"),
       disabled: false,
       buttonText: "Mulai Tryout",
       buttonClass: "primary",
@@ -57,6 +59,7 @@ function Courses() {
     {
       id: 4,
       title: "Tryout 4",
+      subtitle: "Latihan Intensif SKD 2026",
       category: "CAT BKN",
       date: "-",
       duration: 110,
@@ -71,6 +74,7 @@ function Courses() {
     {
       id: 5,
       title: "Tryout 5",
+      subtitle: "Simulasi Tes BASARNAS",
       category: "CAT BASARNAS",
       date: "-",
       duration: 90,
@@ -85,6 +89,7 @@ function Courses() {
     {
       id: 6,
       title: "Tryout 6",
+      subtitle: "Paket Soal Full SKD",
       category: "CAT BKN",
       date: "Segera",
       duration: 110,
@@ -99,6 +104,7 @@ function Courses() {
     {
       id: 7,
       title: "Tryout 7",
+      subtitle: "Tryout Akhir Bulan Agustus",
       category: "CAT BKN",
       date: "15 Agustus 2026",
       duration: 110,
@@ -113,6 +119,7 @@ function Courses() {
     {
       id: 8,
       title: "Tryout 8",
+      subtitle: "Simulasi Tes BKN Basarnas",
       category: "CAT BASARNAS",
       date: "Segera",
       duration: 90,
@@ -127,6 +134,7 @@ function Courses() {
     {
       id: 9,
       title: "Tryout 9",
+      subtitle: "Latihan SKD Tingkat Sulit",
       category: "CAT BKN",
       date: "-",
       duration: 110,
@@ -141,6 +149,7 @@ function Courses() {
     {
       id: 10,
       title: "Tryout 10",
+      subtitle: "Prediksi Soal Terbaru 2026",
       category: "CAT BKN",
       date: "5 September 2026",
       duration: 110,
@@ -155,6 +164,7 @@ function Courses() {
     {
       id: 11,
       title: "Tryout 11",
+      subtitle: "Simulasi CAT Basarnas",
       category: "CAT BASARNAS",
       date: "-",
       duration: 90,
@@ -169,6 +179,7 @@ function Courses() {
     {
       id: 12,
       title: "Tryout 12",
+      subtitle: "Paket Soal SKD Terbaru",
       category: "CAT BKN",
       date: "Segera",
       duration: 110,
@@ -271,22 +282,22 @@ function Courses() {
           </div>
           <div className="tryout-body">
             <h4 className="tryout-title">{item.title}</h4>
-            <div className="tryout-date">
-              <i className="fa fa-calendar"></i> {item.date}
-            </div>
-            <div className="tryout-meta">
-              <div className="tryout-meta-item">
-                <i className="fa fa-clock-o"></i>
-                <span>
-                  <strong>{item.duration}</strong> menit
-                </span>
-              </div>
-              <div className="tryout-meta-item">
-                <i className="fa fa-file-text-o"></i>
-                <span>
-                  <strong>{item.totalSoal}</strong> soal
-                </span>
-              </div>
+            {/* SUBTITLE - ukuran lebih kecil dari judul */}
+            <p className="tryout-subtitle">{item.subtitle}</p>
+
+            {/* TANGGAL, WAKTU, DAN SOAL DALAM SATU BARIS */}
+            <div className="tryout-info-bar">
+              <span className="tryout-date">
+                <i className="fa fa-calendar"></i> {item.date}
+              </span>
+              <span className="tryout-info-divider">|</span>
+              <span className="tryout-duration">
+                <i className="fa fa-clock-o"></i> {item.duration} menit
+              </span>
+              <span className="tryout-info-divider">|</span>
+              <span className="tryout-questions">
+                <i className="fa fa-file-text-o"></i> {item.totalSoal} soal
+              </span>
             </div>
           </div>
           <div className="tryout-footer">
@@ -382,6 +393,51 @@ function Courses() {
             background: #f1f5f9;
             color: #94a3b8;
           }
+            .courses-wrapper {
+  row-gap: 24px;
+}
+.tryout-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tryout-date {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.tryout-date i {
+  margin-right: 6px;
+}
+
+.tryout-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.tryout-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.tryout-title {
+  margin: 0 0 18px;
+}
+
+.tryout-date {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.tryout-date i {
+  margin-right: 6px;
+}
+
 
           .tryout-body {
             padding: 16px 20px 12px;
@@ -392,54 +448,45 @@ function Courses() {
             font-size: 18px;
             font-weight: 700;
             color: #0f172a;
-            margin: 0;
+            margin: 0 0 2px 0;
           }
 
-          .tryout-title a {
-            color: #0f172a;
-            text-decoration: none;
-            transition: color 0.2s;
-          }
-
-          .tryout-title a:hover {
-            color: #2563EB;
-          }
-
-          .tryout-date {
+          .tryout-subtitle {
             font-size: 13px;
-            color: #94a3b8;
-            margin-top: 4px;
-            margin-bottom: 12px;
+            color: #64748b;
+            margin: 0 0 10px 0;
+            font-weight: 400;
+            line-height: 1.4;
           }
 
-          .tryout-date i {
-            margin-right: 6px;
-          }
-
-          .tryout-meta {
-            display: flex;
-            gap: 20px;
-            padding-top: 12px;
-            border-top: 1px solid #f1f5f9;
-          }
-
-          .tryout-meta-item {
+          .tryout-info-bar {
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
+            padding-top: 10px;
+            border-top: 1px solid #f1f5f9;
             font-size: 13px;
             color: #64748b;
           }
 
-          .tryout-meta-item i {
+          .tryout-info-bar i {
             color: #94a3b8;
-            font-size: 14px;
-            width: 16px;
+            font-size: 13px;
+            margin-right: 4px;
           }
 
-          .tryout-meta-item strong {
-            color: #0f172a;
-            font-weight: 600;
+          .tryout-date,
+          .tryout-duration,
+          .tryout-questions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+          }
+
+          .tryout-info-divider {
+            color: #e2e8f0;
+            font-weight: 300;
           }
 
           .tryout-footer {
@@ -589,9 +636,15 @@ function Courses() {
             .tryout-title {
               font-size: 16px;
             }
-            .tryout-meta {
-              flex-wrap: wrap;
-              gap: 12px;
+            .tryout-subtitle {
+              font-size: 12px;
+            }
+            .tryout-info-bar {
+              font-size: 12px;
+              gap: 6px;
+            }
+            .tryout-info-divider {
+              display: none;
             }
             .page-pagination li a,
             .page-pagination li .page-numbers {
@@ -612,6 +665,13 @@ function Courses() {
             .tryout-btn {
               font-size: 13px;
               padding: 8px;
+            }
+            .tryout-info-bar {
+              font-size: 11px;
+              gap: 4px;
+            }
+            .tryout-info-bar i {
+              font-size: 11px;
             }
             .page-pagination li a,
             .page-pagination li .page-numbers {
