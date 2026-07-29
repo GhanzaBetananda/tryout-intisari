@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import api from "../api/api";
-import Swal from "sweetalert2";
 
 const Login = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState("");

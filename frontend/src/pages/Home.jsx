@@ -345,92 +345,6 @@ function Home() {
         </div>
       </section>
 
-      {/* <div className="w3l-homeblock3 py-5">
-        <div className="container py-lg-5 py-md-4 py-2">
-          <h5 className="title-small text-center mb-1">Informasi Terkini</h5>
-          <h3 className="title-big text-center mb-sm-5 mb-4">
-            Pengumuman
-            <span>Terbaru</span>
-          </h3>
-          <div className="row top-pics">
-            <div className="col-md-6">
-              <div className="top-pic1">
-                <div className="card-body blog-details">
-                  <a href="#blog-single" className="blog-desc">
-                    Tes CAT akan dilaksanakan pada 5 September 2026 sesuai
-                    jadwal yang telah ditetapkan.
-                  </a>
-                  <div className="author align-items-center">
-                    <img
-                      src="assets/images/intisari.png"
-                      alt="blogs"
-                      className="img-fluid rounded-circle"
-                    />
-                    <ul className="blog-meta">
-                      <li className="meta-item blog-lesson">
-                        <span className="meta-value"> Mei 29, 2026 </span>.
-                        <span className="meta-value ml-2"></span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 mt-md-0 mt-4">
-              <div className="top-pic2">
-                <div className="card-body blog-details">
-                  <a href="#blog-single" className="blog-desc">
-                    Tips Menghadapi Tes CAT
-                  </a>
-                  <div className="author align-items-center">
-                    <img
-                      src="assets/images/intisari.png"
-                      alt=""
-                      className="img-fluid rounded-circle"
-                    />
-                    <ul className="blog-meta">
-                      <li className="meta-item blog-lesson">
-                        <span className="meta-value">Maret 07, 2026 </span>.
-                        <span className="meta-value ml-2"></span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4">
-                <div className="top-pic3">
-                  <div className="card-body blog-details">
-                    <a href="#blog-single" className="blog-desc">
-                      Mengapa Simulasi CAT Perlu Dilakukan?
-                    </a>
-                    <div className="author align-items-center">
-                      <img
-                        src="assets/images/intisari.png"
-                        alt=""
-                        className="img-fluid rounded-circle"
-                      />
-                      <ul className="blog-meta">
-                        <li className="meta-item blog-lesson">
-                          <span className="meta-value">Januari 19, 2026</span>.
-                          <span className="meta-value ml-2"> </span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-      {/* <div className="mt-md-5 mt-4 text-more text-center">
-            <a href="contact">
-              Lihat Semua Berita
-              <span className="pl-2 fa fa-long-arrow-right"></span>
-            </a>
-          </div> */}
-      {/* </div>
-      </div> */}
-      {/* //middle */}
       <section className="w3l-team py-5" id="team">
         <div className="call-w3 py-lg-5 py-md-4">
           <div className="container">
@@ -463,88 +377,67 @@ function Home() {
                 <div className="row">
                   <div className="col-sm-6">
                     <div className="box16">
-                      <a href="#url">
-                        <img
-                          src="assets/images/lego2.jpg"
-                          alt=""
-                          className="img-fluid radius-image"
-                        />
-                      </a>
+                      <img
+                        src="assets/images/lego2.jpg"
+                        alt="Putra"
+                        className="img-fluid radius-image"
+                      />
                       <div className="box-content">
-                        <h3 className="title">
-                          <a href="#url">Putra</a>
-                        </h3>
+                        <h3 className="title">Putra</h3>
                         <span className="post">Pendamping 1</span>
                         <ul className="social">
-                          <li>
-                            <a>-</a>
-                          </li>
+                          <li>-</li>
                         </ul>
                       </div>
                     </div>
                   </div>
+
                   <div className="col-sm-6 mt-sm-0 mt-3">
                     <div className="box16">
-                      <a href="#url">
-                        <img
-                          src="assets/images/lego1.jpg"
-                          alt=""
-                          className="img-fluid radius-image"
-                        />
-                      </a>
+                      <img
+                        src="assets/images/lego1.jpg"
+                        alt="Lily"
+                        className="img-fluid radius-image"
+                      />
                       <div className="box-content">
-                        <h3 className="title">
-                          <a href="#url">Lily</a>
-                        </h3>
+                        <h3 className="title">Lily</h3>
                         <span className="post">General Admin</span>
                         <ul className="social">
-                          <li>
-                            <a>-</a>
-                          </li>
+                          <li>-</li>
                         </ul>
                       </div>
                     </div>
                   </div>
+
                   <div className="col-sm-6 mt-lg-4 mt-3">
                     <div className="box16">
-                      <a href="#url">
-                        <img
-                          src="assets/images/lego3.jpg"
-                          alt=""
-                          className="img-fluid radius-image"
-                        />
-                      </a>
+                      <img
+                        src="assets/images/lego3.jpg"
+                        alt="Michael"
+                        className="img-fluid radius-image"
+                      />
                       <div className="box-content">
-                        <h3 className="title">
-                          <a href="#url">Michael</a>
-                        </h3>
+                        <h3 className="title">Michael</h3>
                         <span className="post">Team IT</span>
                         <ul className="social">
-                          <li>
-                            <a>-</a>
-                          </li>
+                          <li>-</li>
                         </ul>
                       </div>
                     </div>
                   </div>
+
                   <div className="col-sm-6 mt-lg-4 mt-3">
                     <div className="box16">
-                      <a href="#url">
-                        <img
-                          src="assets/images/lego4.jpg"
-                          alt=""
-                          className="img-fluid radius-image"
-                        />
-                      </a>
+                      <img
+                        src="assets/images/lego4.jpg"
+                        alt="Andi"
+                        className="img-fluid radius-image"
+                      />
                       <div className="box-content">
-                        <h3 className="title">
-                          <a href="#url">Andi</a>
-                        </h3>
+                        <h3 className="title">Andi</h3>
                         <span className="post">Pendamping 2</span>
                         <ul className="social">
-                          <li>
-                            <a>-</a>
-                          </li>
+                          <li>-</li>
                         </ul>
                       </div>
                     </div>

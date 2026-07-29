@@ -695,16 +695,18 @@ function Courses() {
               <div className="pagination-wrapper mt-5 pt-lg-3 text-center">
                 <ul className="page-pagination">
                   <li>
-                    <a
-                      className={`next ${currentPage === 1 ? "disabled" : ""}`}
+                    <button
+                      type="button"
+                      className={`prev ${currentPage === 1 ? "disabled" : ""}`}
                       onClick={goToPrevPage}
+                      disabled={currentPage === 1}
                       style={{
                         cursor: currentPage === 1 ? "not-allowed" : "pointer",
                         opacity: currentPage === 1 ? 0.5 : 1,
                       }}
                     >
                       <span className="fa fa-angle-left"></span> Prev
-                    </a>
+                    </button>
                   </li>
 
                   {getPageNumbers().map((page, index) => (
@@ -726,9 +728,11 @@ function Courses() {
                   ))}
 
                   <li>
-                    <a
+                    <button
+                      type="button"
                       className={`next ${currentPage === totalPages ? "disabled" : ""}`}
                       onClick={goToNextPage}
+                      disabled={currentPage === totalPages}
                       style={{
                         cursor:
                           currentPage === totalPages
@@ -738,7 +742,7 @@ function Courses() {
                       }}
                     >
                       Next <span className="fa fa-angle-right"></span>
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </div>

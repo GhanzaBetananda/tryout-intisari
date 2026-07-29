@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../tryout.css";
 import api from "../../api/api";
@@ -8,42 +8,8 @@ import api from "../../api/api";
 // ========================================================================
 
 // --- Helper untuk membuat soal placeholder kosong TWK/TIU ---
-const buatSoalPG = (section, nomorAwal, jumlah) =>
-  Array.from({ length: jumlah }, (_, i) => {
-    const nomor = nomorAwal + i;
-    return {
-      id: nomor,
-      section,
-      soal: "",
-      opsi: {
-        A: "",
-        B: "",
-        C: "",
-        D: "",
-        E: "",
-      },
-      jawaban: "",
-    };
-  });
 
 // --- Helper untuk membuat soal placeholder kosong TKP ---
-const buatSoalTKP = (nomorAwal, jumlah) =>
-  Array.from({ length: jumlah }, (_, i) => {
-    const nomor = nomorAwal + i;
-    return {
-      id: nomor,
-      section: "TKP",
-      soal: "",
-      opsi: {
-        A: "",
-        B: "",
-        C: "",
-        D: "",
-        E: "",
-      },
-      bobot: { A: "", B: "", C: "", D: "", E: "" },
-    };
-  });
 
 // --- Semua soal TWK dikosongkan (30 soal) ---
 const soalTWKAsli = Array.from({ length: 30 }, (_, i) => ({

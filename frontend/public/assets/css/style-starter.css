@@ -15241,12 +15241,12 @@ ul.blog-meta li {
   height: 40px;
 }
 
-ul.page-pagination li {
+ul.tion li {
   display: inline-block;
   margin-right: 5px;
 }
 
-ul.page-pagination li span.current {
+ul.tion li span.current {
   display: block;
   padding: 8px 16px;
   color: #fff;
@@ -15260,8 +15260,8 @@ ul.page-pagination li span.current {
   box-shadow: 0 25px 98px 0 rgba(19, 19, 19, 0.03);
 }
 
-ul.page-pagination li a.page-numbers,
-ul.page-pagination li a.next {
+ul.tion li a.page-numbers,
+ul.tion li a.next {
   display: block;
   padding: 8px 16px;
   background-color: var(--bg-grey);
@@ -15275,33 +15275,33 @@ ul.page-pagination li a.next {
   box-shadow: 0 25px 98px 0 rgba(19, 19, 19, 0.03);
 }
 
-ul.page-pagination li a.page-numbers:hover,
-ul.page-pagination li a.next:hover {
+ul.tion li a.page-numbers:hover,
+ul.tion li a.next:hover {
   background-color: var(--bg-color);
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
 }
 
 @media (max-width: 415px) {
-  ul.page-pagination li {
+  ul.tion li {
     margin-right: 2px;
   }
-  ul.page-pagination li a.page-numbers,
-  ul.page-pagination li a.next {
+  ul.tion li a.page-numbers,
+  ul.tion li a.next {
     padding: 8px 13px;
   }
-  ul.page-pagination li span.current {
+  ul.tion li span.current {
     padding: 8px 13px;
   }
 }
 
 @media (max-width: 384px) {
-  ul.page-pagination li a.page-numbers,
-  ul.page-pagination li a.next,
-  ul.page-pagination li span.current {
+  ul.tion li a.page-numbers,
+  ul.tion li a.next,
+  ul.tion li span.current {
     padding: 7px 11px;
   }
-  ul.page-pagination li span.current {
+  ul.tion li span.current {
     padding: 7px 11px;
   }
 }
