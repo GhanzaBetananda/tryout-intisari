@@ -21,6 +21,7 @@ import Peserta from "./akun/peserta";
 import TIU from "./daftartryout/TIU/tiu";
 import TWK from "./daftartryout/TWK/twk";
 import TKP from "./daftartryout/TKP/tkp";
+import SIMULASI from "./daftartryout/TWK/simulasi";
 
 function AppContent({ isLoggedIn, setIsLoggedIn }) {
   const location = useLocation();
@@ -33,6 +34,7 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
     "/TIU",
     "/TWK",
     "/TKP",
+    "/simulasi",
   ].some((path) => location.pathname.startsWith(path));
 
   const showHeaderFooter = isLoggedIn && !hideHeaderFooter;
@@ -102,6 +104,10 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
         <Route
           path="/tryout3"
           element={isLoggedIn ? <TryOut3 /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/simulasi"
+          element={isLoggedIn ? <SIMULASI /> : <Navigate to="/login" replace />}
         />
       </Routes>
 
