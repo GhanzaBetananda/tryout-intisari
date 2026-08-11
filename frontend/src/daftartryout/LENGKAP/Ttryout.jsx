@@ -302,7 +302,8 @@ const TTryOut = () => {
         user_id: userId,
         jenis_tryout: "TRYOUT_LENGKAP",
         total_nilai: hasil.total,
-        durasi: DURASI_MENIT * 60 - timeLeft,
+        durasi: Math.round((DURASI_MENIT * 60 - timeLeft) / 60), // sekarang dalam menit
+
         detail: [
           {
             kategori: "TWK",
