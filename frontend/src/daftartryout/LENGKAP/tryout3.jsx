@@ -1818,7 +1818,7 @@ const TryOut3 = () => {
         user_id: userId,
         jenis_tryout: "TO BKN Paket 3",
         total_nilai: hasil.total,
-        durasi: DURASI_MENIT * 60 - timeLeft,
+        durasi: Math.round((DURASI_MENIT * 60 - timeLeft) / 60), // sekarang dalam menit
         detail: [
           {
             kategori: "TWK",
