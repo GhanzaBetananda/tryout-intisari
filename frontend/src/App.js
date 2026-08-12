@@ -16,6 +16,7 @@ import Footer from "./components/Footer";
 import TryOut1 from "./daftartryout/LENGKAP/tryout1";
 import TryOut2 from "./daftartryout/LENGKAP/tryout2";
 import TryOut3 from "./daftartryout/LENGKAP/tryout3";
+import TryOut4 from "./daftartryout/LENGKAP/tryout4";
 import Admin from "./akun/admin";
 import Peserta from "./akun/peserta";
 import TIU from "./daftartryout/TIU/tiu";
@@ -31,6 +32,7 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
     "/tryout1",
     "/tryout2",
     "/tryout3",
+    "/tryout4",
     "/TIU",
     "/TWK",
     "/TKP",
@@ -100,6 +102,10 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
         <Route
           path="/tryout2"
           element={isLoggedIn ? <TryOut2 /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/tryout3"
+          element={isLoggedIn ? <TryOut3 /> : <Navigate to="/login" replace />}
         />
         <Route
           path="/tryout3"
