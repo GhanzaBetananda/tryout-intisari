@@ -108,8 +108,8 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
           element={isLoggedIn ? <TryOut3 /> : <Navigate to="/login" replace />}
         />
         <Route
-          path="/tryout3"
-          element={isLoggedIn ? <TryOut3 /> : <Navigate to="/login" replace />}
+          path="/tryout4"
+          element={isLoggedIn ? <TryOut4 /> : <Navigate to="/login" replace />}
         />
         <Route
           path="/simulasi"
