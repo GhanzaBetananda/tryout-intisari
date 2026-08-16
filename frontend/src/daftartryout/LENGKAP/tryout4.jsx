@@ -1441,25 +1441,32 @@ const SECTION_LABEL = {
 };
 
 // ==================== STORAGE KEYS ====================
-const userId = sessionStorage.getItem("userId");
+const TRYOUT_ID = "TO4"; // ID unik untuk TryOut4
 
-const STORAGE_KEYS = {
-  ANSWERS: `tryout_answers_${userId}`,
-  TIME_LEFT: `tryout_time_left_${userId}`,
-  CURRENT_INDEX: `tryout_current_index_${userId}`,
-  IS_FINISHED: `tryout_is_finished_${userId}`,
-};
+// Buat fungsi untuk mendapatkan storage keys berdasarkan userId
+const getStorageKeys = (userId) => ({
+  ANSWERS: `tryout_${TRYOUT_ID}_answers_${userId}`,
+  TIME_LEFT: `tryout_${TRYOUT_ID}_time_left_${userId}`,
+  CURRENT_INDEX: `tryout_${TRYOUT_ID}_current_index_${userId}`,
+  IS_FINISHED: `tryout_${TRYOUT_ID}_is_finished_${userId}`,
+});
 
 const TryOut4 = () => {
   const navigate = useNavigate();
 
-  // ==================== AMBIL DATA DARI STORAGE ====================
+  // Baca userId di dalam komponen
+  const userId = sessionStorage.getItem("userId") || "";
+  const STORAGE_KEYS = getStorageKeys(userId);
+
+  // ==================== FUNGSI GET INITIAL ====================
   const getInitialAnswers = () => {
+    if (!userId) return {};
     const saved = localStorage.getItem(STORAGE_KEYS.ANSWERS);
     return saved ? JSON.parse(saved) : {};
   };
 
   const getInitialTimeLeft = () => {
+    if (!userId) return DURASI_MENIT * 60;
     const saved = localStorage.getItem(STORAGE_KEYS.TIME_LEFT);
     if (saved) {
       const parsed = parseInt(saved, 10);
@@ -1471,49 +1478,73 @@ const TryOut4 = () => {
   };
 
   const getInitialIndex = () => {
+    if (!userId) return 0;
     const saved = localStorage.getItem(STORAGE_KEYS.CURRENT_INDEX);
     return saved ? parseInt(saved, 10) : 0;
   };
 
   const getInitialIsFinished = () => {
+    if (!userId) return false;
     const saved = localStorage.getItem(STORAGE_KEYS.IS_FINISHED);
     return saved ? JSON.parse(saved) : false;
   };
 
   // ==================== STATE ====================
-  const [currentIndex, setCurrentIndex] = useState(getInitialIndex);
-  const [answers, setAnswers] = useState(getInitialAnswers);
-  const [timeLeft, setTimeLeft] = useState(getInitialTimeLeft);
-  const [isFinished, setIsFinished] = useState(getInitialIsFinished);
+  const [currentIndex, setCurrentIndex] = useState(getInitialIndex());
+  const [answers, setAnswers] = useState(getInitialAnswers());
+  const [timeLeft, setTimeLeft] = useState(getInitialTimeLeft());
+  const [isFinished, setIsFinished] = useState(getInitialIsFinished());
   const [showConfirm, setShowConfirm] = useState(false);
-  const userId = sessionStorage.getItem("userId");
+
   const totalSoal = soalData.length;
   const currentSoal = soalData[currentIndex];
 
+  // ==================== AUTO-CLEANUP OLD STORAGE KEYS ====================
+  useEffect(() => {
+    // Hapus key lama (tanpa namespace) sekali saja untuk setiap user
+    if (userId) {
+      const oldKeys = [
+        `tryout_answers_${userId}`,
+        `tryout_time_left_${userId}`,
+        `tryout_current_index_${userId}`,
+        `tryout_is_finished_${userId}`,
+      ];
+      oldKeys.forEach((key) => {
+        if (localStorage.getItem(key) !== null) {
+          localStorage.removeItem(key);
+          console.log(`Cleaned up old key: ${key}`);
+        }
+      });
+    }
+  }, []); // Jalankan sekali saat mount
+
   // ==================== SIMPAN KE STORAGE ====================
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.ANSWERS, JSON.stringify(answers));
-  }, [answers]);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.CURRENT_INDEX, currentIndex.toString());
-  }, [currentIndex]);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.TIME_LEFT, timeLeft.toString());
-  }, [timeLeft]);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.IS_FINISHED, JSON.stringify(isFinished));
-  }, [isFinished]);
-
-  // ==================== CEK APAKAH SUDAH FINISH ====================
-  useEffect(() => {
-    const savedIsFinished = localStorage.getItem(STORAGE_KEYS.IS_FINISHED);
-    if (savedIsFinished === "true") {
-      setIsFinished(true);
+    if (userId) {
+      localStorage.setItem(STORAGE_KEYS.ANSWERS, JSON.stringify(answers));
     }
-  }, []);
+  }, [answers, userId]);
+
+  useEffect(() => {
+    if (userId) {
+      localStorage.setItem(STORAGE_KEYS.CURRENT_INDEX, currentIndex.toString());
+    }
+  }, [currentIndex, userId]);
+
+  useEffect(() => {
+    if (userId) {
+      localStorage.setItem(STORAGE_KEYS.TIME_LEFT, timeLeft.toString());
+    }
+  }, [timeLeft, userId]);
+
+  useEffect(() => {
+    if (userId) {
+      localStorage.setItem(
+        STORAGE_KEYS.IS_FINISHED,
+        JSON.stringify(isFinished),
+      );
+    }
+  }, [isFinished, userId]);
 
   // ================== TIMER ==================
   useEffect(() => {
@@ -1616,7 +1647,14 @@ const TryOut4 = () => {
 
   // ==================== CLEAR STORAGE ====================
   const clearTryoutStorage = () => {
-    Object.values(STORAGE_KEYS).forEach((key) => {
+    // Hapus semua key yang terkait dengan tryout ini
+    const keys = [
+      STORAGE_KEYS.ANSWERS,
+      STORAGE_KEYS.TIME_LEFT,
+      STORAGE_KEYS.CURRENT_INDEX,
+      STORAGE_KEYS.IS_FINISHED,
+    ];
+    keys.forEach((key) => {
       localStorage.removeItem(key);
     });
   };
