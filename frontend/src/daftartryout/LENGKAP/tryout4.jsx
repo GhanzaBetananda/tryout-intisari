@@ -823,7 +823,7 @@ const soalTIUAsli = [
     id: 65,
     section: "TIU",
     soal: "Carilah gambar selanjutnya pada seri gambar berikut ini.",
-    gambar: "/tryout3/TO4.65.png",
+    gambar: "/tryout4/TO4.65.png",
     opsi: { A: "A", B: "B", C: "C", D: "D", E: "E" },
     jawaban: "B",
   },
