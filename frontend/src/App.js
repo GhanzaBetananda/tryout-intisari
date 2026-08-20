@@ -34,6 +34,7 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
     "/tryout2",
     "/tryout3",
     "/tryout4",
+    "/tryout5",
     "/TIU",
     "/TWK",
     "/TKP",
