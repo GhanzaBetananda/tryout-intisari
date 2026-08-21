@@ -1728,7 +1728,7 @@ const TryOut5 = () => {
 
       const payload = {
         user_id: userId,
-        jenis_tryout: "TO BKN Paket 4",
+        jenis_tryout: "TO BKN Paket 5",
         total_nilai: hasil.total,
         durasi: Math.round((DURASI_MENIT * 60 - timeLeft) / 60), // sekarang dalam menit
         detail: [

@@ -115,11 +115,16 @@ export default function Peserta() {
 
     "TO BKN Paket 4": {
       file: "/pdf/pembahasan4.pdf",
-      releaseDate: "2026-08-23",
+      releaseDate: "2026-08-22",
+    },
+
+    "TO BKN Paket 5": {
+      file: "/pdf/pembahasan5.pdf",
+      releaseDate: "2026-08-29",
     },
 
     TWK: {
-      file: "/pdf/pembahasan2.pdf",
+      file: "/pdf/pdf",
       releaseDate: "2026-08-03",
     },
 
