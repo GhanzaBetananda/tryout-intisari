@@ -1567,7 +1567,7 @@ const SECTION_LABEL = {
 // ==================== IDENTITAS PAKET TRYOUT ====================
 // PENTING: setiap file TryOutX.jsx WAJIB punya TRYOUT_ID unik (mis. "TO1", "TO2", "TO3", "TO4"),
 // supaya localStorage antar paket tidak bentrok/ketimpa satu sama lain.
-const TRYOUT_ID = "TO5";
+const TRYOUT_ID = "TO6";
 
 // Key lama (sebelum ada namespace per paket) — dipakai untuk membersihkan
 // data usang dari versi kode sebelumnya yang menyebabkan bug "nilai 0 langsung muncul".
