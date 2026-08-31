@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import "../tryout.css";
 import api from "../../api/api";
@@ -1622,20 +1622,53 @@ const SECTION_LABEL = {
   TKP: "Tes Karakteristik Pribadi",
 };
 
-// ==================== TAMBAHAN: STORAGE KEYS ====================
-const userId = sessionStorage.getItem("userId");
+// ==================== UPDATE 1: IDENTITAS PAKET TRYOUT ====================
+// PENTING: setiap file TryOutX.jsx WAJIB punya TRYOUT_ID unik (mis. "TO1", "TO2", "TO3", "TO4"),
+// supaya localStorage antar paket tidak bentrok/ketimpa satu sama lain.
+const TRYOUT_ID = "TO3";
 
-const STORAGE_KEYS = {
-  ANSWERS: `tryout_answers_${userId}`,
-  TIME_LEFT: `tryout_time_left_${userId}`,
-  CURRENT_INDEX: `tryout_current_index_${userId}`,
-  IS_FINISHED: `tryout_is_finished_${userId}`,
-};
+// ==================== UPDATE 2: LEGACY KEYS UNTUK PEMBERSIHAN ====================
+// Key lama (sebelum ada namespace per paket) — dipakai untuk membersihkan
+// data usang dari versi kode sebelumnya yang menyebabkan bug "nilai 0 langsung muncul".
+const buildLegacyKeys = (uid) => [
+  `tryout_answers_${uid}`,
+  `tryout_time_left_${uid}`,
+  `tryout_current_index_${uid}`,
+  `tryout_is_finished_${uid}`,
+];
 
 const TryOut3 = () => {
   const navigate = useNavigate();
 
-  // ==================== TAMBAHAN: AMBIL DATA DARI STORAGE ====================
+  // ==================== UPDATE 3: userId sebagai STATE ====================
+  // Dibaca via useState (bukan di top-level module) supaya selalu sinkron dengan
+  // sessionStorage terkini, meski user berganti akun tanpa reload penuh.
+  const [userId] = useState(() => sessionStorage.getItem("userId"));
+
+  // ==================== UPDATE 4: STORAGE KEYS DENGAN PREFIX + useMemo ====================
+  const STORAGE_KEYS = useMemo(
+    () => ({
+      ANSWERS: `tryout_${TRYOUT_ID}_answers_${userId}`,
+      TIME_LEFT: `tryout_${TRYOUT_ID}_time_left_${userId}`,
+      CURRENT_INDEX: `tryout_${TRYOUT_ID}_current_index_${userId}`,
+      IS_FINISHED: `tryout_${TRYOUT_ID}_is_finished_${userId}`,
+    }),
+    [userId],
+  );
+
+  // ==================== UPDATE 5: PEMBERSIHAN DATA LEGACY ====================
+  // Membersihkan sisa localStorage dari versi kode lama yang tidak dinamespace per paket.
+  // Ini mencegah bug "buka tryout langsung nilai 0" pada user yang browsernya
+  // masih menyimpan flag is_finished dari paket tryout lain.
+  useEffect(() => {
+    if (!userId) return;
+    buildLegacyKeys(userId).forEach((key) => {
+      localStorage.removeItem(key);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  // ==================== AMBIL DATA DARI STORAGE ====================
   const getInitialAnswers = () => {
     const saved = localStorage.getItem(STORAGE_KEYS.ANSWERS);
     return saved ? JSON.parse(saved) : {};
@@ -1662,54 +1695,52 @@ const TryOut3 = () => {
     return saved ? JSON.parse(saved) : false;
   };
 
-  // ==================== MODIFIKASI: STATE DENGAN DEFAULT DARI STORAGE ====================
+  // ==================== STATE ====================
   const [currentIndex, setCurrentIndex] = useState(getInitialIndex);
   const [answers, setAnswers] = useState(getInitialAnswers);
   const [timeLeft, setTimeLeft] = useState(getInitialTimeLeft);
   const [isFinished, setIsFinished] = useState(getInitialIsFinished);
   const [showConfirm, setShowConfirm] = useState(false);
-  const userId = sessionStorage.getItem("userId");
-  const totalSoal = soalData.length; // 110
+  const totalSoal = soalData.length;
   const currentSoal = soalData[currentIndex];
 
-  // ==================== TAMBAHAN: SIMPAN KE STORAGE ====================
+  // ==================== SIMPAN KE STORAGE ====================
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.ANSWERS, JSON.stringify(answers));
-  }, [answers]);
+  }, [answers, STORAGE_KEYS]);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.CURRENT_INDEX, currentIndex.toString());
-  }, [currentIndex]);
+  }, [currentIndex, STORAGE_KEYS]);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.TIME_LEFT, timeLeft.toString());
-  }, [timeLeft]);
+  }, [timeLeft, STORAGE_KEYS]);
 
+  // ==================== UPDATE 6: EFFECT UNTUK IS_FINISHED (CONDITIONAL) ====================
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.IS_FINISHED, JSON.stringify(isFinished));
-  }, [isFinished]);
-
-  // ==================== TAMBAHAN: CEK APAKAH SUDAH FINISH SEBELUMNYA ====================
-  useEffect(() => {
-    const savedIsFinished = localStorage.getItem(STORAGE_KEYS.IS_FINISHED);
-    if (savedIsFinished === "true") {
-      setIsFinished(true);
+    // Jangan tulis ulang flag "selesai" setelah storage sengaja dibersihkan
+    // di handleFinish — hindari race dengan clearTryoutStorage().
+    if (isFinished) {
+      localStorage.setItem(
+        STORAGE_KEYS.IS_FINISHED,
+        JSON.stringify(isFinished),
+      );
     }
-  }, []);
+  }, [isFinished, STORAGE_KEYS]);
 
-  // ================== TIMER (AUTO SUBMIT SAAT HABIS) ==================
+  // ==================== TIMER ====================
   useEffect(() => {
     if (isFinished) return;
 
     if (timeLeft <= 0) {
-      handleFinish(); // auto submit
+      handleFinish();
       return;
     }
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         const newTime = prev - 1;
-        // ==================== TAMBAHAN: SIMPAN SETIAP DETIK ====================
         localStorage.setItem(STORAGE_KEYS.TIME_LEFT, newTime.toString());
         return newTime;
       });
@@ -1728,7 +1759,7 @@ const TryOut3 = () => {
       .padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   };
 
-  // ================== HANDLER JAWABAN ==================
+  // ==================== HANDLER JAWABAN ====================
   const handleSelectAnswer = (opsi) => {
     setAnswers((prev) => ({
       ...prev,
@@ -1748,7 +1779,7 @@ const TryOut3 = () => {
 
   const handleRaguRagu = () => handleNext();
 
-  // ================== HITUNG SKOR (TWK/TIU/TKP terpisah) ==================
+  // ==================== HITUNG SKOR ====================
   const hitungSkor = useCallback(() => {
     // --- TWK ---
     let twkBenar = 0;
@@ -1802,14 +1833,14 @@ const TryOut3 = () => {
     };
   }, [answers]);
 
-  // ==================== TAMBAHAN: CLEAR STORAGE ====================
+  // ==================== CLEAR STORAGE ====================
   const clearTryoutStorage = () => {
     Object.values(STORAGE_KEYS).forEach((key) => {
       localStorage.removeItem(key);
     });
   };
 
-  // ==================== MODIFIKASI: handleFinish ====================
+  // ==================== UPDATE 7: handleFinish YANG LEBIH AMAN ====================
   const handleFinish = async () => {
     try {
       const hasil = hitungSkor();
@@ -1847,11 +1878,17 @@ const TryOut3 = () => {
       await api.post("/hasil-tryout", payload);
       console.log(payload);
 
-      // ==================== TAMBAHAN: HAPUS STORAGE SETELAH SELESAI ====================
-      clearTryoutStorage();
-
+      // Set flag selesai DULU, baru bersihkan data jawaban/waktu/index.
+      // IS_FINISHED sengaja tidak ikut dihapus di sini karena useEffect
+      // di atas akan menuliskannya lagi begitu isFinished=true diproses React.
       setIsFinished(true);
       setShowConfirm(false);
+
+      // Hanya hapus ANSWERS, TIME_LEFT, CURRENT_INDEX
+      // IS_FINISHED TETAP DISIMPAN
+      localStorage.removeItem(STORAGE_KEYS.ANSWERS);
+      localStorage.removeItem(STORAGE_KEYS.TIME_LEFT);
+      localStorage.removeItem(STORAGE_KEYS.CURRENT_INDEX);
     } catch (error) {
       console.log(error);
       alert("Gagal menyimpan hasil tryout");
