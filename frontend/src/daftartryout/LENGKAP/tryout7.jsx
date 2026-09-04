@@ -1761,7 +1761,6 @@ const TryOut7 = () => {
     buildLegacyKeys(userId).forEach((key) => {
       localStorage.removeItem(key);
     });
-    7;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
