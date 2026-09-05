@@ -615,7 +615,6 @@ const soalTIUAsli = [
   {
     id: 33,
     section: "TIU",
-    soal: "PASAK: BAJI",
     gambar: "/tryout7/TO7.33.png",
     opsi: {
       A: "6/14",
@@ -1085,11 +1084,11 @@ const soalTIUAsli = [
     section: "TIU",
     gambar: "/tryout7/TO7.64.png",
     opsi: {
-      A: "A",
-      B: "B",
-      C: "C",
-      D: "D",
-      E: "E",
+      A: "-15√1/2",
+      B: "-9√1/2",
+      C: "-4√1/2",
+      D: "3√1/2",
+      E: "4√1/2",
     },
     jawaban: "B",
   },
