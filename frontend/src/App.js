@@ -40,7 +40,7 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
     "/tryout5",
     "/tryout6",
     "/tryout7",
-
+    "/basarnas1",
     "/TIU",
     "/TWK",
     "/TKP",
