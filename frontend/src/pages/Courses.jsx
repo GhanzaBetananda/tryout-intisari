@@ -144,8 +144,8 @@ function Courses() {
     },
     {
       id: 8,
-      title: "Tryout 8",
-      subtitle: "TO BKN Paket 8",
+      title: "BASARNAS 1",
+      subtitle: "TO BASARNAS Paket 1",
       category: "CAT BKN",
       date: "Segera",
       duration: 110,
