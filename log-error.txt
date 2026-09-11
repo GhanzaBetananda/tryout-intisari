@@ -1,6 +1,2 @@
-PS C:\Users\ASUS\Desktop\html_template_to_react-main> npm run dev
-npm error Missing script: "dev"
-npm error
-npm error To see a list of scripts, run:
-npm error   npm run
-npm error A complete log of this run can be found in: C:\Users\ASUS\AppData\Local\npm-cache\_logs\2026-09-10T07_16_40_154Z-debug-0.log
+Access to XMLHttpRequest at 'https://tryoutintisari.web.id/api/login' from origin 'https://tryout-intisari-1.vercel.app' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+tryoutintisari.web.id/api/login:1  Failed to load resource: net::ERR_FAILED
