@@ -365,7 +365,7 @@ function Courses() {
           .tryout-card {
             background: #ffffff;
             border-radius: 18px;
-            border: 1px solid #f1f5f9;
+            border: 1px solid #E5E7EB;
             overflow: hidden;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             height: 100%;
@@ -378,7 +378,7 @@ function Courses() {
           .tryout-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
-            border-color: #e2e8f0;
+            border-color: #E5E7EB;
           }
 
           .tryout-card-header {
@@ -399,18 +399,18 @@ function Courses() {
           }
 
           .tryout-badge.bkn {
-            background: #eff6ff;
-            color: #2563EB;
+            background: #FFF7ED;
+            color: #C2410C;
           }
 
           .tryout-badge.basarnas {
-            background: #fef3c7;
-            color: #d97706;
+            background: #FFF7ED;
+            color: #EA580C;
           }
 
           .tryout-badge.new {
-            background: #fce4ec;
-            color: #e11d48;
+            background: #EA580C;
+            color: #ffffff;
             animation: pulseNew 2s ease-in-out infinite;
           }
 
@@ -420,7 +420,7 @@ function Courses() {
           }
 
           .tryout-badge.coming {
-            background: #f1f5f9;
+            background: #E5E7EB;
             color: #94a3b8;
           }
             .courses-wrapper {
@@ -477,13 +477,13 @@ function Courses() {
           .tryout-title {
             font-size: 18px;
             font-weight: 700;
-            color: #0f172a;
+            color: #111827;
             margin: 0 0 2px 0;
           }
 
           .tryout-subtitle {
             font-size: 13px;
-            color: #64748b;
+            color: #374151;
             margin: 0 0 10px 0;
             font-weight: 400;
             line-height: 1.4;
@@ -495,9 +495,9 @@ function Courses() {
             gap: 8px;
             flex-wrap: wrap;
             padding-top: 10px;
-            border-top: 1px solid #f1f5f9;
+            border-top: 1px solid #E5E7EB;
             font-size: 13px;
-            color: #64748b;
+            color: #374151;
           }
 
           .tryout-info-bar i {
@@ -515,13 +515,13 @@ function Courses() {
           }
 
           .tryout-info-divider {
-            color: #e2e8f0;
+            color: #E5E7EB;
             font-weight: 300;
           }
 
           .tryout-footer {
             padding: 12px 20px 20px;
-            border-top: 1px solid #f1f5f9;
+            border-top: 1px solid #E5E7EB;
             background: #fafbfc;
           }
 
@@ -541,24 +541,24 @@ function Courses() {
           }
 
           .tryout-btn.primary {
-            background: #2563EB;
+            background: #F97316;
             color: #ffffff;
           }
 
           .tryout-btn.primary:hover {
-            background: #1d4ed8;
+            background: #EA580C;
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
           }
 
           .tryout-btn.success {
-            background: #10b981;
+            background: #16A34A;
             color: #ffffff;
             cursor: default;
           }
 
           .tryout-btn.secondary {
-            background: #f1f5f9;
+            background: #E5E7EB;
             color: #94a3b8;
             cursor: not-allowed;
           }
@@ -576,11 +576,11 @@ function Courses() {
           }
 
           .tryout-status.completed {
-            color: #10b981;
+            color: #16A34A;
           }
 
           .tryout-status.upcoming {
-            color: #2563EB;
+            color: #EA580C;
           }
 
           /* ===== PAGINATION ===== */
@@ -615,23 +615,23 @@ function Courses() {
             border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
-            color: #64748b;
+            color: #374151;
             background: #ffffff;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #E5E7EB;
             text-decoration: none;
             transition: all 0.25s ease;
             cursor: pointer;
           }
 
           .page-pagination li .page-numbers.current {
-            background: #2563EB;
+            background: #F97316;
             color: #ffffff;
-            border-color: #2563EB;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            border-color: #F97316;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
           }
 
           .page-pagination li a:hover:not(.current) {
-            background: #f1f5f9;
+            background: #E5E7EB;
             border-color: #cbd5e1;
             transform: translateY(-2px);
           }
@@ -644,7 +644,7 @@ function Courses() {
 
           .page-pagination li a.next:hover,
           .page-pagination li a.prev:hover {
-            background: #f1f5f9;
+            background: #E5E7EB;
             border-color: #cbd5e1;
             transform: translateY(-2px);
           }

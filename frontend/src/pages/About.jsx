@@ -237,7 +237,7 @@ function About() {
       <section className="w3l-contact py-5" id="contact">
         <style>{`
     .w3l-contact {
-      background: #f8fafc;
+      background: #F8FAFC;
     }
 
     .contact-info-wrapper {
@@ -253,14 +253,14 @@ function About() {
       padding: 20px 24px;
       background: #ffffff;
       border-radius: 14px;
-      border: 1px solid #f1f5f9;
+      border: 1px solid #E5E7EB;
       transition: all 0.3s ease;
     }
 
     .contact-info-item:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-      border-color: #e2e8f0;
+      border-color: #E5E7EB;
     }
 
     .contact-icon {
@@ -268,17 +268,17 @@ function About() {
       height: 48px;
       min-width: 48px;
       border-radius: 50%;
-      background: #eff6ff;
+      background: #FFF7ED;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #2563EB;
+      color: #EA580C;
       font-size: 20px;
       transition: all 0.3s ease;
     }
 
     .contact-info-item:hover .contact-icon {
-      background: #2563EB;
+      background: #F97316;
       color: #ffffff;
       transform: scale(1.05);
     }
@@ -291,13 +291,13 @@ function About() {
       margin: 0 0 4px 0;
       font-size: 15px;
       font-weight: 600;
-      color: #0f172a;
+      color: #111827;
     }
 
     .contact-info-text p {
       margin: 0;
       font-size: 14px;
-      color: #64748b;
+      color: #374151;
       line-height: 1.6;
     }
 
