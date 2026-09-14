@@ -383,7 +383,9 @@ function Home() {
                         className="img-fluid radius-image"
                       />
                       <div className="box-content">
-                        <h3 className="title" style={{ color: "#fff" }}>Putra</h3>
+                        <h3 className="title" style={{ color: "#fff" }}>
+                          Putra
+                        </h3>
                         <span className="post">Pendamping 1</span>
                         <ul className="social">
                           <li>-</li>
@@ -400,7 +402,9 @@ function Home() {
                         className="img-fluid radius-image"
                       />
                       <div className="box-content">
-                        <h3 className="title" style={{ color: "#fff" }}>Lily</h3>
+                        <h3 className="title" style={{ color: "#fff" }}>
+                          Lily
+                        </h3>
                         <span className="post">General Admin</span>
                         <ul className="social">
                           <li>-</li>
@@ -417,8 +421,10 @@ function Home() {
                         className="img-fluid radius-image"
                       />
                       <div className="box-content">
-                        <h3 className="title" style={{ color: "#fff" }}>Michael</h3>
-                        <span className="post">Team IT</span>
+                        <h3 className="title" style={{ color: "#fff" }}>
+                          Michael
+                        </h3>
+                        <span className="post">Developer</span>
                         <ul className="social">
                           <li>-</li>
                         </ul>
@@ -434,8 +440,10 @@ function Home() {
                         className="img-fluid radius-image"
                       />
                       <div className="box-content">
-                        <h3 className="title" style={{ color: "#fff" }}>Andi</h3>
-                        <span className="post">Pendamping 2</span>
+                        <h3 className="title" style={{ color: "#fff" }}>
+                          Jeje
+                        </h3>
+                        <span className="post">General Admin</span>
                         <ul className="social">
                           <li>-</li>
                         </ul>
