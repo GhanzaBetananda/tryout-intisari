@@ -29,7 +29,7 @@ function Courses() {
     {
       id: 2,
       title: "Paket Simulasi",
-      subtitle: "",
+      subtitle: "Simulasi CAT BKN",
       category: "CAT BKN",
       date: "8 Agustus 2026",
       duration: 110,
@@ -55,10 +55,6 @@ function Courses() {
       disabled: true,
       buttonText: "Selesai",
       buttonClass: "secondary",
-      // onClick: () => navigate("/tryout3"),
-      // disabled: false,
-      // buttonText: "Mulai Tryout",
-      // buttonClass: "primary",
     },
     {
       id: 4,
@@ -74,10 +70,6 @@ function Courses() {
       disabled: true,
       buttonText: "Selesai",
       buttonClass: "secondary",
-      // onClick: () => navigate("/tryout4"),
-      // disabled: false,
-      // buttonText: "Mulai Tryout",
-      // buttonClass: "primary",
     },
     {
       id: 5,
@@ -87,16 +79,6 @@ function Courses() {
       date: "23 Agustus 2026",
       duration: 110,
       totalSoal: 110,
-      // status: "upcoming",
-      // badge: "bkn",
-      // onClick: null,
-      // disabled: true,
-      // buttonText: "Coming Soon",
-      // buttonClass: "secondary",
-      // onClick: () => navigate("/tryout5"),
-      // disabled: false,
-      // buttonText: "Mulai Tryout",
-      // buttonClass: "primary",
       status: "completed",
       badge: "bkn",
       onClick: null,
@@ -118,10 +100,6 @@ function Courses() {
       disabled: true,
       buttonText: "Selesai",
       buttonClass: "secondary",
-      // onClick: () => navigate("/tryout6"),
-      // disabled: false,
-      // buttonText: "Mulai Tryout",
-      // buttonClass: "primary",
     },
     {
       id: 7,
@@ -137,10 +115,6 @@ function Courses() {
       disabled: true,
       buttonText: "Selesai",
       buttonClass: "secondary",
-      // onClick: () => navigate("/tryout7"),
-      // disabled: false,
-      // buttonText: "Mulai Tryout",
-      // buttonClass: "primary",
     },
     {
       id: 8,
@@ -152,10 +126,6 @@ function Courses() {
       totalSoal: 110,
       status: "upcoming",
       badge: "bkn",
-      // onClick: null,
-      // disabled: true,
-      // buttonText: "Coming Soon",
-      // buttonClass: "secondary",
       onClick: () => navigate("/basarnas1"),
       disabled: false,
       buttonText: "Mulai Tryout",
@@ -176,51 +146,6 @@ function Courses() {
       buttonText: "Coming Soon",
       buttonClass: "secondary",
     },
-    // {
-    //   id: 10,
-    //   title: "Tryout 10",
-    //   subtitle: "Prediksi Soal Terbaru 2026",
-    //   category: "CAT BKN",
-    //   date: "5 September 2026",
-    //   duration: 110,
-    //   totalSoal: 110,
-    //   status: "coming",
-    //   badge: "bkn",
-    //   onClick: null,
-    //   disabled: true,
-    //   buttonText: "Coming Soon",
-    //   buttonClass: "secondary",
-    // },
-    // {
-    //   id: 11,
-    //   title: "Tryout 11",
-    //   subtitle: "Simulasi CAT Basarnas",
-    //   category: "CAT BASARNAS",
-    //   date: "-",
-    //   duration: 90,
-    //   totalSoal: 90,
-    //   status: "coming",
-    //   badge: "basarnas",
-    //   onClick: null,
-    //   disabled: true,
-    //   buttonText: "Coming Soon",
-    //   buttonClass: "secondary",
-    // },
-    // {
-    //   id: 12,
-    //   title: "Tryout 12",
-    //   subtitle: "Paket Soal SKD Terbaru",
-    //   category: "CAT BKN",
-    //   date: "Segera",
-    //   duration: 110,
-    //   totalSoal: 110,
-    //   status: "coming",
-    //   badge: "bkn",
-    //   onClick: null,
-    //   disabled: true,
-    //   buttonText: "Coming Soon",
-    //   buttonClass: "secondary",
-    // },
   ];
 
   // ============================================
@@ -278,77 +203,87 @@ function Courses() {
   };
 
   // ============================================
-  // RENDER CARD
+  // HELPERS - status & button clean mapping
+  // ============================================
+  const getStatusConfig = (status) => {
+    if (status === "completed")
+      return { label: "Selesai", className: "is-done", dot: true };
+    if (status === "upcoming")
+      return { label: "Tersedia", className: "is-live", dot: true };
+    return { label: "Segera", className: "is-soon", dot: false };
+  };
+
+  const getButtonConfig = (item) => {
+    if (item.buttonClass === "primary" || item.buttonText === "Mulai Tryout") {
+      return { className: "primary", icon: "fa fa-arrow-right" };
+    }
+    if (item.buttonText === "Selesai") {
+      return { className: "done", icon: "fa fa-check" };
+    }
+    return { className: "muted", icon: "fa fa-lock" };
+  };
+
+  // ============================================
+  // RENDER CARD - clean minimal
   // ============================================
   const renderTryoutCard = (item) => {
-    const getStatusBadge = () => {
-      if (item.status === "completed") {
-        return (
-          <span className="tryout-status completed">
-            <i className="fa fa-check-circle"></i> Selesai
-          </span>
-        );
-      } else if (item.status === "upcoming") {
-        return (
-          <span className="tryout-status upcoming">
-            <i className="fa fa-clock-o"></i> Tersedia
-          </span>
-        );
-      } else if (item.status === "new") {
-        return <span className="tryout-badge new">New</span>;
-      } else {
-        return <span className="tryout-badge coming">Coming Soon</span>;
-      }
-    };
+    const status = getStatusConfig(item.status);
+    const btn = getButtonConfig(item);
 
     return (
       <div className="col-lg-4 col-md-6 item" key={item.id}>
-        <div className="tryout-card">
-          <div className="tryout-card-header">
-            <span className={`tryout-badge ${item.badge}`}>
-              {item.category}
+        <article className={`tryout-card ${status.className}`}>
+          {/* Top row: icon + title + status */}
+          <div className="tc-top">
+            <div className="tc-icon" aria-hidden="true">
+              <i className="fa fa-file-text-o"></i>
+            </div>
+            <div className="tc-head">
+              <span className="tc-cat">{item.category}</span>
+              <h4 className="tc-title">{item.title}</h4>
+            </div>
+            <span className={`tc-status ${status.className}`}>
+              {status.dot && <span className="tc-dot" />}
+              {status.label}
             </span>
-            {getStatusBadge()}
           </div>
-          <div className="tryout-body">
-            <h4 className="tryout-title">{item.title}</h4>
-            {/* SUBTITLE - ukuran lebih kecil dari judul */}
-            <p className="tryout-subtitle">{item.subtitle}</p>
 
-            {/* TANGGAL, WAKTU, DAN SOAL DALAM SATU BARIS */}
-            <div className="tryout-info-bar">
-              <span className="tryout-date">
-                <i className="fa fa-calendar"></i> {item.date}
-              </span>
-              <span className="tryout-info-divider">|</span>
-              <span className="tryout-duration">
-                <i className="fa fa-clock-o"></i> {item.duration} menit
-              </span>
-              <span className="tryout-info-divider">|</span>
-              <span className="tryout-questions">
-                <i className="fa fa-file-text-o"></i> {item.totalSoal} soal
-              </span>
+          {item.subtitle && <p className="tc-sub">{item.subtitle}</p>}
+
+          {/* Meta clean: 3 kolom dalam 1 panel soft */}
+          <div className="tc-meta">
+            <div className="tc-meta-item">
+              <i className="fa fa-calendar-o"></i>
+              <div className="tc-meta-text">
+                <strong>{item.date}</strong>
+                <small>Tanggal</small>
+              </div>
+            </div>
+            <div className="tc-meta-item">
+              <i className="fa fa-clock-o"></i>
+              <div className="tc-meta-text">
+                <strong>{item.duration} mnt</strong>
+                <small>Durasi</small>
+              </div>
+            </div>
+            <div className="tc-meta-item">
+              <i className="fa fa-list-ul"></i>
+              <div className="tc-meta-text">
+                <strong>{item.totalSoal} soal</strong>
+                <small>Jumlah</small>
+              </div>
             </div>
           </div>
-          <div className="tryout-footer">
-            <button
-              className={`tryout-btn ${item.buttonClass}`}
-              onClick={item.onClick}
-              disabled={item.disabled}
-            >
-              {item.buttonText === "Selesai" && (
-                <i className="fa fa-check-circle"></i>
-              )}
-              {item.buttonText === "Mulai Tryout" && (
-                <i className="fa fa-play"></i>
-              )}
-              {item.buttonText === "Coming Soon" && (
-                <i className="fa fa-lock"></i>
-              )}
-              {item.buttonText}
-            </button>
-          </div>
-        </div>
+
+          <button
+            className={`tc-btn ${btn.className}`}
+            onClick={item.onClick}
+            disabled={item.disabled}
+          >
+            {item.buttonText}
+            <i className={btn.icon}></i>
+          </button>
+        </article>
       </div>
     );
   };
@@ -359,381 +294,292 @@ function Courses() {
       <section className="w3l-courses">
         <style>{`
           .courses-wrapper {
-            padding: 40px 0 20px;
+            padding: 32px 0 8px;
+            row-gap: 20px;
+          }
+          .courses-wrapper .item {
+            display: flex;
           }
 
+          /* ===== Card clean ===== */
           .tryout-card {
-            background: #ffffff;
-            border-radius: 18px;
-            border: 1px solid #E5E7EB;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 100%;
+            --border: #EBEDF0;
+            --ink: #101828;
+            --muted: #667085;
+            --soft: #F8F9FB;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-            margin-bottom: 24px; 
+            gap: 14px;
+            box-shadow: 0 1px 2px rgba(16,24,40,.04);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
           }
-
           .tryout-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
-            border-color: #E5E7EB;
+            transform: translateY(-4px);
+            border-color: #DFE3E8;
+            box-shadow: 0 12px 28px rgba(16,24,40,.08);
           }
 
-          .tryout-card-header {
-            padding: 16px 20px 0;
+          .tc-top {
             display: flex;
-            justify-content: space-between;
             align-items: flex-start;
+            gap: 12px;
+          }
+          .tc-icon {
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #FFF4EA;
+            color: #E4690E;
+            font-size: 18px;
+          }
+          .tryout-card.is-done .tc-icon {
+            background: #F2F4F7;
+            color: #98A2B3;
+          }
+          .tryout-card.is-soon .tc-icon {
+            background: #F2F4F7;
+            color: #B6BFCB;
           }
 
-          .tryout-badge {
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 999px;
+          .tc-head {
+            flex: 1;
+            min-width: 0;
+          }
+          .tc-cat {
+            display: block;
             font-size: 11px;
             font-weight: 700;
+            letter-spacing: .08em;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            color: #98A2B3;
+            margin-bottom: 3px;
           }
-
-          .tryout-badge.bkn {
-            background: #FFF7ED;
-            color: #C2410C;
-          }
-
-          .tryout-badge.basarnas {
-            background: #FFF7ED;
-            color: #EA580C;
-          }
-
-          .tryout-badge.new {
-            background: #EA580C;
-            color: #ffffff;
-            animation: pulseNew 2s ease-in-out infinite;
-          }
-
-          @keyframes pulseNew {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-          }
-
-          .tryout-badge.coming {
-            background: #E5E7EB;
-            color: #94a3b8;
-          }
-            .courses-wrapper {
-  row-gap: 24px;
-}
-.tryout-header-left {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.tryout-date {
-  font-size: 13px;
-  color: #94a3b8;
-}
-
-.tryout-date i {
-  margin-right: 6px;
-}
-
-.tryout-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 18px;
-}
-
-.tryout-left {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.tryout-title {
-  margin: 0 0 18px;
-}
-
-.tryout-date {
-  font-size: 13px;
-  color: #94a3b8;
-}
-
-.tryout-date i {
-  margin-right: 6px;
-}
-
-
-          .tryout-body {
-            padding: 16px 20px 12px;
-            flex: 1;
-          }
-
-          .tryout-title {
-            font-size: 18px;
+          .tc-title {
+            margin: 0;
+            font-size: 17px;
+            line-height: 1.3;
             font-weight: 700;
-            color: #111827;
-            margin: 0 0 2px 0;
+            color: var(--ink);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .tc-sub {
+            margin: 0;
+            margin-top: -8px;
+            font-size: 13.5px;
+            color: var(--muted);
+            line-height: 1.5;
           }
 
-          .tryout-subtitle {
-            font-size: 13px;
-            color: #374151;
-            margin: 0 0 10px 0;
-            font-weight: 400;
-            line-height: 1.4;
-          }
-
-          .tryout-info-bar {
-            display: flex;
+          /* status pill minimal */
+          .tc-status {
+            flex-shrink: 0;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            padding-top: 10px;
-            border-top: 1px solid #E5E7EB;
-            font-size: 13px;
-            color: #374151;
+            gap: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 6px 10px;
+            border-radius: 999px;
+            letter-spacing: .01em;
+            border: 1px solid transparent;
+          }
+          .tc-status.is-live {
+            background: #FFF4EA;
+            color: #DC6803;
+            border-color: #FEDFAD;
+          }
+          .tc-status.is-done {
+            background: #ECFDF3;
+            color: #027A48;
+            border-color: #ABEFC6;
+          }
+          .tc-status.is-soon {
+            background: #F2F4F7;
+            color: #98A2B3;
+            border-color: #E4E7EC;
+          }
+          .tc-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+          }
+          .tc-status.is-live .tc-dot {
+            animation: tcBlink 1.8s ease-in-out infinite;
+          }
+          @keyframes tcBlink {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .45; transform: scale(.8); }
           }
 
-          .tryout-info-bar i {
-            color: #94a3b8;
-            font-size: 13px;
-            margin-right: 4px;
-          }
-
-          .tryout-date,
-          .tryout-duration,
-          .tryout-questions {
+          /* meta panel */
+          .tc-meta {
             display: flex;
-            align-items: center;
-            gap: 4px;
-          }
-
-          .tryout-info-divider {
-            color: #E5E7EB;
-            font-weight: 300;
-          }
-
-          .tryout-footer {
-            padding: 12px 20px 20px;
-            border-top: 1px solid #E5E7EB;
-            background: #fafbfc;
-          }
-
-          .tryout-btn {
-            width: 100%;
-            padding: 10px;
-            border: none;
+            background: var(--soft);
+            border: 1px solid #F0F2F4;
             border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 12px 6px;
+          }
+          .tc-meta-item {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            min-width: 0;
+          }
+          .tc-meta-item + .tc-meta-item {
+            border-left: 1px solid #E9ECF0;
+          }
+          .tc-meta-item > i {
+            font-size: 15px;
+            color: #B6BFCB;
+          }
+          .tc-meta-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.25;
+            min-width: 0;
+          }
+          .tc-meta-text strong {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink);
+            white-space: nowrap;
+          }
+          .tc-meta-text small {
+            font-size: 11px;
+            color: #98A2B3;
           }
 
-          .tryout-btn.primary {
+          /* button clean full width */
+          .tc-btn {
+            margin-top: auto;
+            width: 100%;
+            height: 42px;
+            border: 0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+          }
+          .tc-btn i { font-size: 13px; }
+          .tc-btn.primary {
             background: #F97316;
-            color: #ffffff;
+            color: #fff;
+            box-shadow: 0 6px 14px rgba(249,115,22,.25);
           }
-
-          .tryout-btn.primary:hover {
+          .tc-btn.primary:hover {
             background: #EA580C;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(249,115,22,.32);
           }
-
-          .tryout-btn.success {
-            background: #16A34A;
-            color: #ffffff;
-            cursor: default;
+          .tc-btn.done {
+            background: #F2F4F7;
+            color: #667085;
+            cursor: not-allowed;
           }
-
-          .tryout-btn.secondary {
-            background: #E5E7EB;
-            color: #94a3b8;
+          .tc-btn.done i { color: #12B76A; }
+          .tc-btn.muted {
+            background: #F8F9FB;
+            color: #B6BFCB;
+            border: 1px dashed #E4E7EC;
             cursor: not-allowed;
           }
 
-          .tryout-btn i {
-            font-size: 14px;
-          }
-
-          .tryout-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 600;
-          }
-
-          .tryout-status.completed {
-            color: #16A34A;
-          }
-
-          .tryout-status.upcoming {
-            color: #EA580C;
-          }
-
-          /* ===== PAGINATION ===== */
+          /* ===== Pagination clean ===== */
           .pagination-wrapper {
-            margin-top: 40px;
-            padding-top: 20px;
-          }
-
-          .page-pagination {
+            margin-top: 32px;
             display: flex;
             justify-content: center;
+          }
+          .page-pagination {
+            display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             list-style: none;
             padding: 0;
             margin: 0;
-            flex-wrap: wrap;
           }
-
-          .page-pagination li {
-            display: inline-block;
-          }
-
-          .page-pagination li a,
-          .page-pagination li .page-numbers {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 40px;
-            height: 40px;
-            padding: 0 12px;
+          .page-pagination .page-numbers,
+          .page-pagination button.prev,
+          .page-pagination button.next {
+            min-width: 38px;
+            height: 38px;
+            padding: 0 14px;
             border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #374151;
-            background: #ffffff;
-            border: 1px solid #E5E7EB;
-            text-decoration: none;
-            transition: all 0.25s ease;
-            cursor: pointer;
-          }
-
-          .page-pagination li .page-numbers.current {
-            background: #F97316;
-            color: #ffffff;
-            border-color: #F97316;
-            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
-          }
-
-          .page-pagination li a:hover:not(.current) {
-            background: #E5E7EB;
-            border-color: #cbd5e1;
-            transform: translateY(-2px);
-          }
-
-          .page-pagination li a.next,
-          .page-pagination li a.prev {
-            gap: 6px;
-            padding: 0 18px;
-          }
-
-          .page-pagination li a.next:hover,
-          .page-pagination li a.prev:hover {
-            background: #E5E7EB;
-            border-color: #cbd5e1;
-            transform: translateY(-2px);
-          }
-
-          .page-pagination li .dots {
-            display: flex;
+            border: 1px solid #E4E7EC;
+            background: #fff;
+            color: #344054;
+            font-size: 13.5px;
+            font-weight: 700;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 40px;
-            height: 40px;
-            color: #94a3b8;
-            font-weight: 600;
+            gap: 6px;
+            cursor: pointer;
+            transition: all .2s ease;
+          }
+          .page-pagination .page-numbers.current {
+            background: #101828;
+            border-color: #101828;
+            color: #fff;
+          }
+          .page-pagination .page-numbers:not(.current):hover,
+          .page-pagination button.prev:not(:disabled):hover,
+          .page-pagination button.next:not(:disabled):hover {
+            border-color: #D0D5DD;
+            background: #F9FAFB;
+          }
+          .page-pagination button:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+          }
+          .page-pagination .dots {
+            color: #98A2B3;
+            padding: 0 4px;
+            font-weight: 700;
           }
 
           @media (max-width: 768px) {
-            .tryout-card {
-              margin-bottom: 16px;
-            }
-            .tryout-title {
-              font-size: 16px;
-            }
-            .tryout-subtitle {
-              font-size: 12px;
-            }
-            .tryout-info-bar {
-              font-size: 12px;
-              gap: 6px;
-            }
-            .tryout-info-divider {
-              display: none;
-            }
-            .page-pagination li a,
-            .page-pagination li .page-numbers {
-              min-width: 36px;
-              height: 36px;
-              font-size: 13px;
-              padding: 0 10px;
-            }
-          }
-
-          @media (max-width: 480px) {
-            .tryout-body {
-              padding: 14px 16px 10px;
-            }
-            .tryout-footer {
-              padding: 10px 16px 16px;
-            }
-            .tryout-btn {
-              font-size: 13px;
-              padding: 8px;
-            }
-            .tryout-info-bar {
-              font-size: 11px;
-              gap: 4px;
-            }
-            .tryout-info-bar i {
-              font-size: 11px;
-            }
-            .page-pagination li a,
-            .page-pagination li .page-numbers {
-              min-width: 32px;
-              height: 32px;
-              font-size: 12px;
-              padding: 0 8px;
-            }
+            .tryout-card { padding: 16px; border-radius: 14px; }
+            .tc-title { font-size: 15.5px; }
+            .tc-meta { padding: 10px 4px; }
+            .tc-meta-text strong { font-size: 11.5px; }
           }
         `}</style>
 
         <div className="blog pb-5" id="courses">
           <div className="container py-lg-5 py-md-4 py-2">
             <div className="row courses-wrapper g-4">
-              {/* RENDER CARD DARI DATA ARRAY */}
               {currentItems.map((item) => renderTryoutCard(item))}
             </div>
 
-            {/* PAGINATION - HANYA TAMPIL JIKA TOTAL PAGE > 1 */}
             {totalPages > 1 && (
               <div className="pagination-wrapper mt-5 pt-lg-3 text-center">
                 <ul className="page-pagination">
                   <li>
                     <button
                       type="button"
-                      className={`prev ${currentPage === 1 ? "disabled" : ""}`}
+                      className="prev"
                       onClick={goToPrevPage}
                       disabled={currentPage === 1}
-                      style={{
-                        cursor: currentPage === 1 ? "not-allowed" : "pointer",
-                        opacity: currentPage === 1 ? 0.5 : 1,
-                      }}
                     >
                       <span className="fa fa-angle-left"></span> Prev
                     </button>
@@ -749,7 +595,6 @@ function Courses() {
                             currentPage === page ? "current" : ""
                           }`}
                           onClick={() => goToPage(page)}
-                          style={{ cursor: "pointer" }}
                         >
                           {page}
                         </span>
@@ -760,16 +605,9 @@ function Courses() {
                   <li>
                     <button
                       type="button"
-                      className={`next ${currentPage === totalPages ? "disabled" : ""}`}
+                      className="next"
                       onClick={goToNextPage}
                       disabled={currentPage === totalPages}
-                      style={{
-                        cursor:
-                          currentPage === totalPages
-                            ? "not-allowed"
-                            : "pointer",
-                        opacity: currentPage === totalPages ? 0.5 : 1,
-                      }}
                     >
                       Next <span className="fa fa-angle-right"></span>
                     </button>
