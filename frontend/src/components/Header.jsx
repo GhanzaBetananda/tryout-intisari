@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Header() {
   const currentTheme = localStorage.getItem("theme");
@@ -40,9 +40,9 @@ function Header() {
         <div className="container">
           <nav className="navbar navbar-expand-lg navbar-dark stroke">
             <h1>
-              <a
+              <Link
                 className="navbar-brand"
-                href="/"
+                to="/"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -82,7 +82,7 @@ function Header() {
                     Menemani Langkah Menuju Impian
                   </span>
                 </div>
-              </a>
+              </Link>
             </h1>
 
             {/* if logo is image enable this   
@@ -106,25 +106,25 @@ function Header() {
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav mx-lg-auto">
                 <li className="nav-item active">
-                  <a className="nav-link" href="/">
+                  <Link className="nav-link" to="/">
                     Home
                     <span className="sr-only">(current)</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item @@about__active">
-                  <a className="nav-link" href="/about">
+                  <Link className="nav-link" to="/about">
                     About
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item @@courses__active">
-                  <a className="nav-link" href="/courses">
+                  <Link className="nav-link" to="/courses">
                     Courses
-                  </a>
+                  </Link>
                 </li>
                 {/* <li className="nav-item @@contact__active">
-                  <a className="nav-link" href="/contact">
+                  <Link className="nav-link" to="/contact">
                     Contact
-                  </a>
+                  </Link>
                 </li> */}
               </ul>
 

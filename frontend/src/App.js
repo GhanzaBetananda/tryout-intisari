@@ -28,8 +28,78 @@ import TWK from "./daftartryout/TWK/twk";
 import TKP from "./daftartryout/TKP/tkp";
 import SIMULASI from "./daftartryout/TWK/simulasi";
 
+function initTemplateScripts() {
+  const $ = window.$ || window.jQuery;
+  if (!$ || !$.fn || !$.fn.owlCarousel) return;
+
+  // Banner slider (Home) — hanya init sekali per mount
+  const owlOne = $(".owl-one");
+  if (owlOne.length && !owlOne.hasClass("owl-loaded")) {
+    owlOne.owlCarousel({
+      loop: true,
+      margin: 0,
+      nav: false,
+      dots: false,
+      responsiveClass: true,
+      autoplay: true,
+      autoplayTimeout: 5000,
+      autoplaySpeed: 1000,
+      autoplayHoverPause: false,
+      responsive: {
+        0: { items: 1 },
+        480: { items: 1 },
+        667: { items: 1 },
+        1000: { items: 1, nav: true },
+      },
+    });
+  }
+
+  // Testimonial slider (Home)
+  const owlDemo = $("#owl-demo1");
+  if (owlDemo.length && !owlDemo.hasClass("owl-loaded")) {
+    owlDemo.owlCarousel({
+      loop: true,
+      margin: 20,
+      nav: false,
+      responsiveClass: true,
+      responsive: {
+        0: { items: 1, nav: false },
+        768: { items: 2, nav: false },
+        1000: { items: 3, nav: false, loop: false },
+      },
+    });
+  }
+
+  // Counter (About)
+  try {
+    const counter = $(".counter");
+    if (counter.length && $.fn.countUp) counter.countUp();
+  } catch (e) {
+    // abaikan, bukan error fatal
+  }
+}
+
 function AppContent({ isLoggedIn, setIsLoggedIn }) {
   const location = useLocation();
+
+  // Setiap pindah halaman (termasuk tepat setelah login):
+  // - scroll ke atas
+  // - init ulang slider/counter template yang di index.html
+  //   hanya jalan saat document.ready (tidak jalan saat SPA navigate)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const t = setTimeout(initTemplateScripts, 60);
+    return () => clearTimeout(t);
+  }, [location.pathname]);
+
+  // Saat status login berubah false->true, pastikan template ikut ke-init
+  // (kasus: /login -> / tidak me-remount script jQuery)
+  useEffect(() => {
+    if (isLoggedIn) {
+      const t = setTimeout(initTemplateScripts, 120);
+      return () => clearTimeout(t);
+    }
+  }, [isLoggedIn]);
 
   // Daftar prefix path yang TIDAK boleh menampilkan Header/Footer
   const hideHeaderFooter = [

@@ -63,15 +63,17 @@ const Login = ({ setIsLoggedIn }) => {
         sessionStorage.setItem("userId", userData.id);
         sessionStorage.setItem("userRole", userData.role);
         sessionStorage.setItem("userNoHp", userData.no_hp || "");
-        sessionStorage.setItem("isLoggedIn", "true");
 
-        setIsLoggedIn(true);
-        setIsSubmitting(false);
-
-        // Redirect setelah 1 detik
+        // Tunda update isLoggedIn + redirect secara bersamaan:
+        // - pesan sukses sempat terlihat
+        // - redirect hanya terjadi 1x (tidak balapan dengan <Navigate>)
+        // - Breadcrumbs/Header langsung ke-init di halaman tujuan
         setTimeout(() => {
+          sessionStorage.setItem("isLoggedIn", "true");
+          setIsLoggedIn(true);
+          setIsSubmitting(false);
           navigate("/", { replace: true });
-        }, 1000);
+        }, 800);
       } else {
         setErrorMessage(response.data.message || "Login gagal!");
         setIsSubmitting(false);

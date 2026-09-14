@@ -1,11 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumps from "../components/BreadCrumps";
 import { useNavigate } from "react-router-dom";
 
 function Courses() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9;
+  // Responsif: HP tampil lebih sedikit per halaman biar tidak kepanjangan discroll
+  const getInitialPerPage = () =>
+    typeof window !== "undefined" && window.innerWidth < 768 ? 6 : 9;
+  const [itemsPerPage, setItemsPerPage] = useState(getInitialPerPage);
+
+  useEffect(() => {
+    const onResize = () => {
+      const next = window.innerWidth < 768 ? 6 : 9;
+      setItemsPerPage((prev) => {
+        if (prev !== next) setCurrentPage(1);
+        return next;
+      });
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   // ============================================
   // DATA TRYOUT - Simpan semua di sini
@@ -124,12 +139,16 @@ function Courses() {
       date: "12 September 2026",
       duration: 110,
       totalSoal: 110,
-      status: "upcoming",
+      status: "completed",
       badge: "bkn",
-      onClick: () => navigate("/basarnas1"),
-      disabled: false,
-      buttonText: "Mulai Tryout",
-      buttonClass: "primary",
+      // onClick: () => navigate("/basarnas1"),
+      // disabled: false,
+      // buttonText: "Mulai Tryout",
+      // buttonClass: "primary",
+      onClick: null,
+      disabled: true,
+      buttonText: "Selesai",
+      buttonClass: "secondary",
     },
     {
       id: 9,
@@ -231,7 +250,7 @@ function Courses() {
     const btn = getButtonConfig(item);
 
     return (
-      <div className="col-lg-4 col-md-6 item" key={item.id}>
+      <div className="col-12 col-md-6 col-lg-4 item" key={item.id}>
         <article className={`tryout-card ${status.className}`}>
           {/* Top row: icon + title + status */}
           <div className="tc-top">
@@ -557,17 +576,97 @@ function Courses() {
             font-weight: 700;
           }
 
-          @media (max-width: 768px) {
-            .tryout-card { padding: 16px; border-radius: 14px; }
-            .tc-title { font-size: 15.5px; }
-            .tc-meta { padding: 10px 4px; }
-            .tc-meta-text strong { font-size: 11.5px; }
+          /* ===== Base anti-overflow ===== */
+          .w3l-courses { overflow-x: clip; }
+          .w3l-courses .container { max-width: 100%; }
+          .tc-btn, .page-pagination .page-numbers,
+          .page-pagination button.prev, .page-pagination button.next {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+          }
+          /* Matikan efek hover di layar sentuh biar tidak lengket */
+          @media (hover: none) {
+            .tryout-card:hover { transform: none; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+            .tc-btn.primary:hover { transform: none; }
+          }
+
+          /* ===== Tablet kecil / HP besar ===== */
+          @media (max-width: 767px) {
+            .courses-wrapper { padding: 20px 0 4px; row-gap: 14px; }
+            .tryout-card { padding: 16px; border-radius: 14px; gap: 12px; }
+            .tryout-card:hover { transform: none; }
+            .tc-top { gap: 10px; align-items: center; }
+            .tc-icon { width: 40px; height: 40px; flex-basis: 40px; font-size: 16px; border-radius: 10px; }
+            .tc-cat { font-size: 10px; margin-bottom: 2px; }
+            .tc-title {
+              font-size: 15px;
+              line-height: 1.35;
+              white-space: normal; /* judul boleh 2 baris di HP */
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
+            .tc-status { font-size: 10.5px; padding: 5px 9px; }
+            .tc-sub { font-size: 13px; margin-top: -6px; }
+            /* Meta jadi 3 sel vertikal biar muat di layar sempit */
+            .tc-meta { padding: 10px 2px; }
+            .tc-meta-item { flex-direction: column; gap: 5px; text-align: center; padding: 0 4px; }
+            .tc-meta-item > i { font-size: 14px; }
+            .tc-meta-text { align-items: center; }
+            .tc-meta-text strong { font-size: 11.5px; white-space: normal; line-height: 1.3; }
+            .tc-meta-text small { font-size: 10px; }
+            /* Tombol ramah jempol */
+            .tc-btn { height: 46px; font-size: 14px; border-radius: 12px; }
+            /* Pagination nyaman disentuh */
+            .pagination-wrapper { margin-top: 24px; padding: 0 4px; }
+            .page-pagination { gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 100%; }
+            .page-pagination .page-numbers,
+            .page-pagination button.prev,
+            .page-pagination button.next {
+              min-width: 44px;
+              height: 44px;
+              padding: 0 12px;
+              font-size: 13px;
+            }
+          }
+
+          /* ===== HP kecil (≤480px) ===== */
+          @media (max-width: 480px) {
+            .w3l-courses .container { padding-left: 14px; padding-right: 14px; }
+            .courses-wrapper { row-gap: 12px; }
+            .tryout-card { padding: 14px; gap: 11px; }
+            .tc-icon { width: 38px; height: 38px; flex-basis: 38px; }
+            .tc-title { font-size: 14.5px; }
+            .tc-sub { font-size: 12.5px; }
+            .tc-meta-text strong { font-size: 11px; }
+            .tc-meta-item { gap: 4px; }
+            .tc-btn { height: 48px; } /* target sentuh ideal */
+            .page-pagination .page-numbers { min-width: 40px; height: 42px; padding: 0 10px; }
+            .page-pagination button.prev,
+            .page-pagination button.next { height: 42px; }
+          }
+
+          /* ===== HP sangat kecil (≤360px) ===== */
+          @media (max-width: 360px) {
+            .tc-top { flex-wrap: wrap; }
+            .tc-head { flex: 1 1 calc(100% - 130px); }
+            .tc-status { margin-left: auto; }
+            .tc-meta { padding: 8px 0; }
+            .tc-meta-text strong { font-size: 10.5px; }
+            .tc-meta-item > i { font-size: 13px; }
+            .page-pagination { gap: 5px; }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .tryout-card, .tc-btn { transition: none; }
+            .tc-status.is-live .tc-dot { animation: none; }
           }
         `}</style>
 
         <div className="blog pb-5" id="courses">
           <div className="container py-lg-5 py-md-4 py-2">
-            <div className="row courses-wrapper g-4">
+            <div className="row courses-wrapper g-3 g-md-4">
               {currentItems.map((item) => renderTryoutCard(item))}
             </div>
 
