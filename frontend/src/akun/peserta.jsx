@@ -50,17 +50,47 @@ export default function Peserta() {
     setExpandedId(expandedId === id ? null : id);
   };
 
-  const getScoreColor = (score) => {
-    if (score >= 400) return "#2563EB";
-    if (score >= 300) return "#10b981";
-    if (score >= 200) return "#f59e0b";
+  // Passing grade per jenis tryout.
+  // BUG lama: semua jenis memakai >= 300, sehingga nilai Basarnas
+  // (maks 100, lulus >= 70) selalu terbaca "Tidak Lulus".
+  const getPassingGrade = (jenis) => {
+    if (!jenis) return 300;
+    const j = String(jenis).toLowerCase();
+    if (j.includes("basarnas")) return 70;
+    if (j === "twk") return 65;
+    if (j === "tiu") return 80;
+    if (j === "tkp") return 166;
+    return 300; // TRYOUT_LENGKAP / TO BKN (total TWK+TIU+TKP)
+  };
+
+  const isLulus = (jenis, nilai) =>
+    Number(nilai) >= Number(getPassingGrade(jenis));
+
+  const getScoreColor = (score, jenis) => {
+    const nilai = Number(score) || 0;
+    if (String(jenis || "").toLowerCase().includes("basarnas")) {
+      if (nilai >= 85) return "#2563EB";
+      if (nilai >= 70) return "#10b981";
+      if (nilai >= 50) return "#f59e0b";
+      return "#ef4444";
+    }
+    if (nilai >= 400) return "#2563EB";
+    if (nilai >= 300) return "#10b981";
+    if (nilai >= 200) return "#f59e0b";
     return "#ef4444";
   };
 
-  const getScoreLabel = (score) => {
-    if (score >= 400) return "Excellent";
-    if (score >= 300) return "Good";
-    if (score >= 200) return "Average";
+  const getScoreLabel = (score, jenis) => {
+    const nilai = Number(score) || 0;
+    if (String(jenis || "").toLowerCase().includes("basarnas")) {
+      if (nilai >= 85) return "Excellent";
+      if (nilai >= 70) return "Good";
+      if (nilai >= 50) return "Average";
+      return "Needs Improvement";
+    }
+    if (nilai >= 400) return "Excellent";
+    if (nilai >= 300) return "Good";
+    if (nilai >= 200) return "Average";
     return "Needs Improvement";
   };
 
@@ -1182,8 +1212,18 @@ export default function Peserta() {
               {riwayat.map((item) => {
                 const pembahasan = pembahasanMap[item.jenis_tryout];
                 const isOpen = expandedId === item.id;
-                const scoreColor = getScoreColor(item.total_nilai);
-                const scoreLabel = getScoreLabel(item.total_nilai);
+                const scoreColor = getScoreColor(
+                  item.total_nilai,
+                  item.jenis_tryout,
+                );
+                const scoreLabel = getScoreLabel(
+                  item.total_nilai,
+                  item.jenis_tryout,
+                );
+                const lulusRiwayat = isLulus(
+                  item.jenis_tryout,
+                  item.total_nilai,
+                );
 
                 return (
                   <div className="tryout-card" key={item.id}>
@@ -1199,11 +1239,9 @@ export default function Peserta() {
                             <span>📅 {item.tanggal}</span>
                             <span>⏱ {item.durasi} menit</span>
                             <span
-                              className={`status-badge ${item.total_nilai >= 300 ? "lulus" : "tidak"}`}
+                              className={`status-badge ${lulusRiwayat ? "lulus" : "tidak"}`}
                             >
-                              {item.total_nilai >= 300
-                                ? "✅ Lulus"
-                                : "❌ Tidak Lulus"}
+                              {lulusRiwayat ? "✅ Lulus" : "❌ Tidak Lulus"}
                             </span>
                           </div>
                         </div>

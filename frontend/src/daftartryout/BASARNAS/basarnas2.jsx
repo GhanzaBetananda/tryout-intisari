@@ -5,80 +5,16 @@ import api from "../../api/api";
 
 // ========================================================================
 // DATA SOAL — BASARNAS (100 SOAL)
+// Indikator 01: UU No. 29 Tahun 2014
+// Indikator 02: PermenPAN-RB No. 33 Tahun 2021
+// Indikator 03: PP No. 21 Tahun 2017
+// Indikator 04: PP No. 22 Tahun 2017
+// Indikator 05: Jenis Latihan Fisik Kebugaran Jasmani
 // ========================================================================
 
-// --- Data soal BASARNAS (100 soal) ---
-// Data ini diambil dari file PDF yang Anda berikan
 const soalBasarnas = [
-  // 30 soal pertama (dari 115 soal yang ada, saya ambil 100)
-  // Saya akan singkatkan contohnya karena panjang, tapi Anda bisa masukkan semua 100 soal di sini
   {
     id: 1,
-    section: "BASARNAS",
-    soal: "Berdasarkan Undang-Undang Nomor 29 Tahun 2014, lembaga pemerintah nonkementerian yang menyelenggarakan urusan pemerintahan di bidang pencarian dan pertolongan adalah...",
-    opsi: {
-      A: "Badan Nasional Penanggulangan Bencana",
-      B: "Badan Nasional Pencarian dan Pertolongan",
-      C: "Kepolisian Negara Republik Indonesia",
-      D: "Tentara Nasional Indonesia",
-      E: "Kementerian Perhubungan",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 2,
-    section: "BASARNAS",
-    soal: "Menurut Pasal 1 Undang-Undang Nomor 29 Tahun 2014, definisi dari Pencarian dan Pertolongan (SAR) adalah...",
-    opsi: {
-      A: "Usia pertolongan medis darurat di rumah sakit rujukan",
-      B: "Setiap usaha dan kegiatan pencarian, pertolongan, dan penyelamatan serta evakuasi keadaan darurat",
-      C: "Kegiatan rehabilitasi dan rekonstruksi pascabencana alam",
-      D: "Tindakan pengamanan wilayah perbatasan dari ancaman militer",
-      E: "Pelayanan pemadam kebakaran di kawasan permukiman padat",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 3,
-    section: "BASARNAS",
-    soal: "Asas penyelenggaraan Pencarian dan Pertolongan yang menjamin bahwa pelayanan diberikan kepada siapapun tanpa membedakan suku, agama, ras, atau antargolongan adalah...",
-    opsi: {
-      A: "Asas Keperawatan",
-      B: "Asas Keadilan",
-      C: "Asas Nirdiskriminatif",
-      D: "Asas Otonomi",
-      E: "Asas Kebangsaan",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 4,
-    section: "BASARNAS",
-    soal: "Keadaan di mana keselamatan jiwa seseorang atau sekelompok orang terancam bahaya akibat musibah atau kondisi tertentu menurut UU No. 29 Tahun 2014 dinamakan...",
-    opsi: {
-      A: "Keadaan Darurat Militer",
-      B: "Bencana Alam Nasional",
-      C: "Kondisi Membahayakan Manusia",
-      D: "Kecelakaan Transportasi Berat",
-      E: "Keadaan Lampau Batas",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 5,
-    section: "BASARNAS",
-    soal: "Salah satu tugas pokok Badan Nasional Pencarian dan Pertolongan yang diatur dalam Pasal 4 UU No. 29 Tahun 2014 adalah...",
-    opsi: {
-      A: "Mengadili pelanggaran lalu lintas udara dan laut",
-      B: "Menyelenggarakan operasi pencarian dan pertolongan, pembinaan potensi, serta kesiapsiagaan",
-      C: "Memungut biaya retribusi keselamatan penerbangan",
-      D: "Menetapkan status tanggap darurat bencana daerah",
-      E: "Menyalurkan bantuan dana rekonstruksi pascabencana",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 6,
     section: "BASARNAS",
     soal: "Wilayah kerja operasional pencarian dan pertolongan yang menjadi tanggung jawab Badan Nasional Pencarian dan Pertolongan meliputi...",
     opsi: {
@@ -91,7 +27,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 7,
+    id: 2,
     section: "BASARNAS",
     soal: "Kewajiban masyarakat yang menyaksikan atau mengetahui terjadinya kecelakaan atau Kondisi Membahayakan Manusia menurut UU No. 29 Tahun 2014 adalah...",
     opsi: {
@@ -104,7 +40,7 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 8,
+    id: 3,
     section: "BASARNAS",
     soal: "Penyelenggaraan Pencarian dan Pertolongan sesuai ruang lingkup UU No. 29 Tahun 2014 mencakup komponen-komponen berikut, KECUALI...",
     opsi: {
@@ -117,7 +53,7 @@ const soalBasarnas = [
     jawaban: "D",
   },
   {
-    id: 9,
+    id: 4,
     section: "BASARNAS",
     soal: "Pejabat yang memiliki kewenangan untuk menetapkan pembukaan dan penutupan Operasi Pencarian dan Pertolongan adalah...",
     opsi: {
@@ -130,7 +66,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 10,
+    id: 5,
     section: "BASARNAS",
     soal: "Pihak atau individu yang secara sengaja merintangi, menghalangi, atau menggagalkan pelaksanaan Operasi Pencarian dan Pertolongan berdasarkan UU No. 29 Tahun 2014 dapat dikenakan...",
     opsi: {
@@ -143,7 +79,137 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
+    id: 6,
+    section: "BASARNAS",
+    soal: "Kedudukan Potensi SAR dari unsur masyarakat, TNI, Polri, maupun instansi swasta saat ditugaskan dalam Operasi SAR berada di bawah...",
+    opsi: {
+      A: "Instansi induk masing-masing",
+      B: "Pemerintah Daerah setempat",
+      C: "Kendali komando dan taktis SAR Mission Coordinator (SMC) / Kepala Badan",
+      D: "Polsek setempat",
+      E: "Kodim setempat",
+    },
+    jawaban: "C",
+  },
+  {
+    id: 7,
+    section: "BASARNAS",
+    soal: "Pelaksanaan fungsi pembinaan Potensi SAR oleh Badan Nasional Pencarian dan Pertolongan bertujuan untuk...",
+    opsi: {
+      A: "Membentuk pasukan militer cadangan",
+      B: "Meningkatkan kapasitas, keterampilan, koordinasi, dan kesiapan sumber daya manusia pendukung",
+      C: "Menghimpun dana iuran masyarakat",
+      D: "Menyeleksi calon pegawai negeri sipil secara langsung",
+      E: "Menutup peran organisasi sukarelawan lokal",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 8,
+    section: "BASARNAS",
+    soal: "Pembiayaan pelaksanaan Operasi Pencarian dan Pertolongan yang diselenggarakan oleh Badan Nasional Pencarian dan Pertolongan dibebankan pada...",
+    opsi: {
+      A: "Anggaran Pendapatan dan Belanja Negara (APBN) serta sumber lain yang sah",
+      B: "Keluarga korban musibah",
+      C: "Iuran bulanan Potensi SAR",
+      D: "Pinjaman komersial lembaga keuangan",
+      E: "Dana APBD pemerintah daerah semata",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 9,
+    section: "BASARNAS",
+    soal: "Penerapan standar operasional dan panduan internasional dalam penyelenggaraan pencarian dan pertolongan di Indonesia diselaraskan dengan dokumen...",
+    opsi: {
+      A: "SOLAS dan IAMSAR Manual",
+      B: "Kyoto Protocol",
+      C: "Geneva Convention",
+      D: "ASEAN Charter",
+      E: "Paris Agreement",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 10,
+    section: "BASARNAS",
+    soal: "Nakhoda kapal atau kapten pesawat udara yang berada di dekat lokasi musibah dan menerima sinyal marabahaya wajib...",
+    opsi: {
+      A: "Mengabaikan sinyal jika berada di luar jalur navigasi",
+      B: "Meneruskan perjalanan tanpa melapor",
+      C: "Melakukan tindakan pertolongan sepanjang tidak membahayakan keselamatan armadanya",
+      D: "Mematikan sistem transponder radio",
+      E: "Menunggu perintah dari perusahaan pemilik armada",
+    },
+    jawaban: "C",
+  },
+  {
     id: 11,
+    section: "BASARNAS",
+    soal: "Penyelenggaraan Sistem Komunikasi Pencarian dan Pertolongan oleh BASARNAS dirancang untuk...",
+    opsi: {
+      A: "Menyebarkan siaran berita komersial",
+      B: "Memastikan kelancaran penerimaan informasi musibah dan koordinasi pengendalian operasi",
+      C: "Mengawasi pembicaraan telepon warga masyarakat",
+      D: "Mengatur tarif komunikasi satelit pelayaran",
+      E: "Menyediakan layanan internet gratis bagi masyarakat umum",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 12,
+    section: "BASARNAS",
+    soal: "Langkah awal yang dilakukan Badan Nasional Pencarian dan Pertolongan begitu menerima laporan atau informasi terjadinya kecelakaan adalah...",
+    opsi: {
+      A: "Mengadakan konferensi pers di media",
+      B: "Memverifikasi kebenaran informasi dan menentukan tingkat keadaan darurat",
+      C: "Mengirimkan tagihan biaya operasi kepada pelapor",
+      D: "Mempublikasikan daftar identitas korban di koran",
+      E: "Menutup seluruh akses transportasi di lokasi",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 13,
+    section: "BASARNAS",
+    soal: "Berdasarkan ketentuan operasional yang berlaku, jangka waktu standar pelaksanaan Operasi SAR sebelum dilakukan evaluasi perpanjangan atau penutupan adalah...",
+    opsi: {
+      A: "3 hari",
+      B: "5 hari",
+      C: "7 hari",
+      D: "10 hari",
+      E: "14 hari",
+    },
+    jawaban: "C",
+  },
+  {
+    id: 14,
+    section: "BASARNAS",
+    soal: "Hak setiap warga negara maupun warga negara asing yang mengalami musibah di wilayah NKRI terkait pelayanan SAR dari BASARNAS adalah...",
+    opsi: {
+      A: "Dikenakan tarif biaya sesuai tingkat kesulitan medan",
+      B: "Bebas dari pungutan biaya (gratis)",
+      C: "Wajib membayar asuransi jiwa terlebih dahulu",
+      D: "Mendapatkan penggantian barang materi yang hilang",
+      E: "Diprioritaskan berdasarkan status sosial",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 15,
+    section: "BASARNAS",
+    soal: "Koordinasi yang dilakukan Badan Nasional Pencarian dan Pertolongan dengan organisasi internasional seperti ICAO dan IMO bertujuan untuk...",
+    opsi: {
+      A: "Meminta pinjaman dana operasional tahunan",
+      B: "Menyelaraskan standar keselamatan dan efektivitas operasi SAR lintas batas negara",
+      C: "Membeli armada pesawat dari luar negeri tanpa pajak",
+      D: "Mengambil alih kewenangan SAR negara tetangga",
+      E: "Menjadikan Indonesia sebagai markas militer internasional",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 16,
     section: "BASARNAS",
     soal: "Berdasarkan PermenPAN-RB Nomor 33 Tahun 2021, Jabatan Fungsional Pranata Pencarian dan Pertolongan dikategorikan sebagai jabatan fungsional...",
     opsi: {
@@ -156,7 +222,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 12,
+    id: 17,
     section: "BASARNAS",
     soal: "Instansi Pembina Jabatan Fungsional Pranata Pencarian dan Pertolongan sesuai dengan ketentuan peraturan perundang-undangan adalah...",
     opsi: {
@@ -169,7 +235,7 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 13,
+    id: 18,
     section: "BASARNAS",
     soal: "Urutan jenjang Jabatan Fungsional Pranata Pencarian dan Pertolongan dari jenjang terendah sampai tertinggi adalah...",
     opsi: {
@@ -182,7 +248,7 @@ const soalBasarnas = [
     jawaban: "A",
   },
   {
-    id: 14,
+    id: 19,
     section: "BASARNAS",
     soal: "Tugas jabatan Pranata Pencarian dan Pertolongan mencakup lingkup kegiatan berikut, KECUALI...",
     opsi: {
@@ -195,7 +261,7 @@ const soalBasarnas = [
     jawaban: "E",
   },
   {
-    id: 15,
+    id: 20,
     section: "BASARNAS",
     soal: "Kualifikasi pendidikan formal paling rendah untuk pengangkatan pertama dalam Jabatan Fungsional Pranata Pencarian dan Pertolongan jenjang Pemula adalah...",
     opsi: {
@@ -208,137 +274,137 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 16,
-    section: "BASARNAS",
-    soal: "Persyaratan kualifikasi pendidikan minimal untuk dapat diangkat pertama kali dalam Jabatan Fungsional Pranata Pencarian dan Pertolongan jenjang Terampil adalah...",
-    opsi: {
-      A: "Sekolah Menengah Atas / Kejuruan",
-      B: "Diploma III di bidang yang relevan",
-      C: "Sarjana Terapan (D-IV)",
-      D: "Magister (S-2)",
-      E: "Dokter Spesialis",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 17,
-    section: "BASARNAS",
-    soal: "Pejabat Fungsional Pranata Pencarian dan Pertolongan berkedudukan di bawah dan bertanggung jawab langsung kepada...",
-    opsi: {
-      A: "Kepala Daerah",
-      B: "Menteri Hukum dan HAM",
-      C: "Pejabat Pimpinan Tinggi Pratama, Pejabat Administrator, atau Pejabat Pengawas yang memiliki keterkaitan dengan pelaksanaan tugas Jabatan Fungsional",
-      D: "Presiden secara langsung",
-      E: "Panglima TNI",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 18,
-    section: "BASARNAS",
-    soal: "Batas usia maksimal untuk pengangkatan ke dalam Jabatan Fungsional Pranata Pencarian dan Pertolongan melalui perpindahan dari jabatan lain pada jenjang Pemula, Terampil, dan Mahir adalah...",
-    opsi: {
-      A: "50 tahun",
-      B: "53 tahun",
-      C: "55 tahun",
-      D: "56 tahun",
-      E: "58 tahun",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 19,
-    section: "BASARNAS",
-    soal: "Batas usia maksimal pengangkatan melalui perpindahan dari jabatan lain ke dalam Jabatan Fungsional Pranata Pencarian dan Pertolongan khusus untuk jenjang Penyelia adalah...",
-    opsi: {
-      A: "50 tahun",
-      B: "53 tahun",
-      C: "55 tahun",
-      D: "56 tahun",
-      E: "58 tahun",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 20,
-    section: "BASARNAS",
-    soal: "Pengangkatan PNS ke dalam Jabatan Fungsional Pranata Pencarian dan Pertolongan melalui pengangkatan pertama harus dilaksanakan paling lambat...",
-    opsi: {
-      A: "6 bulan setelah diangkat sebagai PNS",
-      B: "1 tahun setelah diangkat sebagai PNS",
-      C: "2 tahun setelah diangkat sebagai PNS",
-      D: "3 tahun setelah diangkat sebagai PNS",
-      E: "5 tahun setelah diangkat sebagai PNS",
-    },
-    jawaban: "B",
-  },
-  {
     id: 21,
     section: "BASARNAS",
-    soal: "Berdasarkan Peraturan Pemerintah Nomor 21 Tahun 2017, pengertian dari Potensi Pencarian dan Pertolongan adalah...",
+    soal: "Salah satu syarat wajib bagi Pranata Pencarian dan Pertolongan yang akan naik jenjang jabatan satu tingkat lebih tinggi adalah...",
     opsi: {
-      A: "Sumber daya manusia, sarana dan prasarana, serta ilmu pengetahuan dan teknologi yang dapat dimanfaatkan untuk mendukung penyelenggaraan pencarian dan pertolongan",
-      B: "Pasukan khusus militer yang dilatih khusus untuk penanggulangan bencana alam nasional",
-      C: "Tim medis darurat yang berkedudukan di rumah sakit umum daerah",
-      D: "Seluruh warga negara Indonesia yang telah berusia di atas 18 tahun",
-      E: "Armada kapal komersial milik BUMN yang beroperasi di wilayah perairan Indonesia",
+      A: "Memiliki ijazah Magister",
+      B: "Mengikuti dan lulus uji kompetensi",
+      C: "Menjabat sebagai kepala unit kerja",
+      D: "Memiliki masa kerja minimal 15 tahun",
+      E: "Mendapatkan piagam penghargaan presiden",
     },
-    jawaban: "A",
+    jawaban: "B",
   },
   {
     id: 22,
     section: "BASARNAS",
-    soal: "Unsur-unsur yang dapat dikategorikan dan dibina sebagai Potensi Pencarian dan Pertolongan menurut PP No. 21 Tahun 2017 meliputi pihak-pihak berikut, KECUALI...",
+    soal: "Penilaian kinerja Pejabat Fungsional Pranata Pencarian dan Pertolongan dilakukan secara periodik berdasarkan...",
     opsi: {
-      A: "Unsur Tentara Nasional Indonesia dan Kepolisian Negara Republik Indonesia",
-      B: "Kementerian, Lembaga Pemerintah Nonkementerian, dan Pemerintah Daerah",
-      C: "Organisasi Kemasyarakatan dan Lembaga Swadaya Masyarakat",
-      D: "Badan Usaha Swasta dan Perorangan",
-      E: "Satuan militer atau kepolisian asing tanpa persetujuan pemerintah Indonesia",
+      A: "Absensi harian dan tes fisik",
+      B: "Sasaran Kinerja Pegawai (SKP) dan Perilaku Kerja",
+      C: "Kenaikan pangkat reguler otomatis",
+      D: "Penilaian instansi luar",
+      E: "Jumlah jam lembur mingguan",
     },
-    jawaban: "E",
+    jawaban: "B",
   },
   {
     id: 23,
     section: "BASARNAS",
-    soal: "Tujuan utama dari pelaksanaan pembinaan Potensi Pencarian dan Pertolongan yang diselenggarakan oleh Badan Nasional Pencarian dan Pertolongan adalah...",
+    soal: "Batas Usia Pensiun (BUP) bagi PNS yang menduduki Jabatan Fungsional Pranata Pencarian dan Pertolongan (Kategori Keterampilan) adalah...",
     opsi: {
-      A: "Menggantikan peran dan tugas utama personel organik Badan",
-      B: "Meningkatkan kapasitas, keterampilan, koordinasi, dan kesiapsiagaan potensi dalam mendukung operasi SAR",
-      C: "Menghimpun dana komersial dari masyarakat untuk operasional SAR",
-      D: "Membentuk satuan cadangan pertahanan negara di wilayah perbatasan",
-      E: "Mengurangi alokasi anggaran belanja pegawai negeri sipil",
+      A: "56 tahun",
+      B: "58 tahun",
+      C: "60 tahun",
+      D: "62 tahun",
+      E: "65 tahun",
     },
     jawaban: "B",
   },
   {
     id: 24,
     section: "BASARNAS",
-    soal: "Lembaga pemerintah yang memegang tanggung jawab utama dalam menyelenggarakan pembinaan Potensi Pencarian dan Pertolongan secara nasional adalah...",
+    soal: "Rincian kegiatan kesiapsiagaan, operasi pencarian dan pertolongan, pengelolaan sarpras, serta pembinaan potensi merupakan unsur utama dalam...",
     opsi: {
-      A: "Kementerian Pertahanan",
-      B: "Badan Nasional Pencarian dan Pertolongan",
-      C: "Kepolisian Negara Republik Indonesia",
-      D: "Kementerian Sosial",
-      E: "Badan Nasional Penanggulangan Bencana",
+      A: "Sasaran Kinerja Pegawai dan Penilaian Angka Kredit Pranata SAR",
+      B: "Tunjangan operasional khusus",
+      C: "Syarat kelulusan CPNS",
+      D: "Materi seleksi masuk sekolah kedinasan",
+      E: "Program kerja internal organisasi masyarakat",
     },
-    jawaban: "B",
+    jawaban: "A",
   },
   {
     id: 25,
     section: "BASARNAS",
-    soal: "Bentuk kegiatan pembinaan Potensi SAR yang berfokus pada peningkatan kemampuan teknis operasional dan Keterampilan penyelamatan di lapangan adalah...",
+    soal: "Pembentukan dan penetapan Tim Penilai Angka Kredit Jabatan Fungsional Pranata Pencarian dan Pertolongan dilakukan oleh...",
     opsi: {
-      A: "Pelatihan teknis pencarian dan pertolongan",
-      B: "Sosialisasi peraturan perundang-undangan",
-      C: "Penandatanganan nota kesepahaman",
-      D: "Evaluasi Laporan Keuangan",
-      E: "Pembentukan posko koordinasi daerah",
+      A: "Pejabat yang Berwenang di Instansi Pembina atau Instansi Pemerintah pengguna",
+      B: "Menteri Pendayagunaan Aparatur Negara dan Reformasi Birokrasi",
+      C: "Kepala Badan Kepegawaian Negara",
+      D: "Ketua Dewan Perwakilan Rakyat",
+      E: "Kepala Kepolisian Negara Republik Indonesia",
     },
     jawaban: "A",
   },
   {
     id: 26,
+    section: "BASARNAS",
+    soal: "Pejabat Fungsional Pranata Pencarian dan Pertolongan dapat diberhentikan dari jabatannya apabila...",
+    opsi: {
+      A: "Mengikuti latihan gabungan selama 2 minggu",
+      B: "Mengundurkan diri dari jabatan",
+      C: "Mengalami kenaikan pangkat tepat waktu",
+      D: "Bertugas di daerah perbatasan",
+      E: "Mencapai target Angka Kredit tahunan",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 27,
+    section: "BASARNAS",
+    soal: "Pejabat Fungsional Pranata Pencarian dan Pertolongan wajib menjadi anggota Organisasi Profesi yang pembinaannya dilakukan oleh...",
+    opsi: {
+      A: "Badan Nasional Pencarian dan Pertolongan",
+      B: "Kementerian Hukum dan HAM",
+      C: "Badan Kepegawaian Negara",
+      D: "Kementerian Dalam Negeri",
+      E: "Lembaga Administrasi Negara",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 28,
+    section: "BASARNAS",
+    soal: "Setiap Pranata Pencarian dan Pertolongan wajib mengikuti pengembangan kompetensi secara berkelanjutan paling sedikit...",
+    opsi: {
+      A: "10 jam pelajaran per tahun",
+      B: "20 jam pelajaran per tahun",
+      C: "30 jam pelajaran per tahun",
+      D: "40 jam pelajaran per tahun",
+      E: "50 jam pelajaran per tahun",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 29,
+    section: "BASARNAS",
+    soal: "Persyaratan kenaikan pangkat bagi Pejabat Fungsional Pranata Pencarian dan Pertolongan adalah...",
+    opsi: {
+      A: "Memenuhi Angka Kredit Kumulatif yang dipersyaratkan dan memiliki nilai kinerja paling rendah baik",
+      B: "Mengabdi selama 3 tahun tanpa memperhitungkan angka kredit",
+      C: "Lulus seleksi penerimaan mahasiswa baru",
+      D: "Mendapat surat rekomendasi dari kepala daerah",
+      E: "Memiliki pengalaman kerja di luar negeri",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 30,
+    section: "BASARNAS",
+    soal: "Pengangkatan dalam Jabatan Fungsional Pranata Pencarian dan Pertolongan melalui mekanisme Penyesuaian (Inpassing) ditujukan bagi...",
+    opsi: {
+      A: "CPNS yang baru menerima SK pertama",
+      B: "PNS yang memiliki pengalaman tugas di bidang pencarian dan pertolongan sesuai ketentuan masa transisi penetapan jabatan",
+      C: "Pegawai swasta yang dikontrak pemerintah",
+      D: "Anggota TNI/POLRI yang belum dialihkan statusnya",
+      E: "Pensiunan PNS yang dipanggil kembali",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 31,
     section: "BASARNAS",
     soal: "Kegiatan inventarisasi, pencatatan, dan pemutakhiran data mengenai jumlah, lokasi, serta kualifikasi sumber daya manusia dan sarana prasarana Potensi SAR dinamakan...",
     opsi: {
@@ -351,7 +417,7 @@ const soalBasarnas = [
     jawaban: "A",
   },
   {
-    id: 27,
+    id: 32,
     section: "BASARNAS",
     soal: "Pemberian sertifikat kompetensi bagi Potensi Pencarian dan Pertolongan yang telah menyelesaikan dan lulus uji kompetensi teknis bertujuan untuk...",
     opsi: {
@@ -364,7 +430,7 @@ const soalBasarnas = [
     jawaban: "A",
   },
   {
-    id: 28,
+    id: 33,
     section: "BASARNAS",
     soal: "Sesuai dengan ketentuan PP No. 21 Tahun 2017, Potensi SAR yang ditugaskan dan terlibat langsung dalam pelaksanaan Operasi Pencarian dan Pertolongan berhak mendapatkan...",
     opsi: {
@@ -377,7 +443,7 @@ const soalBasarnas = [
     jawaban: "A",
   },
   {
-    id: 29,
+    id: 34,
     section: "BASARNAS",
     soal: "Bentuk apresiasi yang dapat diberikan oleh Pemerintah kepada Potensi SAR yang berkontribusi luar biasa atau berjasa dalam operasi pencarian dan pertolongan adalah...",
     opsi: {
@@ -390,7 +456,7 @@ const soalBasarnas = [
     jawaban: "A",
   },
   {
-    id: 30,
+    id: 35,
     section: "BASARNAS",
     soal: "Kewajiban utama bagi Potensi SAR yang telah mendapatkan pelatihan teknis dan terdaftar dalam sistem data Badan Nasional Pencarian dan Pertolongan adalah...",
     opsi: {
@@ -403,59 +469,137 @@ const soalBasarnas = [
     jawaban: "A",
   },
   {
-    id: 31,
+    id: 36,
     section: "BASARNAS",
-    soal: "Berdasarkan Peraturan Pemerintah Nomor 22 Tahun 2017, Operasi Pencarian dan Pertolongan didefinisikan sebagai...",
+    soal: "Di tingkat wilayah atau daerah, koordinasi dan pelaksanaan teknis pembinaan Potensi SAR diselenggarakan oleh...",
     opsi: {
-      A: "Kegiatan penanggulangan bencana alam yang dilakukan pada tahap pascabencana",
-      B: "Penyelenggaraan rangkaian kegiatan yang meliputi pencarian, pertolongan, penyelamatan, dan evakuasi korban kecelakaan, bencana, atau kondisi membahayakan manusia",
-      C: "Latihan simulasi penyelamatan jiwa di medan ekstrem yang dilakukan secara berkala oleh aparat keselamatan",
-      D: "Proses penyidikan penyebab terjadinya musibah kecelakaan penerbangan atau pelayaran",
-      E: "Pelayanan rehabilitasi medis dan psikologis bagi korban bencana alam",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 32,
-    section: "BASARNAS",
-    soal: "Berapa jumlah tahapan penyelenggaraan Operasi Pencarian dan Pertolongan secara berurutan sebagaimana diatur dalam PP No. 22 Tahun 2017?",
-    opsi: {
-      A: "3 tahapan",
-      B: "4 tahapan",
-      C: "5 tahapan",
-      D: "6 tahapan",
-      E: "7 tahapan",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 33,
-    section: "BASARNAS",
-    soal: "Tahap pertama dalam penyelenggaraan Operasi Pencarian dan Pertolongan yang diawali dengan penerimaan informasi atau laporan mengenai terjadinya kecelakaan atau kondisi membahayakan manusia dinamakan...",
-    opsi: {
-      A: "Tahap Menyadari (Awareness Stage)",
-      B: "Tahap Perencanaan (Planning Stage)",
-      C: "Tahap Persiapan (Initial Action Stage)",
-      D: "Tahap Pelaksanaan (Operations Stage)",
-      E: "Tahap Pengakhiran (Conclusion Stage)",
+      A: "Kantor Pencarian dan Pertolongan",
+      B: "Dinas Perhubungan Provinsi",
+      C: "Komando Distrik Militer",
+      D: "Satuan Polisi Pamong Praja",
+      E: "Badan Penanggulangan Bencana Daerah",
     },
     jawaban: "A",
   },
   {
-    id: 34,
+    id: 37,
     section: "BASARNAS",
-    soal: "Pada Tahap Menyadari (Awareness Stage), tindakan awal yang dilakukan oleh petugas siaga setelah menerima laporan berita musibah adalah...",
+    soal: "Penyusunan dan penetapan standar kurikulum, materi, serta kualifikasi dalam pelatihan teknis Potensi SAR merupakan kewenangan dari...",
     opsi: {
-      A: "Mengirimkan seluruh armada kapal dan helikopter ke lokasi kejadian",
-      B: "Melakukan verifikasi, penilaian kebenaran informasi, serta evaluasi awal status keadaan darurat",
-      C: "Menutup area lokasi musibah untuk umum",
-      D: "Meminta pembayaran uang muka operasional kepada keluarga korban",
-      E: "Mempublikasikan daftar nama korban yang belum terkonfirmasi di media sosial",
+      A: "Badan Nasional Pencarian dan Pertolongan",
+      B: "Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi",
+      C: "Lembaga Pelatihan Swasta Internasional",
+      D: "Kementerian Dalam Negeri",
+      E: "Dinas Tenaga Kerja Lokal",
     },
-    jawaban: "B",
+    jawaban: "A",
   },
   {
-    id: 35,
+    id: 38,
+    section: "BASARNAS",
+    soal: "Pendataan sarana dan prasarana milik Potensi SAR oleh Badan Nasional Pencarian dan Pertolongan mencakup aset-aset pendukung seperti...",
+    opsi: {
+      A: "Alat transportasi, alat komunikasi, alat medis, dan peralatan khusus penyelamatan",
+      B: "Gedung perkantoran swasta dan pusat perbelanjaan",
+      C: "Kendaraan dinas pribadi pejabat daerah",
+      D: "Fasilitas tempat rekreasi dan hiburan umum",
+      E: "Kompleks permukiman dan lahan pertanian",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 39,
+    section: "BASARNAS",
+    soal: "Kegiatan sosialisasi pembinaan Potensi SAR yang ditujukan kepada masyarakat umum dan pemangku kepentingan bertujuan untuk...",
+    opsi: {
+      A: "Meningkatkan kesadaran, kepedulian, dan partisipasi aktif masyarakat dalam penyelenggaraan SAR",
+      B: "Menjual peralatan keselamatan kapal kepada warga",
+      C: "Membuka rekrutmen prajurit militer baru",
+      D: "Mengumpulkan dana sumbangan wajib tahunan",
+      E: "Mempromosikan objek wisata alam ekstrem",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 40,
+    section: "BASARNAS",
+    soal: "Mekanisme pengikutsertaan atau pemanggilan Potensi SAR dalam Operasi Pencarian dan Pertolongan dilakukan atas perintah atau permintaan resmi dari...",
+    opsi: {
+      A: "SAR Mission Coordinator (SMC) atau Kepala Badan / Kepala Kantor SAR",
+      B: "Camat di wilayah lokasi musibah",
+      C: "Pimpinan organisasi masyarakat secara independen",
+      D: "Keluarga korban musibah",
+      E: "Kepala Desa setempat",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 41,
+    section: "BASARNAS",
+    soal: "Pengawasan dan evaluasi terhadap penyelenggaraan pembinaan Potensi SAR dilakukan secara berkala dengan maksud untuk...",
+    opsi: {
+      A: "Menilai efektivitas pembinaan, kesiapan potensi, serta mengidentifikasi kebutuhan peningkatan kapasitas",
+      B: "Menjatuhkan sanksi administratif berupa denda finansial kepada potensi yang kurang aktif",
+      C: "Membatasi jumlah organisasi masyarakat yang ingin berpartisipasi",
+      D: "Memutus hubungan kerja sama antarinstansi yang telah terjalin",
+      E: "Menilai kelayakan pajak dari organisasi potensi",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 42,
+    section: "BASARNAS",
+    soal: "Pembiayaan kegiatan pembinaan Potensi SAR yang dilaksanakan oleh Badan Nasional Pencarian dan Pertolongan dibebankan pada...",
+    opsi: {
+      A: "Anggaran Pendapatan dan Belanja Negara (APBN) dan sumber lain yang sah serta tidak mengikat",
+      B: "Iuran wajib dari peserta pelatihan",
+      C: "Pemotongan gaji pegawai negeri sipil daerah",
+      D: "Penjualan atribut dan peralatan operasional",
+      E: "Dana APBD provinsi seluruh Indonesia secara merata",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 43,
+    section: "BASARNAS",
+    soal: "Kerja sama pembinaan Potensi SAR antara Badan Nasional Pencarian dan Pertolongan dengan instansi atau organisasi potensi dituangkan dalam bentuk...",
+    opsi: {
+      A: "Nota kesepahaman atau perjanjian kerja sama teknis",
+      B: "Peraturan Daerah tentang retribusi keselamatan",
+      C: "Surat keputusan pengangkatan pegawai honorer",
+      D: "Akta hibah barang dan jasa",
+      E: "Kontrak kerja komersial",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 44,
+    section: "BASARNAS",
+    soal: "Bentuk partisipasi Potensi SAR dari unsur Badan Usaha atau Swasta dalam mendukung penyelenggaraan Pencarian dan Pertolongan dapat diwujudkan melalui...",
+    opsi: {
+      A: "Penyediaan bantuan sarana prasarana, personil ahli, atau dukungan pembiayaan melalui program tanggung jawab sosial",
+      B: "Penyelenggaraan jasa komersial evakuasi berbayar kepada korban musibah",
+      C: "Pengambilalihan komando kendali Operasi SAR dari tangan SMC",
+      D: "Penutupan akses lokasi musibah untuk kepentingan publikasi perusahaan",
+      E: "Pembatasan pengerahan bantuan hanya untuk karyawan perusahaan sendiri",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 45,
+    section: "BASARNAS",
+    soal: "Pada saat Potensi SAR dikerahkan dalam Operasi SAR Gabungan, kedudukan seluruh unsur potensi tersebut adalah...",
+    opsi: {
+      A: "Berafiliasi sebagai unsur pendukung operasional di bawah kendali komando SMC",
+      B: "Bekerja secara mandiri tanpa wajib melapor ke Posko SAR",
+      C: "Mengambil alih kepemimpinan operasi apabila jumlah personelnya lebih banyak",
+      D: "Bertindak sebagai pengawas lapangan atas kinerja Rescuer BASARNAS",
+      E: "Bertanggung jawab langsung kepada pemerintah daerah setempat tanpa koordinasi posko",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 46,
     section: "BASARNAS",
     soal: "Tingkat keadaan darurat di mana diperoleh informasi mengenai adanya keraguan terhadap keselamatan kapal, pesawat udara, atau manusia dinamakan...",
     opsi: {
@@ -468,7 +612,7 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 36,
+    id: 47,
     section: "BASARNAS",
     soal: "Tingkat keadaan darurat tertinggi di mana terdapat keyakinan yang beralasan bahwa kapal, pesawat udara, atau manusia berada dalam bahaya kritis dan membutuhkan bantuan segera dinamakan...",
     opsi: {
@@ -481,7 +625,7 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 37,
+    id: 48,
     section: "BASARNAS",
     soal: "Kondisi di mana timbul kekhawatiran mengenai keselamatan kapal, pesawat udara, atau manusia karena perkembangan informasi tidak membaik berada pada tingkat keadaan darurat...",
     opsi: {
@@ -494,7 +638,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 38,
+    id: 49,
     section: "BASARNAS",
     soal: "Tahap Operasi SAR di mana SMC menyusun Rencana Operasi SAR (SAR Action Plan) berdasarkan penentuan posisi duga (datum), luas area pencarian, dan penunjukan SRU dinamakan...",
     opsi: {
@@ -507,7 +651,7 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 39,
+    id: 50,
     section: "BASARNAS",
     soal: "Pejabat yang ditunjuk dan diberi wewenang penuh untuk memimpin, merencanakan, serta mengoordinasikan keseluruhan Operasi Pencarian dan Pertolongan dari Pos Komando dinamakan...",
     opsi: {
@@ -520,7 +664,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 40,
+    id: 51,
     section: "BASARNAS",
     soal: "Tugas dan kewenangan utama seorang On-Scene Coordinator (OSC) dalam Operasi SAR adalah...",
     opsi: {
@@ -533,7 +677,7 @@ const soalBasarnas = [
     jawaban: "A",
   },
   {
-    id: 41,
+    id: 52,
     section: "BASARNAS",
     soal: "Satuan bergerak yang terdiri dari personel terampil beserta sarana pendukung yang ditugaskan secara langsung melakukan pencarian dan pertolongan di lapangan dinamakan...",
     opsi: {
@@ -546,7 +690,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 42,
+    id: 53,
     section: "BASARNAS",
     soal: "Rencana tertulis yang memuat penugasan SRU, pola pencarian, frekuensi komunikasi, serta fasilitas medis yang disiapkan oleh SMC dinamakan...",
     opsi: {
@@ -559,7 +703,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 43,
+    id: 54,
     section: "BASARNAS",
     soal: "Pelaksanaan pergerakan SRU menuju lokasi pencarian, penyisiran area, pembebasan korban, serta penanganan medis darurat dilakukan pada...",
     opsi: {
@@ -572,9 +716,9 @@ const soalBasarnas = [
     jawaban: "D",
   },
   {
-    id: 44,
+    id: 55,
     section: "BASARNAS",
-    soal: "Kegiatan rapat singkat pascatugas (debriefing) yang dilakukan oleh tim Rescuer/SRU sesaat setelah kembali dari penyisiran lapangan bertujuan untuk...",
+    soal: "Kegiatan rapat singkat pasca tugas (debriefing) yang dilakukan oleh tim Rescuer/SRU sesaat setelah kembali dari penyisiran lapangan bertujuan untuk...",
     opsi: {
       A: "Menagih insentif harian personel",
       B: "Mengumpulkan data pencarian, melaporkan kendala lapangan, serta memperbarui peta pencarian untuk evaluasi SMC",
@@ -585,7 +729,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 45,
+    id: 56,
     section: "BASARNAS",
     soal: "Berdasarkan PP No. 22 Tahun 2017, jangka waktu standar pelaksanaan Operasi Pencarian dan Pertolongan sejak ditetapkan pembukaan operasi adalah...",
     opsi: {
@@ -598,7 +742,202 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 46,
+    id: 57,
+    section: "BASARNAS",
+    soal: "Penghentian atau penutupan Operasi Pencarian dan Pertolongan oleh SMC / Kepala Badan dapat dilakukan apabila memenuhi kondisi berikut, KECUALI...",
+    opsi: {
+      A: "Seluruh korban telah ditemukan dan dievakuasi",
+      B: "Evaluasi menyatakan tidak ada lagi tanda-tanda kehidupan dan tidak mungkin lagi ditemukan korban setelah jangka waktu tertentu",
+      C: "Terjadi perubahan cuaca ekstrem yang membahayakan jiwa tim penyelamat secara mutlak",
+      D: "Adanya permintaan tertulis penghentian dari pihak asuransi korban demi efisiensi dana",
+      E: "Tidak ada lagi petunjuk baru mengenai keberadaan objek musibah setelah dilakukan upaya pencarian maksimal",
+    },
+    jawaban: "D",
+  },
+  {
+    id: 58,
+    section: "BASARNAS",
+    soal: "Apabila jangka waktu standar Operasi SAR (7 hari) telah berakhir namun diduga kuat masih ada petunjuk keberadaan korban, tindakan yang dapat diambil sesuai PP No. 22 Tahun 2017 adalah...",
+    opsi: {
+      A: "Operasi SAR wajib ditutup permanently tanpa opsi perpanjangan",
+      B: "Operasi SAR dapat diperpanjang berdasarkan hasil evaluasi SMC dan persetujuan pejabat berwenang",
+      C: "Mengalihkan tanggung jawab penuh kepada pihak keluarga korban",
+      D: "Meminta pembayaran biaya tambahan dari pemerintah daerah untuk melanjutkan pencarian",
+      E: "Membiarkan lokasi tanpa koordinasi dan membiarkan relawan bekerja sendiri",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 59,
+    section: "BASARNAS",
+    soal: "Dalam keadaan di mana lokasi Operasi SAR mengancam keselamatan personel penolong akibat cuaca ekstrem atau bahaya susulan yang tidak dapat ditoleransi, SMC berwenang untuk...",
+    opsi: {
+      A: "Menghentikan sementara Operasi SAR hingga kondisi dinilai aman kembali",
+      B: "Memaksa SRU tetap menerobos lokasi apapun risikonya",
+      C: "Menyerahkan kepemimpinan operasi kepada anggota SRU termuda",
+      D: "Menutup operasi secara permanen dan menghapus file data kejadian",
+      E: "Memberikan sanksi disiplin kepada tim penolong yang menolak masuk lokasi bahaya",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 60,
+    section: "BASARNAS",
+    soal: "Penyerahan korban selamat yang telah dievakuasi dari lokasi musibah oleh SMC/SRU dilakukan kepada...",
+    opsi: {
+      A: "Pihak media massa untuk konferensi pers",
+      B: "Pihak fasilitas pelayanan kesehatan / pemerintah daerah / keluarga korban",
+      C: "Pihak lembaga penjamin asuransi komersial",
+      D: "Pihak pimpinan organisasi kemasyarakatan lokal",
+      E: "Pihak maskapai penerbangan asing tanpa berita acara",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 61,
+    section: "BASARNAS",
+    soal: "Penyerahan jenazah korban meninggal dunia hasil evakuasi Operasi SAR dilakukan kepada...",
+    opsi: {
+      A: "Tim DVI (Disaster Victim Identification) / Kepolisian / Instansi berwenang untuk proses identifikasi dan penanganan selanjutnya",
+      B: "Pihak tempat pemakaman umum secara langsung",
+      C: "Pihak pengelola tempat wisata terdekat",
+      D: "Pihak sponsor kegiatan",
+      E: "Pihak media cetak nasional",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 62,
+    section: "BASARNAS",
+    soal: "Dalam pelaksanaan Operasi SAR Gabungan yang melibatkan unsur TNI, Polri, dan Potensi SAR lainnya, koordinasi komando taktis dan operasional seluruh unsur berada di bawah kendali...",
+    opsi: {
+      A: "Komandan Kodim setempat",
+      B: "Kepala Kepolisian Resort setempat",
+      C: "SAR Mission Coordinator (SMC)",
+      D: "Kepala Badan Penanggulangan Bencana Daerah",
+      E: "Pimpinan organisasi sukarelawan terbanyak",
+    },
+    jawaban: "C",
+  },
+  {
+    id: 63,
+    section: "BASARNAS",
+    soal: "Dokumen resmi yang wajib dibuat oleh SMC setelah seluruh rangkaian Operasi Pencarian dan Pertolongan selesai atau ditutup dinamakan...",
+    opsi: {
+      A: "Laporan Akhir Operasi SAR",
+      B: "Laporan Keuangan Tahunan",
+      C: "Berita Acara Pemeriksaan Saksi",
+      D: "Nota Pembayaran Logistik",
+      E: "Surat Izin Usaha Penyelamatan",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 64,
+    section: "BASARNAS",
+    soal: "Penggunaan sarana dan prasarana milik instansi pemerintah lain, TNI, Polri, atau swasta dalam Operasi SAR diatur berdasarkan prinsip...",
+    opsi: {
+      A: "Menyewa secara komersial dengan harga pasar",
+      B: "Keterpaduan, efisiensi, dan saling mendukung dalam rangka keselamatan jiwa manusia",
+      C: "Pengambilalihan hak milik secara permanen oleh BASARNAS",
+      D: "Pembayaran tunai di depan sebelum sarana digerakkan",
+      E: "Peminjaman tanpa batas waktu dan tanpa kewajiban pemeliharaan",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 65,
+    section: "BASARNAS",
+    soal: "Sesuai PP No. 22 Tahun 2017, apabila musibah pelayaran terjadi di wilayah laut territorial Indonesia dan melibatkan kapal berbendera asing, koordinasi komunikasi operasi dilakukan oleh Badan Nasional Pencarian dan Pertolongan dengan...",
+    opsi: {
+      A: "Kantor Kedutaan Besar / Konsulat negara berbendera kapal dan otoritas keselamatan maritim negara terkait",
+      B: "Pihak pemilik kapal tanpa memberitahu kementerian luar negeri",
+      C: "Organisasi perdagangan dunia (WTO)",
+      D: "Pihak swasta penyedia jasa tarik kapal",
+      E: "Pengadilan maritim internasional secara langsung",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 66,
+    section: "BASARNAS",
+    soal: "Pada Tahap Persiapan (Initial Action Stage), langkah kunci yang wajib dilaksanakan oleh Kantor SAR penerima laporan adalah...",
+    opsi: {
+      A: "Membuat laporan pertanggungjawaban anggaran",
+      B: "Menunjuk SMC, menyiagakan SRU, serta menyusun rencana pergerakan awal",
+      C: "Menutup seluruh rute penerbangan nasional",
+      D: "Mengadakan ujian kompetensi bagi seluruh staf",
+      E: "Membeli peralatan kapal baru dari pabrikan",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 67,
+    section: "BASARNAS",
+    soal: "Evaluasi Operasi SAR yang dilakukan secara harian (daily evaluation) oleh SMC bersama para komandan unsur bertujuan untuk...",
+    opsi: {
+      A: "Menghitung sisa alokasi anggaran BBM",
+      B: "Menilai efektivitas pencarian hari tersebut, menganalisis kendala, dan memperbarui rencana pencarian hari berikutnya",
+      C: "Mengganti seluruh personel SRU tanpa alasan",
+      D: "Menentukan besaran ganti rugi barang korban yang rusak",
+      E: "Mengubah status kelembagaan Kantor SAR",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 68,
+    section: "BASARNAS",
+    soal: "Penyebaran informasi (press release) perkembangan Operasi SAR kepada media massa dan publik wajib dilakukan secara tersentralisasi melalui...",
+    opsi: {
+      A: "Informasi resmi dari SMC / Juru Bicara yang ditunjuk resmi",
+      B: "Pernyataan pribadi setiap anggota Rescuer di akun media sosial masing-masing",
+      C: "Laporan dari warga sekitar yang menonton di lokasi",
+      D: "Keterangan dari saksi mata yang belum diverifikasi",
+      E: "Rilis berita dari agen perjalanan wisata",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 69,
+    section: "BASARNAS",
+    soal: "Pembiayaan pelaksanaan Operasi Pencarian dan Pertolongan yang diselenggarakan oleh Badan Nasional Pencarian dan Pertolongan bersumber dari...",
+    opsi: {
+      A: "Tarikan retribusi keselamatan dari penumpang kapal dan pesawat",
+      B: "Anggaran Pendapatan dan Belanja Negara (APBN) serta sumber lain yang sah dan tidak mengikat",
+      C: "Pembayaran langsung oleh korban yang berhasil diselamatkan",
+      D: "Potongan gaji bulanan anggota potensi SAR",
+      E: "Sumbangan wajib dari pemilik armada yang mengalami kecelakaan",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 70,
+    section: "BASARNAS",
+    soal: "Apabila kecelakaan terjadi pada pesawat udara sipil asing yang jatuh di wilayah daratan Indonesia, penyelenggara utama Operasi Pencarian dan Pertolongan adalah...",
+    opsi: {
+      A: "Tim penyelamat dari negara asal pesawat tanpa pelibatan BASARNAS",
+      B: "Badan Nasional Pencarian dan Pertolongan (BASARNAS) bersama unsur terkait di Indonesia",
+      C: "Maskapai penerbangan swasta pemilik pesawat",
+      D: "Organisasi Palang Merah Internasional secara mandiri",
+      E: "Kedutaan besar negara asing secara sepihak",
+    },
+    jawaban: "B",
+  },
+  {
+    id: 71,
+    section: "BASARNAS",
+    soal: "Dokumen yang menjadi dasar acuan hukum utama dalam teknis penyelenggaraan Operasi Pencarian dan Pertolongan di Indonesia selain PP No. 22 Tahun 2017 adalah...",
+    opsi: {
+      A: "UU No. 29 Tahun 2014 tentang Pencarian dan Pertolongan",
+      B: "UU No. 24 Tahun 2007 tentang Penanggulangan Bencana",
+      C: "UU No. 22 Tahun 2009 tentang Lalu Lintas dan Angkutan Jalan",
+      D: "Kitab Undang-Undang Hukum Pidana (KUHP)",
+      E: "Peraturan Presiden tentang Pengadaan Barang dan Jasa",
+    },
+    jawaban: "A",
+  },
+  {
+    id: 72,
     section: "BASARNAS",
     soal: "Komponen kebugaran jasmani yang paling mendasar dan vital bagi seorang personel Rescuer dalam menjalankan operasi pencarian dan pertolongan dalam jangka waktu yang panjang adalah...",
     opsi: {
@@ -611,7 +950,7 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 47,
+    id: 73,
     section: "BASARNAS",
     soal: "Metode latihan lari yang dilakukan di alam terbuka dengan variasi kecepatan, mulai dari jalan santai, joging, hingga lari cepat (sprint) yang disesuaikan dengan kontur permukaan tanah dinamakan...",
     opsi: {
@@ -624,7 +963,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 48,
+    id: 74,
     section: "BASARNAS",
     soal: "Latihan yang mengombinasikan beberapa jenis gerakan fisik (seperti push-up, squat, jumping jack, sit-up, dan burpee) yang disusun dalam beberapa stasiun latihan dan dilakukan secara berurutan dinamakan...",
     opsi: {
@@ -637,7 +976,7 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 49,
+    id: 75,
     section: "BASARNAS",
     soal: 'Dalam merancang program latihan fisik kebugaran berdasarkan prinsip FITT, huruf "I" melambangkan...',
     opsi: {
@@ -650,9 +989,9 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 50,
+    id: 76,
     section: "BASARNAS",
-    soal: "Jenis latihan peregangan yang dilakukan dengan cara menahan posisi regangan otot tanpa gerakan memantul (bouncing) selama 15–30 detik dinamakan...",
+    soal: "Jenis latihan peregangan yang dilakukan dengan cara menahan posisi regangan otot tanpa gerakan memantul (bouncing) selama 15-30 detik dinamakan...",
     opsi: {
       A: "Peregangan Balistik",
       B: "Peregangan Dinamis",
@@ -663,7 +1002,7 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 51,
+    id: 77,
     section: "BASARNAS",
     soal: "Latihan fisik yang memanfaatkan gerakan melompat secara berulang-ulang untuk melatih daya ledak (power) otot kaki Rescuer dinamakan...",
     opsi: {
@@ -676,7 +1015,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 52,
+    id: 78,
     section: "BASARNAS",
     soal: "Tes kebugaran jasmani standar yang paling tepat digunakan untuk mengukur daya tahan otot perut (abdominal muscular endurance) personel adalah...",
     opsi: {
@@ -689,7 +1028,7 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 53,
+    id: 79,
     section: "BASARNAS",
     soal: "Metode latihan lari Long Slow Distance (LSD) mengutamakan karakteristik latihan berupa...",
     opsi: {
@@ -702,7 +1041,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 54,
+    id: 80,
     section: "BASARNAS",
     soal: "Latihan fisik khusus berupa berjalan kaki menempuh jarak jauh dengan membawa beban ransel berat (backpack) di punggung guna mensimulasikan mobilisasi peralatan SAR di medan darat dinamakan...",
     opsi: {
@@ -715,7 +1054,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 55,
+    id: 81,
     section: "BASARNAS",
     soal: "Komponen kebugaran jasmani yang diuji melalui tes Shuttle Run (lari bolak-balik memindahkan benda) adalah...",
     opsi: {
@@ -728,7 +1067,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 56,
+    id: 82,
     section: "BASARNAS",
     soal: "Pengukuran kapasitas aerobik maksimal tubuh seseorang dalam menghirup dan menggunakan oksigen saat aktivitas fisik secara mendalam dan kuantitatif dinyatakan dalam satuan...",
     opsi: {
@@ -741,7 +1080,7 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 57,
+    id: 83,
     section: "BASARNAS",
     soal: "Jenis pemanasan (warming up) yang paling direkomendasikan untuk dilakukan SEBELUM memulai latihan fisik atau operasi SAR lapangan adalah...",
     opsi: {
@@ -754,7 +1093,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 58,
+    id: 84,
     section: "BASARNAS",
     soal: "Menurut prinsip latihan fisik, prinsip beban berlebih (Overload Principle) berarti bahwa...",
     opsi: {
@@ -767,7 +1106,7 @@ const soalBasarnas = [
     jawaban: "B",
   },
   {
-    id: 59,
+    id: 85,
     section: "BASARNAS",
     soal: "Latihan menahan posisi tubuh sejajar dengan lantai menggunakan tumpuan siku tangan dan ujung kaki tanpa gerakan untuk menguatkan otot inti (core stability) dinamakan...",
     opsi: {
@@ -780,7 +1119,7 @@ const soalBasarnas = [
     jawaban: "A",
   },
   {
-    id: 60,
+    id: 86,
     section: "BASARNAS",
     soal: "Bentuk kontraksi otot di mana otot menghasilkan tegangan tanpa mengalami perubahan panjang otot dan tanpa menghasilkan gerakan sendi dinamakan...",
     opsi: {
@@ -793,526 +1132,187 @@ const soalBasarnas = [
     jawaban: "C",
   },
   {
-    id: 61,
-    section: "BASARNAS",
-    soal: "Pengertian Siaga SAR dalam penyelenggaraan operasi pencarian dan pertolongan adalah...",
-    opsi: {
-      A: "Kegiatan latihan fisik rutin yang dilakukan oleh personel penolong setiap pagi",
-      B: "Tingkat kesiapsiagaan personel, sarana, dan prasarana selama 24 jam terus-menerus untuk merespons kejadian musibah atau Kondisi Membahayakan Manusia (KMM) secara cepat dan tepat",
-      C: "Proses rehabilitasi fisik pascadilaksanakannya operasi pertolongan di daerah bencana",
-      D: "Penjagaan keamanan wilayah perbatasan oleh tim gabungan TNI dan Polri",
-      E: "Pelaksanaan pemeriksaan administratif berkala terhadap dokumen kantor SAR",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 62,
-    section: "BASARNAS",
-    soal: "Tujuan utama dari pelaksanaan Siaga SAR yang dilakukan secara uninterrupted (tanpa henti) oleh Badan Nasional Pencarian dan Pertolongan adalah...",
-    opsi: {
-      A: "Mengurangi anggaran pemeliharaan peralatan operasional",
-      B: "Meminimalkan waktu tanggap (response time) saat terjadi musibah guna menyelamatkan jiwa manusia",
-      C: "Menghimpun data demografi masyarakat di kawasan rawan bencana",
-      D: "Mengatur arus lalu lintas kendaraan operasional di jalan raya",
-      E: "Memenuhi formalitas jam kerja pegawai negeri sipil",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 63,
-    section: "BASARNAS",
-    soal: "Seorang petugas siaga SAR menerima panggilan darurat dari seorang nelayan yang melaporkan kapalnya mengalami mati mesin di tengah laut. Sebelum menetapkan status keadaan darurat, langkah analisis situasi paling awal yang harus dilakukan oleh petugas siaga adalah...",
-    opsi: {
-      A: "Memerintahkan seluruh tim Rescuer langsung berangkat ke laut tanpa informasi tambahan",
-      B: "Mengonfirmasi identitas pelapor, koordinat posisi kapal, jumlah person on board (POB), serta melakukan verifikasi kebenaran laporan",
-      C: "Mengontak pihak galangan kapal untuk menanyakan harga perbaikan mesin",
-      D: "Meminta pelapor membayar biaya administrasi penanganan laporan darurat",
-      E: "Menyuruh nelayan tersebut berenang menuju tepian pantai terdekat",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 64,
-    section: "BASARNAS",
-    soal: "Berdasarkan regulasi dan pedoman penyelenggaraan Pencarian dan Pertolongan, definisi dari Latihan SAR (SAR Exercise) adalah...",
-    opsi: {
-      A: "Kegiatan penanggulangan musibah secara nyata di lapangan saat terjadi bencana alam",
-      B: "Rangkaian kegiatan simulasi operasional yang terencana untuk menguji, memelihara, dan meningkatkan kesiapsiagaan serta kemampuan personel dan sarana SAR",
-      C: "Proses penyidikan teknis oleh pihak kepolisian terhadap penyebab terjadinya kecelakaan kapal atau pesawat",
-      D: "Kegiatan seleksi penerimaan calon pegawai baru di lingkungan instansi pencarian dan pertolongan",
-      E: "Pembentukan posko bantuan sosial untuk penyaluran logistik pengungsi",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 65,
-    section: "BASARNAS",
-    soal: "Tujuan utama diselenggarakannya Latihan SAR secara berkala bagi personel dan Potensi SAR adalah...",
-    opsi: {
-      A: "Mengurangi alokasi penggunaan anggaran operasional tahunan",
-      B: "Menguji efektivitas Standar Operasional Prosedur (SOP), meningkatkan keterampilan teknis, serta memperkuat koordinasi antarunsur",
-      C: "Memenuhi formalitas pemenuhan jam kerja pegawai di ruang kantor",
-      D: "Menggantikan seluruh peran operasi pencarian dan pertolongan yang sebenarnya",
-      E: "Mempublikasikan kegiatan seremonial instansi kepada media massa",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 66,
-    section: "BASARNAS",
-    soal: "Latihan SAR yang berfokus pada pengujian dan peningkatan keterampilan teknis perorangan atau tim kecil pada satu bidang spesifik (seperti teknik pertolongan di ketinggian atau pengoperasian alat potong pembebasan korban) dinamakan...",
-    opsi: {
-      A: "Tabletop Exercise (TTX)",
-      B: "Drill / Gladi Teknik",
-      C: "Command Post Exercise (CPX)",
-      D: "Full Scale Exercise (FSE)",
-      E: "Joint Regional Exercise",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 67,
-    section: "BASARNAS",
-    soal: "Jenis latihan SAR yang dirancang untuk menguji alur komunikasi, keandalan frekuensi radio, serta kesiapsiagaan penerimaan sinyal marabahaya antarestasiun SAR tanpa menggerakkan pasukan lapangan dinamakan...",
-    opsi: {
-      A: "Communications Exercise (COMMEX)",
-      B: "Field Training Exercise (FTX)",
-      C: "Medical Evacuation Drill",
-      D: "Navigation Exercise",
-      E: "Search Pattern Drill",
-    },
-    jawaban: "A",
-  },
-  {
-    id: 68,
-    section: "BASARNAS",
-    soal: "Pola pencarian SAR yang digunakan ketika posisi perkiraan objek (datum) sangat akurat dan area yang perlu disisir relatif kecil, di mana SRU bergerak melakukan lintasan sejajar berulang secara sistematis dinamakan...",
-    opsi: {
-      A: "Parallel Track Search",
-      B: "Sector Search",
-      C: "Expanding Square Search",
-      D: "Track Line Search",
-      E: "Contour Search",
-    },
-    jawaban: "A",
-  },
-  {
-    id: 69,
-    section: "BASARNAS",
-    soal: "Pola pencarian Expanding Square Search (SS) paling tepat diterapkan pada kondisi operasional...",
-    opsi: {
-      A: "Area pencarian sangat luas di laut lepas dengan banyak SRU bergerak bersamaan",
-      B: "Posisi datum diketahui dengan tingkat kepastian tinggi, area pencarian kecil, dan hanya melibatkan satu SRU",
-      C: "Penyisiran garis pantai yang berlekuk-lekuk dan curam",
-      D: "Rute penerbangan pesawat yang hilang di sepanjang jalur penerbangan",
-      E: "Penyisiran area lembah pegunungan yang sangat terjal",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 70,
-    section: "BASARNAS",
-    soal: "Sebuah kapal penyelamatkan (RB) berangkat dari dermaga menuju lokasi datum yang berjarak 45 mil laut (NM). Jika kecepatan rata-rata kapal adalah 15 knot, berapa waktu tempuh yang dibutuhkan kapal untuk mencapai lokasi tersebut?",
-    opsi: {
-      A: "2 jam",
-      B: "2,5 jam",
-      C: "3 jam",
-      D: "3,5 jam",
-      E: "4 jam",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 71,
-    section: "BASARNAS",
-    soal: "Faktor kondisi alam yang paling sering menyebabkan perubahan arah pergeseran (drift) objek musibah di permukaan laut lepas secara signifikan adalah...",
-    opsi: {
-      A: "Kelembapan udara dan suhu air",
-      B: "Gelombang laut, arus permukaan (sea current), dan angin (wind drift)",
-      C: "Curah hujan dan tekanan udara lokal",
-      D: "Pasang surut air laut di daerah pesisir saja",
-      E: "Tingkat salinitas dan kedalaman air laut",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 72,
-    section: "BASARNAS",
-    soal: "Dampak utama dari fenomena cuaca buruk berupa kabut tebal (dense fog) atau hujan deras terhadap efektivitas pelaksanaan Operasi SAR udara maupun laut adalah...",
-    opsi: {
-      A: "Menurunkan daya tahan mesin kendaraan penolong",
-      B: "Mengurangi jarak pandang (visibility) yang mempersulit proses pencarian visual sasaran",
-      C: "Mempercepat laju pergerakan helikopter penyelamat",
-      D: "Merusak perangkat jaringan penerima sinyal radio VHF",
-      E: "Menghilangkan fungsi navigasi GPS pada sarana pencari",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 73,
-    section: "BASARNAS",
-    soal: "Sebuah berita musibah (distress alert) diterima oleh Kantor SAR pada pukul 14.00 UTC. Berapakah waktu lokal kejadian tersebut dalam satuan Waktu Indonesia Barat (WIB / UTC+7)?",
-    opsi: {
-      A: "07.00 WIB",
-      B: "19.00 WIB",
-      C: "21.00 WIB",
-      D: "22.00 WIB",
-      E: "23.00 WIB",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 74,
-    section: "BASARNAS",
-    soal: "Lembaga pemerintah nonkementerian di Indonesia yang memegang tugas pokok, fungsi, dan tanggung jawab utama dalam penyelenggaraan pencarian dan pertolongan (SAR) adalah...",
-    opsi: {
-      A: "Badan Nasional Penanggulangan Bencana (BNPB)",
-      B: "Badan Nasional Pencarian dan Pertolongan (BASARNAS)",
-      C: "Kepolisian Republik Indonesia (POLRI)",
-      D: "TNI Angkatan Laut",
-      E: "Kementerian Ujung Perhubungan",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 75,
-    section: "BASARNAS",
-    soal: "Dalam struktur organisasi Operasi SAR, pejabat yang bertanggung jawab penuh atas keseluruhan manajemen, perencanaan, dan pengendalian Operasi SAR dari tingkat Posko dinamakan...",
-    opsi: {
-      A: "Search and Rescue Mission Coordinator (SMC)",
-      B: "On-Scene Coordinator (OSC)",
-      C: "Search and Rescue Unit (SRU)",
-      D: "Safety Officer",
-      E: "Logistic Officer",
-    },
-    jawaban: "A",
-  },
-  {
-    id: 76,
-    section: "BASARNAS",
-    soal: "Langkah pertama yang paling utama dan wajib dilakukan oleh seorang Rescuer sebelum melakukan pertolongan medis darurat atau evakuasi terhadap korban di lokasi musibah adalah...",
-    opsi: {
-      A: "Mengangkat korban ke tempat yang jauh",
-      B: "Memeriksa dan memastikan keamanan lokasi/lingkungan (Scene Safety)",
-      C: "Memberikan minuman hangat kepada korban",
-      D: "Memfoto kondisi luka korban untuk laporan",
-      E: "Mengubah posisi tubuh korban secara mendadak",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 77,
-    section: "BASARNAS",
-    soal: "Dalam pertolongan pertama dasar (Basic Life Support), pemeriksaan patensi jalan napas korban yang tidak sadarkan diri tanpa curiga cedera tulang belakang dilakukan dengan teknik...",
-    opsi: {
-      A: "Jaw Thrust",
-      B: "Head Tilt - Chin Lift",
-      C: "Heimlich Maneuver",
-      D: "Chest Thrust",
-      E: "Log Roll",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 78,
-    section: "BASARNAS",
-    soal: "Apabila seorang korban diduga kuat mengalami cedera/trauma pada tulang belakang (cervical spine), teknik membuka jalan napas yang paling aman dan direkomendasikan adalah...",
-    opsi: {
-      A: "Head Tilt - Chin Lift",
-      B: "Jaw Thrust",
-      C: "Flexi Neck",
-      D: "Cross Finger",
-      E: "Abdominal Thrust",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 79,
-    section: "BASARNAS",
-    soal: "Alat keselamatan individu (Personal Protective Equipment) yang wajib digunakan oleh Rescuer saat melakukan operasi pertolongan di air (Water Rescue) untuk memberikan daya apung adalah...",
-    opsi: {
-      A: "Harness",
-      B: "Life Jacket / Personal Flotation Device (PFD)",
-      C: "Dry Suit",
-      D: "Cervical Collar",
-      E: "Carabiner",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 80,
-    section: "BASARNAS",
-    soal: "Tali khusus dalam kegiatan SAR air yang dirancang dapat mengapung di permukaan air dan digunakan untuk dilempar ke arah korban yang tenggelam dinamakan...",
-    opsi: {
-      A: "Static Rope",
-      B: "Dynamic Rope",
-      C: "Throw Bag Line (Tali Lempar)",
-      D: "Webbing",
-      E: "Prusik Rope",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 81,
-    section: "BASARNAS",
-    soal: "Jenis tali pertolongan yang memiliki tingkat kelenturan sangat rendah (elongasi rendah) dan paling ideal digunakan untuk sistem penambatan, pengangkatan (hauling), serta penyeberangan pada Vertical Rescue adalah...",
-    opsi: {
-      A: "Dynamic Rope",
-      B: "Static Rope",
-      C: "Manila Rope",
-      D: "Nylon Braided Elastic",
-      E: "Kevlar Cord",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 82,
-    section: "BASARNAS",
-    soal: "Alat pencarian optik genggam yang paling dasar dan wajib dibawa oleh Rescuer untuk memperjelas dan memperbesar objek pencarian di area permukaan darat maupun laut dari jarak jauh adalah...",
-    opsi: {
-      A: "Binokular (Teleskop Ganda)",
-      B: "Stetoskop",
-      C: "Altimeter",
-      D: "Clinometer",
-      E: "Anemometer",
-    },
-    jawaban: "A",
-  },
-  {
-    id: 83,
-    section: "BASARNAS",
-    soal: "Perangkat kamera inframerah portabel yang bekerja dengan mengukur radiasi termal dari tubuh korban sehingga mampu mendeteksi keberadaan korban di tengah kegelapan total atau asap tebal adalah...",
-    opsi: {
-      A: "Digital SLR Camera",
-      B: "Thermal Imaging Camera (TIC)",
-      C: "Sonar Side Scan",
-      D: "Endoskop Industri",
-      E: "Barometer",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 84,
-    section: "BASARNAS",
-    soal: "Dalam operasi Urban Search and Rescue (USAR) pada bangunan runtuh, perangkat akustik yang menggunakan sensor seismik sensitif tinggi untuk mendeteksi getaran, ketukan, atau suara teriakan korban yang tertimbun adalah...",
-    opsi: {
-      A: "Acoustic Search Device / Seismic Listening Device",
-      B: "Echo Sounder",
-      C: "Metal Detector",
-      D: "EPIRB",
-      E: "Anemometer",
-    },
-    jawaban: "A",
-  },
-  {
-    id: 85,
-    section: "BASARNAS",
-    soal: "Urutan tahapan standar yang sistematis dalam siklus operasi penyelamatan dan evakuasi SAR dikenal dengan akronim...",
-    opsi: {
-      A: "LASS (Locate, Access, Stabilize, Transport)",
-      B: "LAST (Locate, Access, Stabilize, Transport)",
-      C: "RICE (Rest, Ice, Compression, Elevation)",
-      D: "ABCD (Airway, Breathing, Circulation, Disability)",
-      E: "START (Simple Triage and Rapid Treatment)",
-    },
-    jawaban: "B",
-  },
-  {
-    id: 86,
-    section: "BASARNAS",
-    soal: "Tahapan dalam operasi evakuasi yang berfokus pada upaya tim penolong untuk menjangkau dan mendatangi posisi keberadaan korban yang telah ditemukan dinamakan...",
-    opsi: {
-      A: "Locate",
-      B: "Access",
-      C: "Stabilize",
-      D: "Transport",
-      E: "Assessment",
-    },
-    jawaban: "B",
-  },
-  {
     id: 87,
     section: "BASARNAS",
-    soal: "Seorang Medical First Responder (MFR) tiba di lokasi kecelakaan lalu lintas. Tindakan pertama yang wajib dilakukan sesuai protokol MFR adalah...",
+    soal: "Pada saat Rescuer mengangkat beban korban dari posisi bawah ke atas pada gerakan bicep curl, otot bisep mengalami kontraksi yang memendek. Jenis kontraksi ini disebut...",
     opsi: {
-      A: "Langsung memindahkan korban ke pinggir jalan",
-      B: "Penilaian keadaan dan keamanan lokasi (Scene Size-Up)",
-      C: "Memasang Cervical Collar pada semua saksi mata",
-      D: "Memberikan minuman manis kepada korban",
-      E: "Melakukan pemijatan pada area yang terasa sakit",
+      A: "Kontraksi Isometrik",
+      B: "Kontraksi Konsentrik",
+      C: "Kontraksi Eksentrik",
+      D: "Kontraksi Pasif",
+      E: "Kontraksi Tetani",
     },
     jawaban: "B",
   },
   {
     id: 88,
     section: "BASARNAS",
-    soal: "Dalam protokol MFR, pemeriksaan awal (Primary Survey) bertujuan untuk...",
+    soal: "Pengukuran Indeks Massa Tubuh (IMT) seseorang dihitung menggunakan rumus...",
     opsi: {
-      A: "Menentukan riwayat penyakit keluarga korban",
-      B: "Mengidentifikasi dan menangani kondisi yang mengancam jiwa (life-threatening) secara cepat",
-      C: "Menghitung total kerugian materiil akibat musibah",
-      D: "Mengisi formulir rujukan rumah sakit secara lengkap",
-      E: "Menanyakan riwayat asuransi kesehatan korban",
+      A: "Berat Badan (kg) dibagi Tinggi Badan (cm)",
+      B: "Berat Badan (kg) dibagi Kuadrat Tinggi Badan dalam meter (m^2)",
+      C: "Tinggi Badan (cm) dikurangi 100",
+      D: "Berat Badan (kg) dikali Tinggi Badan (m)",
+      E: "Lingkar Pinggang (cm) dibagi Berat Badan (kg)",
     },
     jawaban: "B",
   },
   {
     id: 89,
     section: "BASARNAS",
-    soal: "Sistematika pemeriksaan awal (Primary Survey) dalam MFR yang berfokus pada trauma dan henti jantung meliputi urutan...",
+    soal: "Metode latihan renang tanpa henti dalam rentang jarak dan waktu tertentu yang ditujukan untuk meningkatkan daya tahan aerobik di air bagi Rescuer perairan dinamakan...",
     opsi: {
-      A: "SAMPLE",
-      B: "OPQRST",
-      C: "CABDE / ABCDE",
-      D: "DCAP-BTLS",
-      E: "AVPU",
-    },
-    jawaban: "C",
-  },
-  {
-    id: 90,
-    section: "BASARNAS",
-    soal: "Saat melakukan penilaian Airway (jalan napas) pada korban tidak sadarkan diri tanpa trauma leher, tindakan dasar yang dilakukan oleh personil MFR adalah...",
-    opsi: {
-      A: "Jaw Thrust",
-      B: "Head Tilt - Chin Lift",
-      C: "Heimlich Maneuver",
-      D: "Log Roll",
-      E: "Abdominal Thrust",
+      A: "Interval Swimming",
+      B: "Continuous Swimming",
+      C: "Sprint Swimming",
+      D: "Water Trapping",
+      E: "Fin Swimming",
     },
     jawaban: "B",
   },
   {
+    id: 90,
+    section: "BASARNAS",
+    soal: "Latihan lari intensitas tinggi (sprint) yang diselingi dengan interval waktu istirahat aktif (seperti jalan santai) secara teratur dinamakan...",
+    opsi: {
+      A: "High-Intensity Interval Training (HIIT) / Interval Training",
+      B: "Continuous Low-Intensity Training",
+      C: "Fartlek Training",
+      D: "Static Resistance Training",
+      E: "Proprioceptive Training",
+    },
+    jawaban: "A",
+  },
+  {
     id: 91,
     section: "BASARNAS",
-    soal: "Berdasarkan Undang-Undang Nomor 29 Tahun 2014 tentang Pencarian dan Pertolongan, lembaga pemerintah nonkementerian yang menyelenggarakan urusan pemerintahan di bidang pencarian dan pertolongan (SAR) di Indonesia adalah...",
+    soal: "Kemampuan tubuh seseorang untuk mengubah arah posisi tubuh secara cepat, tepat, dan efisien tanpa kehilangan keseimbangan dinamakan...",
     opsi: {
-      A: "Badan Nasional Penanggulangan Bencana (BNPB)",
-      B: "Badan Nasional Pencarian dan Pertolongan (BASARNAS)",
-      C: "Palang Merah Indonesia (PMI)",
-      D: "Kepolisian Negara Republik Indonesia (POLRI)",
-      E: "Tentara Nasional Indonesia (TNI)",
+      A: "Kecepatan (Speed)",
+      B: "Kelincahan (Agility)",
+      C: "Keseimbangan (Balance)",
+      D: "Koordinasi (Coordination)",
+      E: "Power (Muscular Power)",
     },
     jawaban: "B",
   },
   {
     id: 92,
     section: "BASARNAS",
-    soal: 'Pengertian "Potensi SAR" menurut regulasi penyelenggaraan SAR di Indonesia adalah...',
+    soal: "Kisaran Zona Latihan Denyut Jantung (Target Heart Rate) yang direkomendasikan untuk meningkatkan kapasitas daya tahan kardiorespirasi (aerobik sedang) adalah...",
     opsi: {
-      A: "Seluruh peralatan canggih yang dibeli dari luar negeri",
-      B: "Sumber daya manusia, sarana dan prasarana, serta informasi yang dimiliki oleh instansi pemerintah, TNI, POLRI, organisasi masyarakat, atau badan usaha yang dapat dimanfaatkan untuk operasi SAR",
-      C: "Anggota tetap yang digaji penuh oleh instansi Basarnas",
-      D: "Anggaran khusus yang dialokasikan hanya saat terjadi bencana alam",
-      E: "Korban musibah yang berhasil diselamatkan dan menjadi relawan",
+      A: "30% - 40% dari Denyut Jantung Maksimal (DJM)",
+      B: "60% - 80% dari Denyut Jantung Maksimal (DJM)",
+      C: "90% - 100% dari Denyut Jantung Maksimal (DJM)",
+      D: "10% - 20% dari Denyut Jantung Maksimal (DJM)",
+      E: "Tepat pada nilai 100% DJM tanpa jeda",
     },
     jawaban: "B",
   },
   {
     id: 93,
     section: "BASARNAS",
-    soal: "Peralatan komunikasi radio genggam portabel yang bekerja pada frekuensi VHF atau UHF dan digunakan sebagai sarana komunikasi taktis jarak dekat hingga menengah antar-personel di lapangan dinamakan...",
+    soal: "Latihan penguatan otot punggung atas (latissimus dorsi) dan lengan yang sangat efektif mendukung kemampuan Rescuer dalam memanjat tali atau mengangkat beban adalah...",
     opsi: {
-      A: "Telepon Satelit",
-      B: "Handy Talkie (HT)",
-      C: "Radio HF/SSB",
-      D: "Megaphone",
-      E: "Search and Rescue Transponder (SART)",
+      A: "Bench Press",
+      B: "Pull-Up",
+      C: "Leg Press",
+      D: "Calf Raise",
+      E: "Sit-Up",
     },
     jawaban: "B",
   },
   {
     id: 94,
     section: "BASARNAS",
-    soal: "Jenis radio komunikasi yang memanfaatkan gelombang pantulan ionosfer (skywave) sehingga mampu menjangkau komunikasi jarak jauh antar-posko atau lintas pulau tanpa bantuan jaringan seluler/satelit adalah...",
+    soal: "Kondisi kelelahan kronis, penurunan performa fisik, dan gangguan tidur akibat beban latihan fisik yang terlalu tinggi tanpa periode pemulihan (recovery) yang cukup dinamakan...",
     opsi: {
-      A: "Radio HF (High Frequency) / SSB (Single Sideband)",
-      B: "Radio HT UHF",
-      C: "Intercom",
-      D: "Megaphone",
-      E: "Bluetooth Transceiver",
+      A: "Overload Effect",
+      B: "Overtraining Syndrome",
+      C: "Muscle Atrophy",
+      D: "Hypertrophy",
+      E: "Supercompensation",
     },
-    jawaban: "A",
+    jawaban: "B",
   },
   {
     id: 95,
     section: "BASARNAS",
-    soal: "Sistem satelit internasional berbasis kemanusiaan yang khusus dirancang untuk mendeteksi dan memancarkan sinyal darurat dari beacon di seluruh dunia guna mendukung operasi SAR dinamakan...",
+    soal: "Latihan Fin Swimming (renang dengan menggunakan kaki katak/sirip) bagi Rescuer SAR laut terutama bertujuan untuk melatih...",
     opsi: {
-      A: "Cospas-Sarsat",
-      B: "GPS Navstar",
-      C: "Starlink",
-      D: "Palapa",
-      E: "Galileo",
+      A: "Kecepatan pernapasan dada",
+      B: "Kekuatan dan daya tahan otot tungkai kaki di dalam air",
+      C: "Keseimbangan berdiri di perahu karet",
+      D: "Kelenturan pergelangan tangan",
+      E: "Kekuatan otot perut saat menyelam",
     },
-    jawaban: "A",
+    jawaban: "B",
   },
   {
     id: 96,
     section: "BASARNAS",
-    soal: "Frekuensi digital standar internasional utama yang digunakan oleh beacon modern (EPIRB, ELT, PLB) untuk memancarkan data pendaftaran digital dan koordinat lokasi ke satelit Cospas-Sarsat adalah...",
+    soal: "Teknik peregangan yang melibatkan kombinasi kontraksi isometrik otot dan peregangan pasif dengan bantuan pasangan/rekan latihan dinamakan...",
     opsi: {
-      A: "406 MHz",
-      B: "121,5 MHz",
-      C: "243,0 MHz",
-      D: "156,8 MHz",
-      E: "2,4 GHz",
+      A: "Peregangan Balistik",
+      B: "Peregangan PNF (Proprioceptive Neuromuscular Facilitation)",
+      C: "Peregangan Dinamis",
+      D: "Peregangan Mandiri",
+      E: "Peregangan Aktif",
     },
-    jawaban: "A",
+    jawaban: "B",
   },
   {
     id: 97,
     section: "BASARNAS",
-    soal: "Perangkat pemancar sinyal marabahaya khusus yang terpasang pada kapal laut dan dirancang dapat lepas mengapung serta memancar secara otomatis saat kapal tenggelam dinamakan...",
+    soal: "Bentuk latihan fisik kebugaran yang hanya memanfaatkan beban berat tubuh sendiri (bodyweight) tanpa menggunakan peralatan beban luar dinamakan...",
     opsi: {
-      A: "EPIRB (Emergency Position Indicating Radio Beacon)",
-      B: "ELT (Emergency Locator Transmitter)",
-      C: "PLB (Personal Locator Beacon)",
-      D: "SART (Search and Rescue Transponder)",
-      E: "VDR (Voyage Data Recorder)",
+      A: "Powerlifting",
+      B: "Kalistenik (Calisthenics)",
+      C: "Crossfit",
+      D: "Bodybuilding",
+      E: "Strongman Training",
     },
-    jawaban: "A",
+    jawaban: "B",
   },
   {
     id: 98,
     section: "BASARNAS",
-    soal: 'Perbedaan mendasar antara "Sarana SAR" dan "Peralatan SAR" dalam klasifikasi penyelenggaraan operasi Pencarian dan Pertolongan terletak pada...',
+    soal: "Waktu pemulihan (recovery) yang disarankan bagi kelompok otot yang telah dilatih dengan intensitas berat sebelum dilatih kembali adalah...",
     opsi: {
-      A: "Sarana merupakan wahana/alat transportasi pergerakan, sedangkan peralatan merupakan perkakas/instrumen pendukung aksi pertolongan",
-      B: "Sarana hanya digunakan di darat, sedangkan peralatan hanya digunakan di air",
-      C: "Sarana dimiliki oleh swasta, sedangkan peralatan wajib dimiliki oleh pemerintah",
-      D: "Sarana digunakan oleh korban, sedangkan peralatan khusus digunakan oleh dokter",
-      E: "Sarana tidak membutuhkan perawatan, sedangkan peralatan membutuhkan kalibrasi",
+      A: "1 - 2 jam",
+      B: "6 - 8 jam",
+      C: "24 - 48 jam",
+      D: "1 minggu penuh",
+      E: "Tidak memerlukan waktu pemulihan",
     },
-    jawaban: "A",
+    jawaban: "C",
   },
   {
     id: 99,
     section: "BASARNAS",
-    soal: "Kapal penyelamat yang memiliki kombinasi lambung serat kaca kaku (rigid) dengan tabung udara tiup di sekelilingnya sehingga sangat stabil dan tangguh menembus gelombang tinggi dinamakan...",
+    soal: "Kemampuan otot atau sekelompok otot untuk melakukan kontraksi berulang-ulang terhadap suatu beban dalam jangka waktu yang cukup lama dinamakan...",
     opsi: {
-      A: "Rigid Inflatable Boat (RIB)",
-      B: "Landing Craft Rubber (LCR)",
-      C: "Hovercraft",
-      D: "Kapal Tugboat",
-      E: "Sampan",
+      A: "Kekuatan Otot (Muscular Strength)",
+      B: "Daya Tahan Otot (Muscular Endurance)",
+      C: "Daya Ledak Otot (Muscular Power)",
+      D: "Kecepatan Otot (Muscular Speed)",
+      E: "Tonus Otot (Muscle Tone)",
     },
-    jawaban: "A",
+    jawaban: "B",
   },
   {
     id: 100,
     section: "BASARNAS",
-    soal: "Wahana transportasi air khusus yang bergerak di atas bantalan udara bertekanan tinggi sehingga mampu melintasi medan air, rawa-rawa, lumpur, hingga daratan landai dinamakan...",
+    soal: "Latihan rintangan berangkai (Obstacle Course / Halang Rintang) yang memadukan merayap, memanjat, melompati parit, dan berlari bertujuan melatih kebugaran Rescuer secara...",
     opsi: {
-      A: "Hovercraft",
-      B: "Jet Ski",
-      C: "Perahu Karet",
-      D: "Rigid Hull Boat",
-      E: "Kapal Catamaran",
+      A: "Parsial (satu komponen saja)",
+      B: "Terpadu (memadukan kekuatan, kelincahan, daya tahan, dan koordinasi)",
+      C: "Khusus untuk kelenturan sendi jari",
+      D: "Terisolasi pada otot lengan bawah saja",
+      E: "Pasif tanpa memerlukan konsentrasi",
     },
-    jawaban: "A",
+    jawaban: "B",
   },
-  // Contoh beberapa soal (Anda perlu memasukkan semua 100 soal dari PDF):
 ];
 
 // ========================================================================
@@ -1467,6 +1467,9 @@ const Basarnas2 = () => {
   };
 
   // ==================== HITUNG SKOR ====================
+  // Skala BASARNAS: 100 soal, tiap benar = 1, maks 100, lulus >= 70.
+  // Pakai Number() agar perbandingan tidak gagal saat nilai berupa string
+  // (mis. dari localStorage / API).
   const hitungSkor = useCallback(() => {
     let benar = 0;
 
@@ -1476,12 +1479,12 @@ const Basarnas2 = () => {
       }
     });
 
-    const nilai = benar; // Setiap jawaban benar bernilai 1
-    const totalMaks = JUMLAH_SOAL;
+    const nilai = Number(benar) || 0; // Setiap jawaban benar bernilai 1
+    const totalMaks = Number(JUMLAH_SOAL) || 100;
 
     return {
-      benar: benar,
-      salah: JUMLAH_SOAL - benar,
+      benar: Number(benar) || 0,
+      salah: totalMaks - nilai,
       nilai: nilai,
       maks: totalMaks,
     };
@@ -1502,15 +1505,15 @@ const Basarnas2 = () => {
       const payload = {
         user_id: userId,
         jenis_tryout: "Try Out Basarnas",
-        total_nilai: hasil.nilai,
+        total_nilai: Number(hasil.nilai) || 0,
         durasi: Math.round((DURASI_MENIT * 60 - timeLeft) / 60),
         detail: [
           {
             kategori: "BASARNAS",
-            benar: hasil.benar,
-            salah: hasil.salah,
-            terjawab: hasil.benar + hasil.salah,
-            nilai: hasil.nilai,
+            benar: Number(hasil.benar) || 0,
+            salah: Number(hasil.salah) || 0,
+            terjawab: (Number(hasil.benar) || 0) + (Number(hasil.salah) || 0),
+            nilai: Number(hasil.nilai) || 0,
           },
         ],
       };
@@ -1535,7 +1538,7 @@ const Basarnas2 = () => {
   // ================== TAMPILAN HASIL ==================
   if (isFinished) {
     const hasil = hitungSkor();
-    const lulus = hasil.nilai >= PASSING_GRADE;
+    const lulus = Number(hasil.nilai) >= Number(PASSING_GRADE);
 
     return (
       <div className="tryout-container">
