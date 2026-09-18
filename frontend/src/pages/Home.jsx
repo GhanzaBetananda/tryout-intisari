@@ -11,7 +11,7 @@ const testimonials = [
     name: "Muhammad Ma'rifat",
     img: "assets/images/marifat.jpeg",
     message:
-      "Terima kasih banyak kepada seluruh admin dan pemateri Bimbel Intisari, terutama Kak Jeje, Kak Micel, dan Pak Putra, yang telah membimbing kami memahami strategi menjawab soal TKP, TIU, TWK, serta berbagai tips dan trik SKD. Selama 7 kali tryout, saya merasa kemampuan saya semakin berkembang dalam mengerjakan soal, dan pengalaman belajar bersama Bimbel Intisari sangat membantu saya menjadi lebih percaya diri. 🙏",
+      "Terima kasih kepada seluruh admin dan pemateri Bimbel Intisari yang telah membimbing kami dengan tips dan trik mengerjakan TKP, TIU, TWK, dan SKD. Selama 7 kali tryout, saya merasa kemampuan saya semakin berkembang dan lebih percaya diri dalam mengerjakan soal. 🙏",
   },
   {
     name: "Farah Azmi",
