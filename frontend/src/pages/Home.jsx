@@ -1,4 +1,44 @@
 import React from "react";
+
+const testimonials = [
+  {
+    name: "Nirza",
+    img: "assets/images/nirza.jpeg",
+    message:
+      "Kesannya selama menjadi peserta bimbel intisari itu sangat sangat baik, kakak kakaknya ramah, penjelasan materinya mudah di pahami dan cara kakak kakaknya menjelaskan asik ga boring sama sekali.Thank you bimbel intisari and team juga kaka kaka tutor. 💗☺️",
+  },
+  {
+    name: "Muhammad Ma'rifat",
+    img: "assets/images/marifat.jpeg",
+    message:
+      "Terima kasih banyak kepada seluruh admin dan pemateri Bimbel Intisari, terutama Kak Jeje, Kak Micel, dan Pak Putra, yang telah membimbing kami memahami strategi menjawab soal TKP, TIU, TWK, serta berbagai tips dan trik SKD. Selama 7 kali tryout, saya merasa kemampuan saya semakin berkembang dalam mengerjakan soal, dan pengalaman belajar bersama Bimbel Intisari sangat membantu saya menjadi lebih percaya diri. 🙏",
+  },
+  {
+    name: "Farah Azmi",
+    img: "assets/images/farah.jpeg",
+    message:
+      "Bimbel Intisari membantu saya lebih siap dalam menghadapi ujian. Materi SKD sangat update, pembahasannya detail, serta soal try out sangat banyak. Terima kasih dan sukses selalu!",
+  },
+  {
+    name: "La Ode Muhammad",
+    img: "assets/images/laode.jpeg",
+    message:
+      "Web Bimbel Intisari sangat membantu dan semua admin maupun pedamping sangat ramah dan asik. Tampilannya bersih, pembahasan materi soal sangat jelas, dan materi yang disajikan terasa sangat terstruktur sehingga proses belajar jadi jauh lebih efektif dan menyenangkan.",
+  },
+  {
+    name: "Moechammad Alfreda",
+    img: "assets/images/alfreda.jpeg",
+    message:
+      "Bimbel ini membantu saya untuk lebih siap apabila ada rekrutmen di kemudian hari",
+  },
+  // {
+  //   name: "Nabila Putri",
+  //   img: "assets/images/a2.jpg",
+  //   message:
+  //     "Materi selalu diperbarui dan sesuai dengan kebutuhan peserta seleksi. Pembahasan soal yang lengkap membuat saya lebih memahami konsep, bukan sekadar menghafal jawaban.",
+  // },
+];
+
 function Home() {
   return (
     <div>
@@ -466,317 +506,61 @@ function Home() {
             <h3 className="title-big text-center mb-sm-5 mb-4">
               Kesan & Pesan Peserta
             </h3>
-            {/* /grids */}
-            <div className="testimonial-width">
-              <div id="owl-demo1" className="owl-two owl-carousel owl-theme">
-                <div className="item">
-                  <div className="testimonial-content">
+            {/* grid 6 card testimoni - foto 1:1 di atas, pesan di bawah */}
+            <div className="row">
+              {testimonials.map((item, index) => (
+                <div key={index} className="col-lg-4 col-md-6 mb-4">
+                  <div
+                    className="testimonial-card h-100"
+                    style={{
+                      background: "#ffffff",
+                      borderRadius: "12px",
+                      padding: "20px",
+                      boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+                      display: "flex",
+                      flexDirection: "column",
+                      height: "100%",
+                    }}
+                  >
                     <div
-                      className="testimonial"
                       style={{
-                        height: "340px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        background: "#ffffff", // <--- TAMBAHKAN INI
-                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
-                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
+                        width: "100%",
+                        aspectRatio: "1 / 1",
+                        overflow: "hidden",
+                        borderRadius: "10px",
+                        marginBottom: "16px",
                       }}
                     >
-                      <blockquote>
-                        <q>
-                          Materi yang disampaikan sangat terstruktur dan mudah
-                          dipahami. Simulasi try out membantu saya lebih
-                          terbiasa dengan sistem CAT sehingga lebih percaya diri
-                          saat menghadapi ujian.
-                        </q>
-                      </blockquote>
-                      <div className="testi-des">
-                        <div className="test-img">
-                          <img
-                            src="assets/images/gojo.jpg"
-                            className="img-fluid"
-                            alt="client-img"
-                          />
-                        </div>
-                        <div className="peopl align-self">
-                          <h3>Andi Pratama</h3>
-                          <p className="indentity">Peserta</p>
-                        </div>
-                      </div>
+                      <img
+                        src={item.img}
+                        alt={item.name}
+                        className="img-fluid"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          aspectRatio: "1 / 1",
+                          objectFit: "cover",
+                          display: "block",
+                        }}
+                      />
+                    </div>
+                    <blockquote style={{ flex: "1", marginBottom: "16px" }}>
+                      <q style={{ fontStyle: "italic" }}>{item.message}</q>
+                    </blockquote>
+                    <div className="text-center">
+                      <h4 style={{ marginBottom: "4px", fontSize: "18px" }}>
+                        {item.name}
+                      </h4>
+                      <p
+                        className="indentity"
+                        style={{ margin: 0, color: "#777" }}
+                      >
+                        Peserta
+                      </p>
                     </div>
                   </div>
                 </div>
-
-                <div className="item">
-                  <div className="testimonial-content">
-                    <div
-                      className="testimonial"
-                      style={{
-                        height: "340px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        background: "#ffffff", // <--- TAMBAHKAN INI
-                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
-                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
-                      }}
-                    >
-                      <blockquote>
-                        <q>
-                          Bank soal yang tersedia sangat beragam dan
-                          pembahasannya jelas. Saya dapat mengetahui letak
-                          kekurangan saya melalui hasil evaluasi setiap try out.
-                        </q>
-                      </blockquote>
-                      <div className="testi-des">
-                        <div className="test-img">
-                          <img
-                            src="assets/images/gojo.jpg"
-                            className="img-fluid"
-                            alt="client-img"
-                          />
-                        </div>
-                        <div className="peopl align-self">
-                          <h3>Siti Rahma</h3>
-                          <p className="indentity">Peserta</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="item">
-                  <div className="testimonial-content">
-                    <div
-                      className="testimonial"
-                      style={{
-                        height: "340px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        background: "#ffffff", // <--- TAMBAHKAN INI
-                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
-                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
-                      }}
-                    >
-                      <blockquote>
-                        <q>
-                          Pengajar menjelaskan setiap materi dengan sabar dan
-                          mudah dipahami. Saya juga mendapatkan banyak tips
-                          dalam mengatur waktu saat mengerjakan soal CAT.
-                        </q>
-                      </blockquote>
-                      <div className="testi-des">
-                        <div className="test-img">
-                          <img
-                            src="assets/images/gojo.jpg"
-                            className="img-fluid"
-                            alt="client-img"
-                          />
-                        </div>
-                        <div className="peopl align-self">
-                          <h3>Muhammad Rizky</h3>
-                          <p className="indentity">Peserta</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="item">
-                  <div className="testimonial-content">
-                    <div
-                      className="testimonial"
-                      style={{
-                        height: "340px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        background: "#ffffff", // <--- TAMBAHKAN INI
-                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
-                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
-                      }}
-                    >
-                      <blockquote>
-                        <q>
-                          Fitur analisis nilai sangat membantu untuk melihat
-                          perkembangan belajar saya. Dengan begitu, saya bisa
-                          lebih fokus memperbaiki materi yang masih kurang
-                          dikuasai.
-                        </q>
-                      </blockquote>
-                      <div className="testi-des">
-                        <div className="test-img">
-                          <img
-                            src="assets/images/gojo.jpg"
-                            className="img-fluid"
-                            alt="client-img"
-                          />
-                        </div>
-                        <div className="peopl align-self">
-                          <h3>Dewi Anggraini</h3>
-                          <p className="indentity">Peserta</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="item">
-                  <div className="testimonial-content">
-                    <div
-                      className="testimonial"
-                      style={{
-                        height: "340px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        background: "#ffffff", // <--- TAMBAHKAN INI
-                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
-                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
-                      }}
-                    >
-                      <blockquote>
-                        <q>
-                          Platformnya mudah digunakan dan try out berjalan
-                          lancar. Pengalaman mengerjakan soal terasa mirip
-                          dengan pelaksanaan CAT yang sebenarnya.
-                        </q>
-                      </blockquote>
-                      <div className="testi-des">
-                        <div className="test-img">
-                          <img
-                            src="assets/images/gojo.jpg"
-                            className="img-fluid"
-                            alt="client-img"
-                          />
-                        </div>
-                        <div className="peopl align-self">
-                          <h3>Fajar Nugroho</h3>
-                          <p className="indentity">Peserta</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="item">
-                  <div className="testimonial-content">
-                    <div
-                      className="testimonial"
-                      style={{
-                        height: "340px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        background: "#ffffff", // <--- TAMBAHKAN INI
-                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
-                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
-                      }}
-                    >
-                      <blockquote>
-                        <q>
-                          Materi selalu diperbarui dan sesuai dengan kebutuhan
-                          peserta seleksi. Pembahasan soal yang lengkap membuat
-                          saya lebih memahami konsep, bukan sekadar menghafal
-                          jawaban.
-                        </q>
-                      </blockquote>
-                      <div className="testi-des">
-                        <div className="test-img">
-                          <img
-                            src="assets/images/gojo.jpg"
-                            className="img-fluid"
-                            alt="client-img"
-                          />
-                        </div>
-                        <div className="peopl align-self">
-                          <h3>Nabila Putri</h3>
-                          <p className="indentity">Peserta</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="item">
-                  <div className="testimonial-content">
-                    <div
-                      className="testimonial"
-                      style={{
-                        height: "340px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        background: "#ffffff", // <--- TAMBAHKAN INI
-                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
-                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
-                      }}
-                    >
-                      <blockquote>
-                        <q>
-                          Pendampingan dari mentor sangat membantu selama proses
-                          belajar. Setiap pertanyaan dijawab dengan jelas
-                          sehingga saya lebih siap menghadapi ujian.
-                        </q>
-                      </blockquote>
-                      <div className="testi-des">
-                        <div className="test-img">
-                          <img
-                            src="assets/images/gojo.jpg"
-                            className="img-fluid"
-                            alt="client-img"
-                          />
-                        </div>
-                        <div className="peopl align-self">
-                          <h3>Rizal Saputra</h3>
-                          <p className="indentity">Peserta</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="item">
-                  <div className="testimonial-content">
-                    <div
-                      className="testimonial"
-                      style={{
-                        height: "340px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        background: "#ffffff", // <--- TAMBAHKAN INI
-                        padding: "20px", // <--- TAMBAHKAN JUGA (opsional)
-                        borderRadius: "10px", // <--- TAMBAHKAN JUGA (opsional)
-                      }}
-                    >
-                      <blockquote>
-                        <q>
-                          Belajar di Bimbel Intisari memberikan pengalaman yang
-                          menyenangkan. Jadwal try out yang rutin membuat saya
-                          lebih disiplin dan percaya diri dalam mempersiapkan
-                          seleksi.
-                        </q>
-                      </blockquote>
-                      <div className="testi-des">
-                        <div className="test-img">
-                          <img
-                            src="assets/images/gojo.jpg"
-                            className="img-fluid"
-                            alt="client-img"
-                          />
-                        </div>
-                        <div className="peopl align-self">
-                          <h3>Aulia Maharani</h3>
-                          <p className="indentity">Peserta</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           {/* /grids */}
