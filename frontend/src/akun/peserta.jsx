@@ -163,6 +163,16 @@ export default function Peserta() {
       releaseDate: "2026-09-12",
     },
 
+    "Try Out Basarnas 1": {
+      file: "/pdf/basarnas1.pdf",
+      releaseDate: "2026-09-20",
+    },
+
+    "Try Out Basarnas 2": {
+      file: "/pdf/pembahasan-basarnas2.pdf",
+      releaseDate: "2026-09-27",
+    },
+
     TWK: {
       file: "/pdf/pdf",
       releaseDate: "2026-08-03",
