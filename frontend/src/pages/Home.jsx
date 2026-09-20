@@ -31,12 +31,12 @@ const testimonials = [
     message:
       "Bimbel ini membantu saya untuk lebih siap apabila ada rekrutmen di kemudian hari",
   },
-  // {
-  //   name: "Nabila Putri",
-  //   img: "assets/images/a2.jpg",
-  //   message:
-  //     "Materi selalu diperbarui dan sesuai dengan kebutuhan peserta seleksi. Pembahasan soal yang lengkap membuat saya lebih memahami konsep, bukan sekadar menghafal jawaban.",
-  // },
+  {
+    name: "Tiara",
+    img: "assets/images/tiara.jpeg",
+    message:
+      "Kesan saya selama mengikuti bimbel, saya merasa senang karena banyak memiliki teman baru, pengalaman baru, dan saya rasa bimbel initrasi sangat membantu saya untuk mempersiapkan diri kedepannya untuk menghadapi/mengikuti seleksi cpns",
+  },
 ];
 
 function Home() {
