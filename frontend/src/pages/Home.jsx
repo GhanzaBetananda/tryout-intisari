@@ -507,50 +507,67 @@ function Home() {
               Kesan & Pesan Peserta
             </h3>
             {/* grid 6 card testimoni - foto 1:1 di atas, pesan di bawah */}
+            <style>{`
+              .testimonial-card {
+                background: #ffffff;
+                border-radius: 12px;
+                padding: 20px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+              }
+              .testimonial-photo {
+                width: 100%;
+                aspect-ratio: 1 / 1;
+                overflow: hidden;
+                border-radius: 10px;
+                margin-bottom: 16px;
+              }
+              .testimonial-photo img {
+                width: 100%;
+                height: 100%;
+                aspect-ratio: 1 / 1;
+                object-fit: cover;
+                display: block;
+              }
+              .testimonial-quote {
+                flex: 1;
+                margin-bottom: 16px;
+                font-style: italic;
+                overflow-wrap: break-word;
+              }
+              .testimonial-name {
+                margin-bottom: 4px;
+                font-size: 18px;
+              }
+              @media (max-width: 991.98px) {
+                .testimonial-card { padding: 18px; }
+              }
+              @media (max-width: 575.98px) {
+                .testimonial-card { padding: 16px; border-radius: 10px; }
+                .testimonial-photo { max-width: 280px; margin-left: auto; margin-right: auto; }
+                .testimonial-quote { font-size: 14px; }
+                .testimonial-name { font-size: 16px; }
+              }
+            `}</style>
             <div className="row">
               {testimonials.map((item, index) => (
-                <div key={index} className="col-lg-4 col-md-6 mb-4">
-                  <div
-                    className="testimonial-card h-100"
-                    style={{
-                      background: "#ffffff",
-                      borderRadius: "12px",
-                      padding: "20px",
-                      boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "100%",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        aspectRatio: "1 / 1",
-                        overflow: "hidden",
-                        borderRadius: "10px",
-                        marginBottom: "16px",
-                      }}
-                    >
+                <div key={index} className="col-12 col-sm-6 col-lg-4 mb-4">
+                  <div className="testimonial-card h-100">
+                    <div className="testimonial-photo">
                       <img
                         src={item.img}
                         alt={item.name}
                         className="img-fluid"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          aspectRatio: "1 / 1",
-                          objectFit: "cover",
-                          display: "block",
-                        }}
+                        loading="lazy"
                       />
                     </div>
-                    <blockquote style={{ flex: "1", marginBottom: "16px" }}>
-                      <q style={{ fontStyle: "italic" }}>{item.message}</q>
+                    <blockquote className="testimonial-quote">
+                      <q>{item.message}</q>
                     </blockquote>
                     <div className="text-center">
-                      <h4 style={{ marginBottom: "4px", fontSize: "18px" }}>
-                        {item.name}
-                      </h4>
+                      <h4 className="testimonial-name">{item.name}</h4>
                       <p
                         className="indentity"
                         style={{ margin: 0, color: "#777" }}
