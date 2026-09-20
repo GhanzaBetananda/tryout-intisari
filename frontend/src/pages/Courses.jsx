@@ -152,7 +152,7 @@ function Courses() {
     },
     {
       id: 9,
-      title: "BASARNAS 2",
+      title: "Kompetensi Umum BASARNAS",
       subtitle: "TO BASARNAS Paket 2",
       category: "CAT BKN",
       date: "20 September 2026",

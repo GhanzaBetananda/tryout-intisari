@@ -68,7 +68,11 @@ export default function Peserta() {
 
   const getScoreColor = (score, jenis) => {
     const nilai = Number(score) || 0;
-    if (String(jenis || "").toLowerCase().includes("basarnas")) {
+    if (
+      String(jenis || "")
+        .toLowerCase()
+        .includes("basarnas")
+    ) {
       if (nilai >= 85) return "#2563EB";
       if (nilai >= 70) return "#10b981";
       if (nilai >= 50) return "#f59e0b";
@@ -82,7 +86,11 @@ export default function Peserta() {
 
   const getScoreLabel = (score, jenis) => {
     const nilai = Number(score) || 0;
-    if (String(jenis || "").toLowerCase().includes("basarnas")) {
+    if (
+      String(jenis || "")
+        .toLowerCase()
+        .includes("basarnas")
+    ) {
       if (nilai >= 85) return "Excellent";
       if (nilai >= 70) return "Good";
       if (nilai >= 50) return "Average";
@@ -168,7 +176,7 @@ export default function Peserta() {
       releaseDate: "2026-09-20",
     },
 
-    "Try Out Basarnas 2": {
+    "Kompetensi Umum BASARNAS": {
       file: "/pdf/pembahasan-basarnas2.pdf",
       releaseDate: "2026-09-27",
     },

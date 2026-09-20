@@ -1504,7 +1504,7 @@ const Basarnas2 = () => {
 
       const payload = {
         user_id: userId,
-        jenis_tryout: "Try Out Basarnas 2",
+        jenis_tryout: "Kompetensi Umum BASARNAS",
         total_nilai: Number(hasil.nilai) || 0,
         durasi: Math.round((DURASI_MENIT * 60 - timeLeft) / 60),
         detail: [
