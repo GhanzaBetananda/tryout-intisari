@@ -237,6 +237,72 @@ export default function Peserta() {
     },
   };
 
+  // ===============================
+  // Materi PDF (15 file non-pembahasan dari public/pdf)
+  // ===============================
+  const materiPdfList = [
+    {
+      judul: "PERBAN PP RI Nomor 3 Tahun 2020",
+      file: "/pdf/PERBAN PP RI NOMOR 3 TAHUN 2020.pdf",
+    },
+    {
+      judul: "PERBAN PP RI Nomor 3 Tahun 2023",
+      file: "/pdf/PERBAN PP RI NOMOR 3 TAHUN 2023.pdf",
+    },
+    {
+      judul: "PERBAN PP RI Nomor 4 Tahun 2023",
+      file: "/pdf/PERBAN PP RI NOMOR 4 TAHUN 2023.pdf",
+    },
+    {
+      judul: "PERBAN PP RI Nomor 5 Tahun 2021",
+      file: "/pdf/PERBAN PP RI NOMOR 5 TAHUN 2021.pdf",
+    },
+    {
+      judul: "PERBAN PP RI Nomor 5 Tahun 2022",
+      file: "/pdf/PERBAN PP RI NOMOR 5 TAHUN 2022.pdf",
+    },
+    {
+      judul: "PERBAN PP RI Nomor 6 Tahun 2019",
+      file: "/pdf/PERBAN PP RI NOMOR 6 TAHUN 2019.pdf",
+    },
+    {
+      judul: "PERBAN PP RI Nomor 6 Tahun 2022",
+      file: "/pdf/PERBAN PP RI NOMOR 6 TAHUN 2022.pdf",
+    },
+    {
+      judul: "PERBAN PP RI Nomor 7 Tahun 2022",
+      file: "/pdf/PERBAN PP RI NOMOR 7 TAHUN 2022.pdf",
+    },
+    {
+      judul: "PERBAN PP RI Nomor 8 Tahun 2021",
+      file: "/pdf/PERBAN PP RI NOMOR 8 TAHUN 2021.pdf",
+    },
+    {
+      judul: "PERBAN PP RI Nomor 9 Tahun 2020",
+      file: "/pdf/PERBAN PP RI NOMOR 9 TAHUN 2020.pdf",
+    },
+    {
+      judul: "Permen PANRB No. 33 Tahun 2021",
+      file: "/pdf/Permen PANRB No. 33 Tahun 2021.pdf",
+    },
+    {
+      judul: "Perpres Nomor 83 Tahun 2016",
+      file: "/pdf/Perpres Nomor 83 Tahun 2016.pdf",
+    },
+    {
+      judul: "PP 21 Tahun 2017",
+      file: "/pdf/PP 21 2017.pdf",
+    },
+    {
+      judul: "PP 22 Tahun 2017",
+      file: "/pdf/PP 22 Tahun 2017.pdf",
+    },
+    {
+      judul: "UU Nomor 29 Tahun 2014",
+      file: "/pdf/UU Nomor 29 Tahun 2014.pdf",
+    },
+  ];
+
   return (
     <>
       <style>{`
@@ -1030,8 +1096,161 @@ export default function Peserta() {
     font-weight:600;
 }
 
+        /* ----- MATERI PDF SECTION ----- */
+        .materi-section {
+          background: #ffffff;
+          border-radius: 20px;
+          border: 1px solid #f1f5f9;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+          padding: 28px;
+          margin-bottom: 32px;
+        }
+
+        .materi-header {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 16px;
+          margin-bottom: 6px;
+          flex-wrap: wrap;
+        }
+
+        .materi-header h2 {
+          margin: 0 0 6px 0;
+          font-size: 20px;
+          font-weight: 800;
+          color: #0f172a;
+          letter-spacing: -0.3px;
+        }
+
+        .materi-header p {
+          margin: 0;
+          font-size: 14px;
+          color: #64748b;
+          line-height: 1.6;
+          max-width: 640px;
+        }
+
+        .materi-count {
+          font-size: 13px;
+          font-weight: 700;
+          color: #2563EB;
+          background: #eff6ff;
+          border: 1px solid #dbeafe;
+          padding: 6px 14px;
+          border-radius: 999px;
+          white-space: nowrap;
+        }
+
+        .materi-divider {
+          width: 60px;
+          height: 3px;
+          background: linear-gradient(90deg, #2563EB, #3b82f6);
+          border-radius: 999px;
+          margin: 14px 0 20px 0;
+        }
+
+        .materi-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 14px;
+        }
+
+        .materi-card {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          border: 1px solid #f1f5f9;
+          background: #fafbfc;
+          border-radius: 16px;
+          padding: 16px;
+          transition: all 0.25s ease;
+        }
+
+        .materi-card:hover {
+          background: #ffffff;
+          border-color: #e2e8f0;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+          transform: translateY(-2px);
+        }
+
+        .materi-icon {
+          width: 44px;
+          height: 44px;
+          border-radius: 12px;
+          background: #fef2f2;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 22px;
+          flex-shrink: 0;
+        }
+
+        .materi-info {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .materi-info h4 {
+          margin: 0 0 8px 0;
+          font-size: 14px;
+          font-weight: 700;
+          color: #0f172a;
+          line-height: 1.4;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .materi-actions {
+          display: flex;
+          gap: 8px;
+        }
+
+        .btn-materi-view,
+        .btn-materi-download {
+          padding: 7px 14px;
+          border-radius: 9px;
+          font-size: 12.5px;
+          font-weight: 700;
+          cursor: pointer;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          transition: all 0.2s ease;
+          border: 1px solid transparent;
+        }
+
+        .btn-materi-view {
+          background: #2563EB;
+          color: #fff;
+          border: none;
+        }
+
+        .btn-materi-view:hover {
+          background: #1d4ed8;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-materi-download {
+          background: #ffffff;
+          color: #475569;
+          border-color: #e2e8f0;
+        }
+
+        .btn-materi-download:hover {
+          background: #f8fafc;
+          border-color: #cbd5e1;
+        }
+
         /* ----- RESPONSIVE ----- */
         @media (max-width: 1024px) {
+          .materi-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
           .stats-grid {
             grid-template-columns: repeat(2, 1fr);
           }
@@ -1041,6 +1260,9 @@ export default function Peserta() {
         }
 
         @media (max-width: 768px) {
+          .materi-section { padding: 20px 16px; }
+          .materi-grid { grid-template-columns: 1fr; }
+          .materi-header h2 { font-size: 18px; }
           .peserta-container { padding: 16px; }
           .hero-title { font-size: 22px; }
           .hero-subtitle { font-size: 14px; }
@@ -1175,6 +1397,53 @@ export default function Peserta() {
                   </div>
                 </div>
               )}
+
+              {/* MATERI PDF - 15 file dari public/pdf, di atas Riwayat Tryout */}
+              <div className="materi-section">
+                <div className="materi-header">
+                  <div>
+                    <h2>📚 Materi PDF</h2>
+                    <p>
+                      Kumpulan 15 materi regulasi & referensi dari folder{" "}
+                      <code>public/pdf</code> (di luar file pembahasan
+                      bernomor). Klik untuk membaca langsung.
+                    </p>
+                  </div>
+                  <span className="materi-count">
+                    📄 {materiPdfList.length} File
+                  </span>
+                </div>
+                <div className="materi-divider"></div>
+                <div className="materi-grid">
+                  {materiPdfList.map((m, idx) => (
+                    <div className="materi-card" key={idx}>
+                      <div className="materi-icon">📕</div>
+                      <div className="materi-info">
+                        <h4 title={m.judul}>
+                          {idx + 1}. {m.judul}
+                        </h4>
+                        <div className="materi-actions">
+                          <button
+                            className="btn-materi-view"
+                            onClick={() =>
+                              window.open(encodeURI(m.file), "_blank")
+                            }
+                          >
+                            👁 Lihat
+                          </button>
+                          <a
+                            className="btn-materi-download"
+                            href={encodeURI(m.file)}
+                            download
+                          >
+                            ⬇ Unduh
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
               {/* HERO TITLE - Di bawah profile */}
               <div className="hero-section">
