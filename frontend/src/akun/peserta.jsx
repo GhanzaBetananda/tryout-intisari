@@ -134,7 +134,7 @@ export default function Peserta() {
     return new Date() >= new Date(releaseDate);
   };
   const openPembahasan = (file) => {
-    window.open(file, "_blank");
+    window.open(encodeURI(file), "_blank");
   };
 
   // ===============================
@@ -1047,6 +1047,8 @@ export default function Peserta() {
           .pdf-actions{
     display:flex;
     justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
 }
 
 .btn-view-pdf{
@@ -1208,8 +1210,7 @@ export default function Peserta() {
           gap: 8px;
         }
 
-        .btn-materi-view,
-        .btn-materi-download {
+        .btn-materi-view {
           padding: 7px 14px;
           border-radius: 9px;
           font-size: 12.5px;
@@ -1221,9 +1222,6 @@ export default function Peserta() {
           gap: 6px;
           transition: all 0.2s ease;
           border: 1px solid transparent;
-        }
-
-        .btn-materi-view {
           background: #2563EB;
           color: #fff;
           border: none;
@@ -1233,17 +1231,6 @@ export default function Peserta() {
           background: #1d4ed8;
           transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-materi-download {
-          background: #ffffff;
-          color: #475569;
-          border-color: #e2e8f0;
-        }
-
-        .btn-materi-download:hover {
-          background: #f8fafc;
-          border-color: #cbd5e1;
         }
 
         /* ----- RESPONSIVE ----- */
@@ -1431,13 +1418,6 @@ export default function Peserta() {
                           >
                             👁 Lihat
                           </button>
-                          <a
-                            className="btn-materi-download"
-                            href={encodeURI(m.file)}
-                            download
-                          >
-                            ⬇ Unduh
-                          </a>
                         </div>
                       </div>
                     </div>
@@ -1620,7 +1600,7 @@ export default function Peserta() {
                                               }
                                             >
                                               <i className="fa fa-file-pdf-o"></i>
-                                              Lihat Pembahasan
+                                              Lihat
                                             </button>
                                           </>
                                         ) : (
