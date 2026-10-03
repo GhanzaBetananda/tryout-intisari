@@ -16,7 +16,6 @@ export default function Peserta() {
   const [viewerFile, setViewerFile] = useState(null);
   const [viewerTitle, setViewerTitle] = useState("");
   const [viewerNumPages, setViewerNumPages] = useState(null);
-  const [viewerPage, setViewerPage] = useState(1);
   const [viewerScale, setViewerScale] = useState(() =>
     typeof window !== "undefined" && window.innerWidth < 768 ? 0.6 : 1,
   );
@@ -164,7 +163,6 @@ export default function Peserta() {
     setViewerFile(file);
     setViewerTitle(title || "Pembahasan");
     setViewerNumPages(null);
-    setViewerPage(1);
     setViewerError(null);
   };
 
@@ -172,13 +170,11 @@ export default function Peserta() {
     setViewerFile(null);
     setViewerTitle("");
     setViewerNumPages(null);
-    setViewerPage(1);
     setViewerError(null);
   };
 
   const onViewerDocLoad = ({ numPages }) => {
     setViewerNumPages(numPages);
-    setViewerPage(1);
     setViewerError(null);
   };
 
@@ -1346,6 +1342,20 @@ export default function Peserta() {
     padding:16px;
 }
 
+.pdf-viewer-frame-wrap .react-pdf__Document{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.pdf-page-gap{
+    margin-bottom:16px;
+}
+
+.pdf-page-gap:last-child{
+    margin-bottom:0;
+}
+
 .pdf-page-wrap{
     position:relative;
     display:inline-block;
@@ -1965,28 +1975,11 @@ export default function Peserta() {
               </button>
             </div>
             <div className="pdf-viewer-controls">
-              <button
-                className="pdf-viewer-btn"
-                onClick={() => setViewerPage((p) => Math.max(1, p - 1))}
-                disabled={viewerPage <= 1}
-              >
-                ← Prev
-              </button>
               <span className="pdf-viewer-pageinfo">
-                Hal {viewerNumPages ? viewerPage : "…"} /{" "}
-                {viewerNumPages || "…"}
+                {viewerNumPages
+                  ? `${viewerNumPages} halaman — scroll ke bawah`
+                  : "Memuat…"}
               </span>
-              <button
-                className="pdf-viewer-btn"
-                onClick={() =>
-                  setViewerPage((p) =>
-                    viewerNumPages ? Math.min(viewerNumPages, p + 1) : p + 1,
-                  )
-                }
-                disabled={viewerNumPages ? viewerPage >= viewerNumPages : true}
-              >
-                Next →
-              </button>
               <span className="pdf-viewer-zoomwrap">
                 <button
                   className="pdf-viewer-btn"
@@ -2028,26 +2021,31 @@ export default function Peserta() {
                     <div className="pdf-viewer-status">⏳ Memuat dokumen…</div>
                   }
                 >
-                  <div className="pdf-page-wrap">
-                    <Page
-                      pageNumber={viewerPage}
-                      scale={viewerScale}
-                      renderTextLayer={false}
-                      renderAnnotationLayer={false}
-                    />
-                    <div
-                      className="pdf-watermark"
-                      aria-hidden="true"
-                      onContextMenu={(e) => e.preventDefault()}
-                    >
-                      {Array.from({ length: 8 }).map((_, i) => (
-                        <span key={i}>
-                          {akun?.username || "peserta"} •{" "}
-                          {akun?.username || "peserta"} •
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  {Array.from(
+                    new Array(viewerNumPages || 0),
+                    (_, i) => (
+                      <div className="pdf-page-wrap pdf-page-gap" key={i}>
+                        <Page
+                          pageNumber={i + 1}
+                          scale={viewerScale}
+                          renderTextLayer={false}
+                          renderAnnotationLayer={false}
+                        />
+                        <div
+                          className="pdf-watermark"
+                          aria-hidden="true"
+                          onContextMenu={(e) => e.preventDefault()}
+                        >
+                          {Array.from({ length: 8 }).map((_, j) => (
+                            <span key={j}>
+                              {akun?.username || "peserta"} •{" "}
+                              {akun?.username || "peserta"} •
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ),
+                  )}
                 </Document>
               )}
             </div>
