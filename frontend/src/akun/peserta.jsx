@@ -135,7 +135,21 @@ export default function Peserta() {
   const isReleased = (releaseDate) => {
     return new Date() >= new Date(releaseDate);
   };
-  const openPembahasan = (file, title) => {
+  const openPembahasan = async (file, title) => {
+    // Cek dulu file benar-benar ada di server. Kalau 404 (mis. salah nama
+    // file di mapping), Vercel mengembalikan index.html sehingga iframe
+    // malah memuat halaman web + error jQuery/$ di console.
+    try {
+      const res = await fetch(encodeURI(file), { method: "HEAD" });
+      if (!res.ok) {
+        alert(
+          `File "${title || "PDF"}" belum tersedia di server. Silakan hubungi admin.`,
+        );
+        return;
+      }
+    } catch {
+      // Gagal verifikasi (mis. offline) — tetap coba buka viewer.
+    }
     setViewerFile(file);
     setViewerTitle(title || "Pembahasan");
   };
@@ -200,7 +214,7 @@ export default function Peserta() {
     },
 
     "Kompetensi Umum BASARNAS": {
-      file: "/pdf/pembahasan-basarnas2.pdf",
+      file: "/pdf/pembahasan2.pdf",
       releaseDate: "2026-09-27",
     },
 
@@ -1799,7 +1813,7 @@ export default function Peserta() {
                 className="pdf-viewer-frame"
                 title={viewerTitle}
                 src={`${encodeURI(viewerFile)}#toolbar=0&navpanes=0&scrollbar=0`}
-                sandbox="allow-scripts allow-same-origin"
+                sandbox="allow-same-origin"
               />
               <div
                 className="pdf-viewer-guard"
