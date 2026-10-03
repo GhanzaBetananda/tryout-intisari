@@ -241,6 +241,13 @@ export default function Peserta() {
       releaseDate: "2026-09-20",
     },
 
+    // Alias: versi lama basarnas1.jsx mengirim tanpa angka " 1",
+    // sehingga baris riwayat lama tidak cocok dengan key di atas.
+    "Try Out Basarnas": {
+      file: "/pdf/basarnas1.pdf",
+      releaseDate: "2026-09-20",
+    },
+
     "Kompetensi Umum BASARNAS": {
       file: "/pdf/basarnas2.pdf",
       releaseDate: "2026-09-27",
@@ -305,6 +312,38 @@ export default function Peserta() {
       file: "/pdf/pembahasan12.pdf",
       releaseDate: "2026-10-12",
     },
+  };
+
+  // Pencocokan nama tryout dibuat toleran (huruf besar/kecil & spasi),
+  // karena isi DB bisa beda dengan key di atas (mis. data lama).
+  const normJenis = (s) =>
+    String(s || "")
+      .toLowerCase()
+      .replace(/\s+/g, " ")
+      .trim();
+
+  // Alias nama lama / varian penulisan -> key resmi di pembahasanMap.
+  const pembahasanAlias = {
+    "try out basarnas": "Try Out Basarnas 1",
+    "tryout basarnas": "Try Out Basarnas 1",
+    "tryout basarnas 1": "Try Out Basarnas 1",
+    "basarnas 1": "Try Out Basarnas 1",
+    "kompetensi umum basarnas": "Kompetensi Umum BASARNAS",
+  };
+
+  const getPembahasan = (jenis) => {
+    if (!jenis) return undefined;
+    if (pembahasanMap[jenis]) return pembahasanMap[jenis];
+    const n = normJenis(jenis);
+    const aliasKey = pembahasanAlias[n];
+    if (aliasKey && pembahasanMap[aliasKey]) return pembahasanMap[aliasKey];
+    const hit = Object.keys(pembahasanMap).find((k) => normJenis(k) === n);
+    if (hit) return pembahasanMap[hit];
+    console.warn(
+      "[peserta] pembahasan tidak cocok untuk jenis_tryout:",
+      JSON.stringify(jenis),
+    );
+    return undefined;
   };
 
   // ===============================
@@ -1747,7 +1786,7 @@ export default function Peserta() {
 
               {/* TRYOUT LIST */}
               {riwayat.map((item) => {
-                const pembahasan = pembahasanMap[item.jenis_tryout];
+                const pembahasan = getPembahasan(item.jenis_tryout);
                 const isOpen = expandedId === item.id;
                 const scoreColor = getScoreColor(
                   item.total_nilai,
