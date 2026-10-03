@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
 import api from "../api/api";
+
+// Worker PDF lokal (public/pdf.worker.min.js) agar viewer tidak
+// bergantung pada CDN dan tetap jalan di jaringan lambat.
+pdfjs.GlobalWorkerOptions.workerSrc = `${process.env.PUBLIC_URL}/pdf.worker.min.js`;
 
 export default function Peserta() {
   const [akun, setAkun] = useState(null);
@@ -10,6 +15,12 @@ export default function Peserta() {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [viewerFile, setViewerFile] = useState(null);
   const [viewerTitle, setViewerTitle] = useState("");
+  const [viewerNumPages, setViewerNumPages] = useState(null);
+  const [viewerPage, setViewerPage] = useState(1);
+  const [viewerScale, setViewerScale] = useState(() =>
+    typeof window !== "undefined" && window.innerWidth < 768 ? 0.6 : 1,
+  );
+  const [viewerError, setViewerError] = useState(null);
 
   useEffect(() => {
     fetchRiwayat();
@@ -152,11 +163,30 @@ export default function Peserta() {
     }
     setViewerFile(file);
     setViewerTitle(title || "Pembahasan");
+    setViewerNumPages(null);
+    setViewerPage(1);
+    setViewerError(null);
   };
 
   const closeViewer = () => {
     setViewerFile(null);
     setViewerTitle("");
+    setViewerNumPages(null);
+    setViewerPage(1);
+    setViewerError(null);
+  };
+
+  const onViewerDocLoad = ({ numPages }) => {
+    setViewerNumPages(numPages);
+    setViewerPage(1);
+    setViewerError(null);
+  };
+
+  const onViewerDocError = (err) => {
+    console.error("Gagal memuat PDF:", err);
+    setViewerError(
+      "Gagal memuat dokumen. Periksa koneksi lalu coba lagi.",
+    );
   };
 
   // Tutup viewer dengan tombol Escape + kunci scroll saat terbuka
@@ -1212,30 +1242,117 @@ export default function Peserta() {
     color:#fff;
 }
 
+.pdf-viewer-controls{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    padding:10px 16px;
+    background:#0f172a;
+    border-top:1px solid rgba(255,255,255,0.08);
+    flex-shrink:0;
+}
+
+.pdf-viewer-btn{
+    background:rgba(255,255,255,0.1);
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:9px;
+    padding:6px 14px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:700;
+    transition:.2s;
+}
+
+.pdf-viewer-btn:hover:not(:disabled){
+    background:rgba(255,255,255,0.2);
+}
+
+.pdf-viewer-btn:disabled{
+    opacity:0.35;
+    cursor:not-allowed;
+}
+
+.pdf-viewer-pageinfo{
+    color:#cbd5e1;
+    font-size:13px;
+    font-weight:600;
+    min-width:70px;
+    text-align:center;
+}
+
+.pdf-viewer-zoomwrap{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-left:8px;
+}
+
 .pdf-viewer-frame-wrap{
     position:relative;
     flex:1;
-    min-height:60vh;
+    min-height:50vh;
+    max-height:70vh;
+    overflow:auto;
     background:#334155;
     user-select:none;
     -webkit-user-select:none;
+    display:flex;
+    justify-content:center;
+    padding:16px;
 }
 
-.pdf-viewer-frame{
-    width:100%;
-    height:min(72vh, 720px);
-    border:none;
+.pdf-page-wrap{
+    position:relative;
+    display:inline-block;
+    box-shadow:0 8px 32px rgba(0,0,0,0.45);
+}
+
+.pdf-page-wrap canvas{
     display:block;
-    background:#fff;
+    max-width:100%;
+    height:auto !important;
 }
 
-.pdf-viewer-guard{
+.pdf-watermark{
     position:absolute;
     top:0;
+    left:0;
     right:0;
-    width:90px;
-    height:64px;
+    bottom:0;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    align-items:center;
+    pointer-events:none;
+    user-select:none;
+    -webkit-user-select:none;
     z-index:2;
+}
+
+.pdf-watermark span{
+    display:block;
+    white-space:nowrap;
+    font-size:22px;
+    font-weight:800;
+    color:rgba(37, 99, 235, 0.14);
+    transform:rotate(-30deg);
+    letter-spacing:2px;
+}
+
+.pdf-viewer-status{
+    color:#e2e8f0;
+    font-size:14px;
+    font-weight:600;
+    padding:60px 20px;
+    text-align:center;
+}
+
+.pdf-viewer-error{
+    color:#fca5a5;
 }
 
 .pdf-viewer-footer{
@@ -1420,7 +1537,7 @@ export default function Peserta() {
           .modal-box { padding: 32px 24px; }
           .pdf-viewer-overlay { padding: 12px; }
           .pdf-viewer-header { flex-wrap: wrap; }
-          .pdf-viewer-frame { height: 70vh; }
+          .pdf-viewer-frame-wrap { min-height: 55vh; padding: 10px; }
         }
 
         @media (max-width: 480px) {
@@ -1789,7 +1906,8 @@ export default function Peserta() {
         </div>
       </div>
 
-      {/* PDF VIEWER MODAL - Lihat saja, toolbar Chrome disembunyikan */}
+      {/* PDF VIEWER MODAL - render canvas per halaman + watermark.
+          Tanpa text layer (tidak bisa blok/copy teks), tanpa tombol unduh. */}
       {viewerFile && (
         <div className="pdf-viewer-overlay" onClick={closeViewer}>
           <div
@@ -1804,25 +1922,97 @@ export default function Peserta() {
                 ✕ Tutup
               </button>
             </div>
+            <div className="pdf-viewer-controls">
+              <button
+                className="pdf-viewer-btn"
+                onClick={() => setViewerPage((p) => Math.max(1, p - 1))}
+                disabled={viewerPage <= 1}
+              >
+                ← Prev
+              </button>
+              <span className="pdf-viewer-pageinfo">
+                Hal {viewerNumPages ? viewerPage : "…"} /{" "}
+                {viewerNumPages || "…"}
+              </span>
+              <button
+                className="pdf-viewer-btn"
+                onClick={() =>
+                  setViewerPage((p) =>
+                    viewerNumPages ? Math.min(viewerNumPages, p + 1) : p + 1,
+                  )
+                }
+                disabled={viewerNumPages ? viewerPage >= viewerNumPages : true}
+              >
+                Next →
+              </button>
+              <span className="pdf-viewer-zoomwrap">
+                <button
+                  className="pdf-viewer-btn"
+                  onClick={() =>
+                    setViewerScale((s) => Math.max(0.5, +(s - 0.2).toFixed(2)))
+                  }
+                >
+                  −
+                </button>
+                <span className="pdf-viewer-pageinfo">
+                  {Math.round(viewerScale * 100)}%
+                </span>
+                <button
+                  className="pdf-viewer-btn"
+                  onClick={() =>
+                    setViewerScale((s) => Math.min(2, +(s + 0.2).toFixed(2)))
+                  }
+                >
+                  +
+                </button>
+              </span>
+            </div>
             <div
               className="pdf-viewer-frame-wrap"
               onContextMenu={(e) => e.preventDefault()}
               onDragStart={(e) => e.preventDefault()}
+              onCopy={(e) => e.preventDefault()}
             >
-              <iframe
-                className="pdf-viewer-frame"
-                title={viewerTitle}
-                src={`${encodeURI(viewerFile)}#toolbar=0&navpanes=0&scrollbar=0`}
-                sandbox="allow-same-origin"
-              />
-              <div
-                className="pdf-viewer-guard"
-                onContextMenu={(e) => e.preventDefault()}
-              />
+              {viewerError ? (
+                <div className="pdf-viewer-status pdf-viewer-error">
+                  ⚠️ {viewerError}
+                </div>
+              ) : (
+                <Document
+                  file={encodeURI(viewerFile)}
+                  onLoadSuccess={onViewerDocLoad}
+                  onLoadError={onViewerDocError}
+                  loading={
+                    <div className="pdf-viewer-status">
+                      ⏳ Memuat dokumen…
+                    </div>
+                  }
+                >
+                  <div className="pdf-page-wrap">
+                    <Page
+                      pageNumber={viewerPage}
+                      scale={viewerScale}
+                      renderTextLayer={false}
+                      renderAnnotationLayer={false}
+                    />
+                    <div
+                      className="pdf-watermark"
+                      aria-hidden="true"
+                      onContextMenu={(e) => e.preventDefault()}
+                    >
+                      {Array.from({ length: 8 }).map((_, i) => (
+                        <span key={i}>
+                          {akun?.username || "peserta"} • {akun?.username || "peserta"} •
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Document>
+              )}
             </div>
             <div className="pdf-viewer-footer">
-              Dokumen hanya untuk dibaca di sini • Klik kanan & unduhan
-              dinonaktifkan • Tekan Esc untuk menutup
+              Dokumen hanya untuk dibaca di sini • Tanpa tombol unduh & tidak
+              bisa copy teks • Berwatermark akunmu • Tekan Esc untuk menutup
             </div>
           </div>
         </div>
