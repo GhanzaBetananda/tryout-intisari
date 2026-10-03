@@ -184,9 +184,7 @@ export default function Peserta() {
 
   const onViewerDocError = (err) => {
     console.error("Gagal memuat PDF:", err);
-    setViewerError(
-      "Gagal memuat dokumen. Periksa koneksi lalu coba lagi.",
-    );
+    setViewerError("Gagal memuat dokumen. Periksa koneksi lalu coba lagi.");
   };
 
   // Tutup viewer dengan tombol Escape + kunci scroll saat terbuka
@@ -244,8 +242,13 @@ export default function Peserta() {
     },
 
     "Kompetensi Umum BASARNAS": {
-      file: "/pdf/pembahasan2.pdf",
+      file: "/pdf/basarnas2.pdf",
       releaseDate: "2026-09-27",
+    },
+
+    "Kompetensi Khusus BASARNAS": {
+      file: "/pdf/basarnas3.pdf",
+      releaseDate: "2026-10-03",
     },
 
     TWK: {
@@ -1983,9 +1986,7 @@ export default function Peserta() {
                   onLoadSuccess={onViewerDocLoad}
                   onLoadError={onViewerDocError}
                   loading={
-                    <div className="pdf-viewer-status">
-                      ⏳ Memuat dokumen…
-                    </div>
+                    <div className="pdf-viewer-status">⏳ Memuat dokumen…</div>
                   }
                 >
                   <div className="pdf-page-wrap">
@@ -2002,7 +2003,8 @@ export default function Peserta() {
                     >
                       {Array.from({ length: 8 }).map((_, i) => (
                         <span key={i}>
-                          {akun?.username || "peserta"} • {akun?.username || "peserta"} •
+                          {akun?.username || "peserta"} •{" "}
+                          {akun?.username || "peserta"} •
                         </span>
                       ))}
                     </div>
