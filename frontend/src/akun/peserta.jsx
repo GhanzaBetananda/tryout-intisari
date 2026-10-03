@@ -8,6 +8,8 @@ export default function Peserta() {
   const [error, setError] = useState(null);
   const [expandedId, setExpandedId] = useState(null);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [viewerFile, setViewerFile] = useState(null);
+  const [viewerTitle, setViewerTitle] = useState("");
 
   useEffect(() => {
     fetchRiwayat();
@@ -133,9 +135,30 @@ export default function Peserta() {
   const isReleased = (releaseDate) => {
     return new Date() >= new Date(releaseDate);
   };
-  const openPembahasan = (file) => {
-    window.open(encodeURI(file), "_blank");
+  const openPembahasan = (file, title) => {
+    setViewerFile(file);
+    setViewerTitle(title || "Pembahasan");
   };
+
+  const closeViewer = () => {
+    setViewerFile(null);
+    setViewerTitle("");
+  };
+
+  // Tutup viewer dengan tombol Escape + kunci scroll saat terbuka
+  useEffect(() => {
+    if (!viewerFile) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") closeViewer();
+    };
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [viewerFile]);
 
   // ===============================
   // Mapping Pembahasan PDF
@@ -1098,6 +1121,118 @@ export default function Peserta() {
     font-weight:600;
 }
 
+.pdf-viewer-overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(15, 23, 42, 0.75);
+    backdrop-filter:blur(8px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:10000;
+    padding:20px;
+    animation:fadeInOverlay 0.25s ease;
+}
+
+.pdf-viewer-box{
+    background:#0f172a;
+    border-radius:20px;
+    width:min(1000px, 100%);
+    max-height:92vh;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:0 24px 64px rgba(0,0,0,0.4);
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+.pdf-viewer-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 20px;
+    background:#1e293b;
+    color:#fff;
+    flex-shrink:0;
+}
+
+.pdf-viewer-title{
+    font-size:15px;
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    flex:1;
+}
+
+.pdf-viewer-badge{
+    font-size:11px;
+    font-weight:700;
+    background:rgba(37, 99, 235, 0.25);
+    color:#bfdbfe;
+    border:1px solid rgba(147, 197, 253, 0.3);
+    padding:3px 12px;
+    border-radius:999px;
+    white-space:nowrap;
+}
+
+.pdf-viewer-close{
+    background:rgba(239, 68, 68, 0.2);
+    color:#fca5a5;
+    border:1px solid rgba(239, 68, 68, 0.3);
+    border-radius:10px;
+    padding:7px 16px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:700;
+    transition:.2s;
+    flex-shrink:0;
+}
+
+.pdf-viewer-close:hover{
+    background:rgba(239, 68, 68, 0.4);
+    color:#fff;
+}
+
+.pdf-viewer-frame-wrap{
+    position:relative;
+    flex:1;
+    min-height:60vh;
+    background:#334155;
+    user-select:none;
+    -webkit-user-select:none;
+}
+
+.pdf-viewer-frame{
+    width:100%;
+    height:min(72vh, 720px);
+    border:none;
+    display:block;
+    background:#fff;
+}
+
+.pdf-viewer-guard{
+    position:absolute;
+    top:0;
+    right:0;
+    width:90px;
+    height:64px;
+    z-index:2;
+}
+
+.pdf-viewer-footer{
+    padding:10px 20px;
+    background:#1e293b;
+    color:#94a3b8;
+    font-size:12px;
+    text-align:center;
+    flex-shrink:0;
+}
+
         /* ----- MATERI PDF SECTION ----- */
         .materi-section {
           background: #ffffff;
@@ -1269,6 +1404,9 @@ export default function Peserta() {
           .detail-table th, .detail-table td { padding: 10px 12px; font-size: 13px; }
           .detail-table .stat-cell { flex-direction: column; gap: 4px; }
           .modal-box { padding: 32px 24px; }
+          .pdf-viewer-overlay { padding: 12px; }
+          .pdf-viewer-header { flex-wrap: wrap; }
+          .pdf-viewer-frame { height: 70vh; }
         }
 
         @media (max-width: 480px) {
@@ -1412,9 +1550,7 @@ export default function Peserta() {
                         <div className="materi-actions">
                           <button
                             className="btn-materi-view"
-                            onClick={() =>
-                              window.open(encodeURI(m.file), "_blank")
-                            }
+                            onClick={() => openPembahasan(m.file, m.judul)}
                           >
                             👁 Lihat
                           </button>
@@ -1596,7 +1732,10 @@ export default function Peserta() {
                                             <button
                                               className="btn-view-pdf"
                                               onClick={() =>
-                                                openPembahasan(pembahasan.file)
+                                                openPembahasan(
+                                                  pembahasan.file,
+                                                  item.jenis_tryout,
+                                                )
                                               }
                                             >
                                               <i className="fa fa-file-pdf-o"></i>
@@ -1635,6 +1774,45 @@ export default function Peserta() {
           )}
         </div>
       </div>
+
+      {/* PDF VIEWER MODAL - Lihat saja, toolbar Chrome disembunyikan */}
+      {viewerFile && (
+        <div className="pdf-viewer-overlay" onClick={closeViewer}>
+          <div
+            className="pdf-viewer-box"
+            onClick={(e) => e.stopPropagation()}
+            onContextMenu={(e) => e.preventDefault()}
+          >
+            <div className="pdf-viewer-header">
+              <span className="pdf-viewer-title">📕 {viewerTitle}</span>
+              <span className="pdf-viewer-badge">👁 Mode Lihat Saja</span>
+              <button className="pdf-viewer-close" onClick={closeViewer}>
+                ✕ Tutup
+              </button>
+            </div>
+            <div
+              className="pdf-viewer-frame-wrap"
+              onContextMenu={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
+            >
+              <iframe
+                className="pdf-viewer-frame"
+                title={viewerTitle}
+                src={`${encodeURI(viewerFile)}#toolbar=0&navpanes=0&scrollbar=0`}
+                sandbox="allow-scripts allow-same-origin"
+              />
+              <div
+                className="pdf-viewer-guard"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            </div>
+            <div className="pdf-viewer-footer">
+              Dokumen hanya untuk dibaca di sini • Klik kanan & unduhan
+              dinonaktifkan • Tekan Esc untuk menutup
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* LOGOUT CONFIRMATION MODAL */}
       {showLogoutConfirm && (
