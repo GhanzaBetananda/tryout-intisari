@@ -2,24 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Header.css";
 
-function getInitialTheme() {
-  return localStorage.getItem("theme") || "light";
-}
-
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const userRole = sessionStorage.getItem("userRole");
 
-  const [theme, setTheme] = useState(getInitialTheme);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // Terapkan tema ke <html>
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   // Deteksi scroll untuk ubah header transparan -> solid.
   // Tetap kompatibel dengan script jQuery template (class nav-fixed).
@@ -49,9 +38,6 @@ function Header() {
     else if (userRole === "peserta") navigate("/peserta");
     else navigate("/login");
   };
-
-  const toggleTheme = () =>
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
 
   const solid = scrolled || menuOpen;
 
@@ -107,19 +93,6 @@ function Header() {
         </nav>
 
         <div className="header-actions">
-          <button
-            type="button"
-            className="theme-btn"
-            onClick={toggleTheme}
-            title={theme === "dark" ? "Mode terang" : "Mode gelap"}
-            aria-label="Ganti tema"
-          >
-            <span
-              className={`fa ${theme === "dark" ? "fa-sun-o" : "fa-moon-o"}`}
-              aria-hidden="true"
-            />
-          </button>
-
           <button type="button" className="btn-akun" onClick={handleAccountClick}>
             <span className="fa fa-user" aria-hidden="true" />
             <span className="btn-label">Akun</span>
