@@ -505,7 +505,13 @@ a.receipe.blue {
   color: var(--ei-orange-deep) !important;
   font-weight: 700;
 }
-.w3l-breadcrumb .waveWrapper { display: none !important; }
+.w3l-breadcrumb .waveWrapper {
+  display: inline-block !important;
+  margin-top: -60px !important;
+}
+.w3l-breadcrumb .waveWrapper path {
+  fill: #ffffff !important;
+}
 .home-services {
   margin-top: 0 !important;
   padding-top: 48px !important;
