@@ -1,16 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Header() {
-  const currentTheme = localStorage.getItem("theme");
-
-  if (currentTheme) {
-    document.documentElement.setAttribute("data-theme", currentTheme);
-  }
-
   const navigate = useNavigate();
   const userRole = sessionStorage.getItem("userRole");
-  const [checked, setChecked] = useState(currentTheme === "dark");
   const handleAccountClick = (e) => {
     e.preventDefault();
 
@@ -22,23 +15,12 @@ function Header() {
       navigate("/login");
     }
   };
-  function changeTheme(e) {
-    if (e.target.checked) {
-      document.documentElement.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-      setChecked(true);
-    } else {
-      document.documentElement.setAttribute("data-theme", "light");
-      localStorage.setItem("theme", "light");
-      setChecked(false);
-    }
-  }
   return (
     <div>
       {/*header*/}
       <header id="site-header" className="fixed-top">
         <div className="container">
-          <nav className="navbar navbar-expand-lg navbar-dark stroke">
+          <nav className="navbar navbar-expand-lg navbar-light stroke">
             <h1>
               <Link
                 className="navbar-brand"
@@ -67,8 +49,10 @@ function Header() {
                 >
                   <span
                     style={{
-                      fontSize: "28px",
-                      fontWeight: "bold",
+                      fontSize: "22px",
+                      fontWeight: "800",
+                      letterSpacing: "-0.02em",
+                      color: "#111827",
                     }}
                   >
                     Bimbel Intisari
@@ -76,7 +60,10 @@ function Header() {
 
                   <span
                     style={{
-                      fontSize: "14px",
+                      fontSize: "12px",
+                      color: "#9CA3AF",
+                      fontWeight: "600",
+                      letterSpacing: "0.04em",
                     }}
                   >
                     Menemani Langkah Menuju Impian
@@ -91,7 +78,7 @@ function Header() {
                         </a> 
                     */}
             <button
-              className="navbar-toggler  collapsed bg-gradient"
+              className="navbar-toggler collapsed"
               type="button"
               data-toggle="collapse"
               data-target="#navbarTogglerDemo02"
@@ -166,38 +153,12 @@ function Header() {
                 <a
                   href="#peserta"
                   className="btn login mr-2"
-                  style={{
-                    border: "2px solid #fff",
-                    borderRadius: "30px",
-                    padding: "8px 20px",
-                    background: "transparent",
-                  }}
                   onClick={handleAccountClick}
                 >
                   <span className="fa fa-user"></span> Akun
                 </a>
               </div>
             </div>
-            {/* toggle switch for light and dark theme */}
-            <div className="mobile-position">
-              <nav className="navigation">
-                <div className="theme-switch-wrapper">
-                  <label className="theme-switch" htmlFor="checkbox">
-                    <input
-                      type="checkbox"
-                      id="checkbox"
-                      checked={checked}
-                      onChange={changeTheme}
-                    />
-                    {/* <div className="mode-container py-1">
-                      <i className="gg-sun"></i>
-                      <i className="gg-moon"></i>
-                    </div> */}
-                  </label>
-                </div>
-              </nav>
-            </div>
-            {/* //toggle switch for light and dark theme */}
           </nav>
         </div>
       </header>

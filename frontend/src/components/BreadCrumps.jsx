@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function BreadCrumps(props) {
   return (
     <div>
-      {/* about breadcrumb */}
+      {/* breadcrumb minimalis */}
       <section className="w3l-breadcrumb">
         <div className="breadcrumb-bg breadcrumb-bg-about py-5">
           <div className="container pt-lg-5 pt-3 p-lg-4 pb-3">
@@ -17,16 +17,7 @@ function BreadCrumps(props) {
             </ul>
           </div>
         </div>
-        <div className="waveWrapper waveAnimation">
-          <svg viewBox="0 0 500 150" preserveAspectRatio="none">
-            <path
-              d="M-5.07,73.52 C149.99,150.00 299.66,-102.13 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
-              style={{ stroke: "none" }}
-            ></path>
-          </svg>
-        </div>
       </section>
-      {/* //about breadcrumb */}
     </div>
   );
 }
