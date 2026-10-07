@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const testimonials = [
   {
@@ -43,7 +42,7 @@ const testimonials = [
 function Home() {
   return (
     <div>
-      {/* main-slider — elegan minimalis: putih dominan, orange aksen */}
+      {/* main-slider */}
       <section className="w3l-main-slider" id="home">
         <div className="companies20-content">
           <div className="owl-one owl-carousel owl-theme">
@@ -53,38 +52,15 @@ function Home() {
                   <div className="banner-info">
                     <div className="container">
                       <div className="banner-info-bg">
-                        <span className="hero-badge">
-                          <span className="dot"></span> CAT BKN & CAT Basarnas
-                        </span>
                         <h5>
-                          Persiapan CAT yang <span className="hl">Tenang</span>,
-                          Terarah & Terukur
+                          Persiapkan Tes CAT BKN & CAT Basarnas Bersama Bimbel
+                          Intisari
                         </h5>
                         <p className="mt-4 pr-lg-4">
-                          Materi terbaru, latihan soal berkualitas, dan simulasi
-                          CAT yang menyerupai ujian sebenarnya — dalam tampilan
-                          yang bersih dan fokus belajar.
+                          Tingkatkan peluang lolos seleksi dengan materi
+                          terbaru, latihan soal berkualitas, dan simulasi CAT
+                          yang dirancang menyerupai ujian sebenarnya.{" "}
                         </p>
-                        <div className="hero-cta">
-                          <Link to="/courses" className="hero-btn-primary">
-                            Mulai Try Out{" "}
-                            <span className="fa fa-arrow-right"></span>
-                          </Link>
-                          <Link to="/about" className="hero-btn-ghost">
-                            Pelajari Program
-                          </Link>
-                        </div>
-                        <div className="hero-trust">
-                          <span className="hero-trust-item">
-                            <i className="fa fa-users"></i> 500+ Peserta
-                          </span>
-                          <span className="hero-trust-item">
-                            <i className="fa fa-file-text-o"></i> 56 Paket Soal
-                          </span>
-                          <span className="hero-trust-item">
-                            <i className="fa fa-check"></i> Pembahasan Lengkap
-                          </span>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -97,27 +73,12 @@ function Home() {
                   <div className="banner-info">
                     <div className="container">
                       <div className="banner-info-bg">
-                        <span className="hero-badge">
-                          <span className="dot"></span> Simulasi CAT Realistis
-                        </span>
-                        <h5>
-                          Simulasi Ujian <span className="hl">Semirip</span>{" "}
-                          Aslinya
-                        </h5>
+                        <h5>Simulasi CAT yang Mirip dengan Ujian Resmi </h5>
                         <p className="mt-4 pr-lg-4">
-                          Rasakan sistem CAT dengan batas waktu, tampilan, dan
-                          penilaian otomatis yang membantu meningkatkan
-                          kesiapanmu.
+                          Rasakan pengalaman mengerjakan soal dalam sistem CAT
+                          dengan waktu, tampilan, dan mekanisme yang membantu
+                          meningkatkan kesiapanmu.
                         </p>
-                        <div className="hero-cta">
-                          <Link to="/courses" className="hero-btn-primary">
-                            Coba Simulasi{" "}
-                            <span className="fa fa-arrow-right"></span>
-                          </Link>
-                          <Link to="/about" className="hero-btn-ghost">
-                            Lihat Fasilitas
-                          </Link>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -130,26 +91,30 @@ function Home() {
                   <div className="banner-info">
                     <div className="container">
                       <div className="banner-info-bg">
-                        <span className="hero-badge">
-                          <span className="dot"></span> Materi & Pembahasan
-                        </span>
-                        <h5>
-                          Materi Lengkap, <span className="hl">Mudah</span>{" "}
-                          Dipahami
-                        </h5>
+                        <h5>Materi Lengkap dan Pembahasan Mudah Dipahami</h5>
                         <p className="mt-4 pr-lg-4">
-                          Strategi menjawab soal, pembahasan per materi, dan
-                          latihan terstruktur untuk CAT BKN maupun CAT Basarnas.
+                          Pelajari strategi menjawab soal, pembahasan setiap
+                          materi, serta latihan yang disusun untuk menghadapi
+                          seleksi CAT BKN maupun CAT Basarnas.
                         </p>
-                        <div className="hero-cta">
-                          <Link to="/courses" className="hero-btn-primary">
-                            Jelajahi Materi{" "}
-                            <span className="fa fa-arrow-right"></span>
-                          </Link>
-                          <Link to="/about" className="hero-btn-ghost">
-                            Tentang Kami
-                          </Link>
-                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </div>
+            <div className="item">
+              <li>
+                <div className="slider-info banner-view banner-top3 bg bg2">
+                  <div className="banner-info">
+                    <div className="container">
+                      <div className="banner-info-bg">
+                        <h5>Wujudkan Impian Menjadi Personel Basarnas</h5>
+                        <p className="mt-4 pr-lg-4">
+                          Belajar lebih terarah bersama mentor berpengalaman dan
+                          pantau perkembangan belajarmu melalui evaluasi serta
+                          try out berkala.{" "}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -158,7 +123,17 @@ function Home() {
             </div>
           </div>
         </div>
+
+        <div className="waveWrapper waveAnimation">
+          <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+            <path
+              d="M-5.07,73.52 C149.99,150.00 299.66,-102.13 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
+              style={{ stroke: "none" }}
+            ></path>
+          </svg>
+        </div>
       </section>
+      {/* /main-slider */}
       <section className="w3l-courses">
         <div className="blog pb-5" id="courses">
           <div className="container py-lg-5 py-md-4 py-2">

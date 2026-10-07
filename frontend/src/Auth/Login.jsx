@@ -116,15 +116,15 @@ const Login = ({ setIsLoggedIn }) => {
               onError={(e) => (e.target.style.display = "none")}
             />
             <div className="image-text">
-              <h3>Bimbel Intisari</h3>
-              <p>Persiapan CAT BKN & CAT Basarnas yang tenang & terarah</p>
+              <h3>Intisari Education Center</h3>
+              <p>Persiapan CAT BKN & CAT Basarnas Menuju Karier Impian</p>
             </div>
           </div>
 
           <div className="registrasi-form">
-            <h2>Selamat datang kembali</h2>
+            <h2>FORM LOGIN</h2>
             <p className="subtitle">
-              Masuk untuk melanjutkan try out & memantau progres belajarmu.
+              Masukkan email dan password untuk mengakses Try Out.
             </p>
 
             {errorMessage && (
