@@ -274,20 +274,21 @@ function Courses() {
     return (
       <div className="col-12 col-md-6 col-lg-4 item" key={item.id}>
         <article className={`tryout-card ${status.className}`}>
-          {/* Top row: icon + title + status */}
+          {/* Top row: icon + category + status, judul pindah ke baris sendiri biar full */}
           <div className="tc-top">
             <div className="tc-icon" aria-hidden="true">
               <i className="fa fa-file-text-o"></i>
             </div>
             <div className="tc-head">
               <span className="tc-cat">{item.category}</span>
-              <h4 className="tc-title">{item.title}</h4>
             </div>
             <span className={`tc-status ${status.className}`}>
               {status.dot && <span className="tc-dot" />}
               {status.label}
             </span>
           </div>
+
+          <h4 className="tc-title">{item.title}</h4>
 
           {item.subtitle && <p className="tc-sub">{item.subtitle}</p>}
 
@@ -367,7 +368,7 @@ function Courses() {
 
           .tc-top {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 12px;
           }
           .tc-icon {
@@ -394,6 +395,8 @@ function Courses() {
           .tc-head {
             flex: 1;
             min-width: 0;
+            display: flex;
+            align-items: center;
           }
           .tc-cat {
             display: block;
@@ -402,24 +405,31 @@ function Courses() {
             letter-spacing: .08em;
             text-transform: uppercase;
             color: #98A2B3;
-            margin-bottom: 3px;
-          }
-          .tc-title {
-            margin: 0;
-            font-size: 17px;
-            line-height: 1.3;
-            font-weight: 700;
-            color: var(--ink);
+            margin-bottom: 0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
           }
+          .tc-title {
+            margin: 0;
+            font-size: 17px;
+            line-height: 1.4;
+            font-weight: 700;
+            color: var(--ink);
+            /* judul selalu full tampil, wrap ke baris baru */
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            overflow-wrap: break-word;
+            word-break: break-word;
+          }
           .tc-sub {
             margin: 0;
-            margin-top: -8px;
+            margin-top: -10px;
             font-size: 13.5px;
             color: var(--muted);
             line-height: 1.5;
+            overflow-wrap: break-word;
           }
 
           /* status pill minimal */
@@ -619,15 +629,14 @@ function Courses() {
             .tryout-card:hover { transform: none; }
             .tc-top { gap: 10px; align-items: center; }
             .tc-icon { width: 40px; height: 40px; flex-basis: 40px; font-size: 16px; border-radius: 10px; }
-            .tc-cat { font-size: 10px; margin-bottom: 2px; }
+            .tc-cat { font-size: 10px; margin-bottom: 0; }
             .tc-title {
               font-size: 15px;
-              line-height: 1.35;
-              white-space: normal; /* judul boleh 2 baris di HP */
-              display: -webkit-box;
-              -webkit-line-clamp: 2;
-              -webkit-box-orient: vertical;
-              overflow: hidden;
+              line-height: 1.4;
+              /* judul full tampil, tanpa potongan / clamp */
+              white-space: normal;
+              overflow: visible;
+              display: block;
             }
             .tc-status { font-size: 10.5px; padding: 5px 9px; }
             .tc-sub { font-size: 13px; margin-top: -6px; }
@@ -671,8 +680,8 @@ function Courses() {
 
           /* ===== HP sangat kecil (≤360px) ===== */
           @media (max-width: 360px) {
-            .tc-top { flex-wrap: wrap; }
-            .tc-head { flex: 1 1 calc(100% - 130px); }
+            .tc-top { flex-wrap: nowrap; }
+            .tc-head { flex: 1 1 auto; }
             .tc-status { margin-left: auto; }
             .tc-meta { padding: 8px 0; }
             .tc-meta-text strong { font-size: 10.5px; }
