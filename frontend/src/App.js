@@ -25,6 +25,7 @@ import BASARNAS2 from "./daftartryout/BASARNAS/basarnas2";
 import BASARNAS3 from "./daftartryout/BASARNAS/basarnas3";
 import BASARNAS4 from "./daftartryout/BASARNAS/basarnas4";
 import BASARNAS5 from "./daftartryout/BASARNAS/basarnas5";
+import BASARNAS6 from "./daftartryout/BASARNAS/basarnas6";
 import Admin from "./akun/admin";
 import Peserta from "./akun/peserta";
 import TIU from "./daftartryout/TIU/tiu";
@@ -119,6 +120,7 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
     "/basarnas3",
     "/basarnas4",
     "/basarnas5",
+    "/basarnas6",
     "/TIU",
     "/TWK",
     "/TKP",
@@ -237,6 +239,12 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
           path="/basarnas5"
           element={
             isLoggedIn ? <BASARNAS5 /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/basarnas6"
+          element={
+            isLoggedIn ? <BASARNAS6 /> : <Navigate to="/login" replace />
           }
         />
         <Route
