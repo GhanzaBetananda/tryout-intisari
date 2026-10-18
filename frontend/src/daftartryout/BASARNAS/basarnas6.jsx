@@ -677,7 +677,8 @@ const TOTAL_MAKS = JUMLAH_SOAL * NILAI_PER_SOAL; // 100
 const PASSING_GRADE = 70;
 
 const SECTION_LABEL = {
-  BASARNAS: "Teknik Pencarian di Darat, Navigasi, ESAR, Survival, PPPM & Evakuasi Vertikal",
+  BASARNAS:
+    "Teknik Pencarian di Darat, Navigasi, ESAR, Survival, PPPM & Evakuasi Vertikal",
 };
 
 // ==================== IDENTITAS PAKET TRYOUT ====================
@@ -857,7 +858,7 @@ const Basarnas6 = () => {
 
       const payload = {
         user_id: userId,
-        jenis_tryout: "Kompetensi Umum BASARNAS",
+        jenis_tryout: "Paket Khusus Operasi SAR 1",
         total_nilai: Number(hasil.nilai) || 0,
         durasi: Math.round((DURASI_MENIT * 60 - timeLeft) / 60),
         detail: [
@@ -910,7 +911,8 @@ const Basarnas6 = () => {
               <h4>BASARNAS</h4>
               <p className="section-nilai">{hasil.nilai}</p>
               <p className="section-sub">
-                Benar {hasil.benar} dari {JUMLAH_SOAL} soal (@{NILAI_PER_SOAL} poin)
+                Benar {hasil.benar} dari {JUMLAH_SOAL} soal (@{NILAI_PER_SOAL}{" "}
+                poin)
               </p>
               <p className="section-sub">
                 Salah {hasil.salah} dari {JUMLAH_SOAL} soal
