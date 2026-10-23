@@ -691,6 +691,17 @@ const buildLegacyKeys = (uid) => [
   `tryout_is_finished_${uid}`,
 ];
 
+// ==================== PENGACAKAN (FISHER-YATES) ====================
+// Mengembalikan salinan array yang urutannya diacak tanpa mengubah array asli.
+const shuffleArray = (array) => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
 const Basarnas6 = () => {
   const navigate = useNavigate();
 
@@ -702,6 +713,7 @@ const Basarnas6 = () => {
       TIME_LEFT: `tryout_${TRYOUT_ID}_time_left_${userId}`,
       CURRENT_INDEX: `tryout_${TRYOUT_ID}_current_index_${userId}`,
       IS_FINISHED: `tryout_${TRYOUT_ID}_is_finished_${userId}`,
+      ORDER: `tryout_${TRYOUT_ID}_order_${userId}`,
     }),
     [userId],
   );
@@ -733,12 +745,40 @@ const Basarnas6 = () => {
 
   const getInitialIndex = () => {
     const saved = localStorage.getItem(STORAGE_KEYS.CURRENT_INDEX);
-    return saved ? parseInt(saved, 10) : 0;
+    const parsed = saved ? parseInt(saved, 10) : 0;
+    // Pastikan index selalu valid terhadap jumlah soal
+    if (Number.isNaN(parsed) || parsed < 0) return 0;
+    return Math.min(parsed, soalBasarnas.length - 1);
   };
 
   const getInitialIsFinished = () => {
     const saved = localStorage.getItem(STORAGE_KEYS.IS_FINISHED);
     return saved ? JSON.parse(saved) : false;
+  };
+
+  // ==================== PENGACAKAN URUTAN SOAL ====================
+  // Urutan acak disimpan di localStorage agar refresh halaman tidak
+  // mengacak ulang (jawaban yang tersimpan tetap sesuai soalnya).
+  const getInitialOrder = () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.ORDER);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (
+          Array.isArray(parsed) &&
+          parsed.length === soalBasarnas.length &&
+          new Set(parsed).size === parsed.length &&
+          parsed.every((id) => soalBasarnas.some((s) => s.id === id))
+        ) {
+          return parsed;
+        }
+      } catch {
+        // fallback ke pengacakan baru jika data rusak
+      }
+    }
+    const urutanBaru = shuffleArray(soalBasarnas).map((s) => s.id);
+    localStorage.setItem(STORAGE_KEYS.ORDER, JSON.stringify(urutanBaru));
+    return urutanBaru;
   };
 
   // ==================== STATE ====================
@@ -747,8 +787,15 @@ const Basarnas6 = () => {
   const [timeLeft, setTimeLeft] = useState(getInitialTimeLeft);
   const [isFinished, setIsFinished] = useState(getInitialIsFinished);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [order] = useState(getInitialOrder);
   const totalSoal = soalBasarnas.length;
-  const currentSoal = soalBasarnas[currentIndex];
+
+  // Array soal sesuai urutan acak
+  const soalTeracak = useMemo(
+    () => order.map((id) => soalBasarnas.find((s) => s.id === id)),
+    [order],
+  );
+  const currentSoal = soalTeracak[currentIndex];
 
   // ==================== SIMPAN KE STORAGE ====================
   useEffect(() => {
@@ -881,6 +928,7 @@ const Basarnas6 = () => {
       localStorage.removeItem(STORAGE_KEYS.ANSWERS);
       localStorage.removeItem(STORAGE_KEYS.TIME_LEFT);
       localStorage.removeItem(STORAGE_KEYS.CURRENT_INDEX);
+      localStorage.removeItem(STORAGE_KEYS.ORDER);
     } catch (error) {
       console.log(error);
       alert("Gagal menyimpan hasil tryout");
@@ -968,7 +1016,7 @@ const Basarnas6 = () => {
               BASARNAS ({totalSoal} soal)
             </p>
             <div className="nomor-grid">
-              {soalBasarnas.map((soal, idx) => (
+              {soalTeracak.map((soal, idx) => (
                 <button
                   key={soal.id}
                   className={`nomor-btn ${
@@ -976,7 +1024,7 @@ const Basarnas6 = () => {
                   } ${answers[soal.id] ? "terjawab" : ""}`}
                   onClick={() => goToQuestion(idx)}
                 >
-                  {soal.id}
+                  {idx + 1}
                 </button>
               ))}
             </div>
@@ -992,7 +1040,7 @@ const Basarnas6 = () => {
 
         <div className="soal-panel">
           <p className="soal-nomor">
-            Soal {currentSoal.id} dari {totalSoal} (BASARNAS)
+            Soal {currentIndex + 1} dari {totalSoal} (BASARNAS)
           </p>
           <div className="soal-teks">
             {Array.isArray(currentSoal.soal) ? (
