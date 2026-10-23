@@ -127,7 +127,7 @@ function Courses() {
     },
     {
       id: 6,
-      title: "Tryout 6",
+      title: "Paket Basarnas Terbaru",
       subtitle: "TO Basarnas Paket 8 ",
       category: "CAT BASARNAS",
       date: "01/11/2026",
