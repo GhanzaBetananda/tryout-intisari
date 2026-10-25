@@ -1388,14 +1388,55 @@ const Basarnas7 = () => {
     return saved ? JSON.parse(saved) : false;
   };
 
+  // ==================== SEED PENGACAKAN ====================
+  // Setiap sesi baru mendapat seed acak -> urutan soal berbeda antar
+  // pengguna dan antar sesi. Seed disimpan di sessionStorage supaya saat
+  // halaman di-refresh urutannya tidak berubah (progress tetap konsisten).
+  const [shuffleSeed] = useState(() => {
+    const KEY = `basarnas7_shuffle_seed_${userId || "guest"}`;
+    let seed = sessionStorage.getItem(KEY);
+    if (!seed) {
+      seed = `${Date.now()}-${Math.random()}-${userId || "guest"}`;
+      sessionStorage.setItem(KEY, seed);
+    }
+    return seed;
+  });
+
+  // ==================== URUTAN SOAL ACAK ====================
+  // Fisher–Yates shuffle dengan PRNG berbasis seed (deterministik per seed)
+  const soalAcak = useMemo(() => {
+    // Buat hash angka awal dari string seed
+    let t = 2166136261;
+    for (let i = 0; i < shuffleSeed.length; i++) {
+      t ^= shuffleSeed.charCodeAt(i);
+      t = Math.imul(t, 16777619);
+    }
+    t = t >>> 0;
+
+    // mulberry32 PRNG
+    const rand = () => {
+      t += 0x6d2b79f5;
+      let r = Math.imul(t ^ (t >>> 15), 1 | t);
+      r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r;
+      return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+    };
+
+    const arr = [...soalBasarnas];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(rand() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }, [shuffleSeed]);
+
   // ==================== STATE ====================
   const [currentIndex, setCurrentIndex] = useState(getInitialIndex);
   const [answers, setAnswers] = useState(getInitialAnswers);
   const [timeLeft, setTimeLeft] = useState(getInitialTimeLeft);
   const [isFinished, setIsFinished] = useState(getInitialIsFinished);
   const [showConfirm, setShowConfirm] = useState(false);
-  const totalSoal = soalBasarnas.length;
-  const currentSoal = soalBasarnas[currentIndex];
+  const totalSoal = soalAcak.length;
+  const currentSoal = soalAcak[currentIndex];
 
   // ==================== SIMPAN KE STORAGE ====================
   useEffect(() => {
@@ -1473,7 +1514,7 @@ const Basarnas7 = () => {
   const hitungSkor = useCallback(() => {
     let benar = 0;
 
-    soalBasarnas.forEach((soal) => {
+    soalAcak.forEach((soal) => {
       if (answers[soal.id] === soal.jawaban) {
         benar += 1;
       }
@@ -1495,6 +1536,8 @@ const Basarnas7 = () => {
     Object.values(STORAGE_KEYS).forEach((key) => {
       localStorage.removeItem(key);
     });
+    // Hapus seed pengacakan agar sesi/attempt berikutnya mendapat urutan baru
+    sessionStorage.removeItem(`basarnas7_shuffle_seed_${userId || "guest"}`);
   };
 
   // ==================== handleFinish ====================
@@ -1613,7 +1656,7 @@ const Basarnas7 = () => {
               BASARNAS ({totalSoal} soal)
             </p>
             <div className="nomor-grid">
-              {soalBasarnas.map((soal, idx) => (
+              {soalAcak.map((soal, idx) => (
                 <button
                   key={soal.id}
                   className={`nomor-btn ${
@@ -1621,7 +1664,7 @@ const Basarnas7 = () => {
                   } ${answers[soal.id] ? "terjawab" : ""}`}
                   onClick={() => goToQuestion(idx)}
                 >
-                  {soal.id}
+                  {idx + 1}
                 </button>
               ))}
             </div>
@@ -1637,7 +1680,7 @@ const Basarnas7 = () => {
 
         <div className="soal-panel">
           <p className="soal-nomor">
-            Soal {currentSoal.id} dari {totalSoal} (BASARNAS)
+            Soal {currentIndex + 1} dari {totalSoal} (BASARNAS)
           </p>
           <div className="soal-teks">
             {Array.isArray(currentSoal.soal) ? (
