@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import api from "../api/api";
 
@@ -20,6 +20,8 @@ export default function Peserta() {
     typeof window !== "undefined" && window.innerWidth < 768 ? 0.6 : 1,
   );
   const [viewerError, setViewerError] = useState(null);
+  const viewerBoxRef = useRef(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     fetchRiwayat();
@@ -167,11 +169,49 @@ export default function Peserta() {
   };
 
   const closeViewer = () => {
+    // Keluar fullscreen dulu bila aktif
+    if (document.fullscreenElement) {
+      document
+        .exitFullscreen?.()
+        .catch(() => {});
+    }
     setViewerFile(null);
     setViewerTitle("");
     setViewerNumPages(null);
     setViewerError(null);
+    setIsFullscreen(false);
   };
+
+  // ==================== FULLSCREEN VIEWER ====================
+  const toggleViewerFullscreen = async () => {
+    const el = viewerBoxRef.current;
+    if (!el) return;
+    try {
+      if (!document.fullscreenElement) {
+        await (el.requestFullscreen?.() ||
+          el.webkitRequestFullscreen?.() ||
+          Promise.reject());
+      } else {
+        await (document.exitFullscreen?.() ||
+          document.webkitExitFullscreen?.() ||
+          Promise.reject());
+      }
+    } catch (err) {
+      console.error("Gagal mengubah fullscreen:", err);
+    }
+  };
+
+  // Sinkronisasi state fullscreen (mis. user menekan Esc browser / F11)
+  useEffect(() => {
+    const onFsChange = () => {
+      const active = Boolean(document.fullscreenElement);
+      setIsFullscreen(active);
+      // Reset scale + zoom default saat masuk fullscreen agar muat layar
+      if (active) setViewerScale(window.innerWidth < 768 ? 0.6 : 1);
+    };
+    document.addEventListener("fullscreenchange", onFsChange);
+    return () => document.removeEventListener("fullscreenchange", onFsChange);
+  }, []);
 
   const onViewerDocLoad = ({ numPages }) => {
     setViewerNumPages(numPages);
@@ -187,7 +227,7 @@ export default function Peserta() {
   useEffect(() => {
     if (!viewerFile) return;
     const onKey = (e) => {
-      if (e.key === "Escape") closeViewer();
+      if (e.key === "Escape" && !document.fullscreenElement) closeViewer();
     };
     window.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
@@ -252,6 +292,21 @@ export default function Peserta() {
     "Kompetensi Khusus BASARNAS": {
       file: "/pdf/basarnas3.pdf",
       releaseDate: "2026-10-03",
+    },
+
+    "Peraturan-peraturan Basarnas": {
+      file: "/pdf/basarnas4.pdf",
+      releaseDate: "2026-10-10",
+    },
+
+      "Organisasi Basarnas": {
+      file: "/pdf/basarnas5.pdf",
+      releaseDate: "2026-10-17",
+    },
+
+      "Paket Khusus Operasi SAR 1": {
+      file: "/pdf/basarnas6.pdf",
+      releaseDate: "2026-10-24",
     },
 
     TWK: {
@@ -1280,6 +1335,62 @@ export default function Peserta() {
     color:#fff;
 }
 
+.pdf-viewer-fullscreen{
+    background:rgba(37, 99, 235, 0.2);
+    color:#93c5fd;
+    border:1px solid rgba(37, 99, 235, 0.35);
+    border-radius:10px;
+    padding:7px 16px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:700;
+    transition:.2s;
+    flex-shrink:0;
+}
+
+.pdf-viewer-fullscreen:hover{
+    background:rgba(37, 99, 235, 0.4);
+    color:#fff;
+}
+
+.pdf-viewer-fullscreen.active{
+    background:rgba(34, 197, 94, 0.2);
+    color:#86efac;
+    border-color:rgba(34, 197, 94, 0.35);
+}
+
+.pdf-viewer-fullscreen.active:hover{
+    background:rgba(34, 197, 94, 0.4);
+    color:#fff;
+}
+
+/* ----- Fullscreen viewer ----- */
+.pdf-viewer-box:fullscreen{
+    width:100%;
+    height:100%;
+    max-height:none;
+    border-radius:0;
+}
+
+.pdf-viewer-box:fullscreen .pdf-viewer-frame-wrap{
+    max-height:none;
+}
+
+.pdf-viewer-box:fullscreen .pdf-viewer-footer{
+    opacity:0.85;
+}
+
+.pdf-viewer-box:-webkit-full-screen{
+    width:100%;
+    height:100%;
+    max-height:none;
+    border-radius:0;
+}
+
+.pdf-viewer-box:-webkit-full-screen .pdf-viewer-frame-wrap{
+    max-height:none;
+}
+
 .pdf-viewer-controls{
     display:flex;
     align-items:center;
@@ -1963,13 +2074,20 @@ export default function Peserta() {
       {viewerFile && (
         <div className="pdf-viewer-overlay" onClick={closeViewer}>
           <div
-            className="pdf-viewer-box"
+            ref={viewerBoxRef}
+            className={`pdf-viewer-box ${isFullscreen ? "fullscreen" : ""}`}
             onClick={(e) => e.stopPropagation()}
             onContextMenu={(e) => e.preventDefault()}
           >
             <div className="pdf-viewer-header">
               <span className="pdf-viewer-title">📕 {viewerTitle}</span>
-              <span className="pdf-viewer-badge">👁 Mode Lihat Saja</span>
+              <button
+                className={`pdf-viewer-fullscreen ${isFullscreen ? "active" : ""}`}
+                onClick={toggleViewerFullscreen}
+                title={isFullscreen ? "Keluar fullscreen" : "Mode fullscreen"}
+              >
+                {isFullscreen ? "⤡ Keluar Fullscreen" : "⛶ Fullscreen"}
+              </button>
               <button className="pdf-viewer-close" onClick={closeViewer}>
                 ✕ Tutup
               </button>
@@ -2051,7 +2169,8 @@ export default function Peserta() {
             </div>
             <div className="pdf-viewer-footer">
               Dokumen hanya untuk dibaca di sini • Tanpa tombol unduh & tidak
-              bisa copy teks • Berwatermark akunmu • Tekan Esc untuk menutup
+              bisa copy teks • Berwatermark akunmu • Gunakan ⛶ Fullscreen untuk
+              tampilan penuh • Tekan Esc untuk menutup
             </div>
           </div>
         </div>
