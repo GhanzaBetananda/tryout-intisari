@@ -352,7 +352,7 @@ const SIMULASI = () => {
     const lulusTWK = hasil.twk.nilai >= PASSING_GRADE.TWK;
 
     return (
-      <div className="tryout-container">
+      <div className="tryout-container tryout-hasil">
         <div className="hasil-card">
           <h2>Hasil Try Out TWK</h2>
 

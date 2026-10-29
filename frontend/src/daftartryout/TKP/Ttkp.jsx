@@ -235,7 +235,7 @@ const TTKP = () => {
     const lulusTKP = hasil.tkp.nilai >= PASSING_GRADE.TKP;
 
     return (
-      <div className="tryout-container">
+      <div className="tryout-container tryout-hasil">
         <div className="hasil-card">
           <h2>Hasil Try Out TKP</h2>
 

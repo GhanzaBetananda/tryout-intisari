@@ -1603,6 +1603,12 @@ const TryOut8 = () => {
   const [timeLeft, setTimeLeft] = useState(getInitialTimeLeft);
   const [isFinished, setIsFinished] = useState(getInitialIsFinished);
   const [showConfirm, setShowConfirm] = useState(false);
+
+  // ==================== PANEL NAVIGASI (BUKA/TUTUP) ====================
+  // Default terbuka di desktop, tertutup di layar kecil agar ruang soal maksimal.
+  const [panelOpen, setPanelOpen] = useState(
+    () => typeof window === "undefined" || window.innerWidth >= 1024,
+  );
   // ==================== URUTAN SOAL (DIACAK PER PENGERJAAN) ====================
   // Setiap user yang MEMBUKA pengerjaan BARU mendapat susunan soal berbeda
   // (diacak Fisher–Yates). Urutannya disimpan ke localStorage dan dipakai lagi
@@ -1821,7 +1827,7 @@ const TryOut8 = () => {
     const lulusSemua = lulusTWK && lulusTIU && lulusTKP;
 
     return (
-      <div className="tryout-container">
+      <div className="tryout-container tryout-hasil">
         <div className="hasil-card">
           <h2>Hasil Try Out SKD CPNS</h2>
 
@@ -1896,6 +1902,14 @@ const TryOut8 = () => {
   return (
     <div className="tryout-container">
       <div className="tryout-header">
+        <button
+          className="panel-toggle"
+          onClick={() => setPanelOpen((v) => !v)}
+          title={panelOpen ? "Tutup panel nomor" : "Buka panel nomor"}
+          aria-label={panelOpen ? "Tutup panel nomor" : "Buka panel nomor"}
+        >
+          {panelOpen ? "✕" : "☰"}
+        </button>
         <div>
           <h2>Try Out SKD CPNS</h2>
           <span className={`badge badge-${currentSoal.section.toLowerCase()}`}>
@@ -1907,10 +1921,18 @@ const TryOut8 = () => {
         </div>
       </div>
 
-      <div className="tryout-body1">
-        <div className="nomor-panel">
+      <div className={`tryout-body1 ${panelOpen ? "with-panel" : "no-panel"}`}>
+        <div className={`nomor-panel ${panelOpen ? "" : "panel-hidden"}`}>
           <p className="nomor-panel-title">
             Terjawab: {jumlahTerjawab}/{totalSoal}
+            <button
+              className="panel-close"
+              onClick={() => setPanelOpen(false)}
+              title="Tutup panel nomor"
+              aria-label="Tutup panel nomor"
+            >
+              ✕
+            </button>
           </p>
 
           {["TWK", "TIU", "TKP"].map((section) => (

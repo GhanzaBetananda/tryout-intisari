@@ -233,7 +233,7 @@ const TIU = () => {
     const lulusTIU = hasil.tiu.nilai >= PASSING_GRADE.TIU;
 
     return (
-      <div className="tryout-container">
+      <div className="tryout-container tryout-hasil">
         <div className="hasil-card">
           <h2>Hasil Try Out TIU</h2>
 

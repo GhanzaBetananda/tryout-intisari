@@ -1906,7 +1906,7 @@ const TryOut3 = () => {
     const lulusSemua = lulusTWK && lulusTIU && lulusTKP;
 
     return (
-      <div className="tryout-container">
+      <div className="tryout-container tryout-hasil">
         <div className="hasil-card">
           <h2>Hasil Try Out SKD CPNS</h2>
 

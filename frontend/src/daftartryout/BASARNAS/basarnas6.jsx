@@ -943,7 +943,7 @@ const Basarnas6 = () => {
     const lulus = Number(hasil.nilai) >= Number(PASSING_GRADE);
 
     return (
-      <div className="tryout-container">
+      <div className="tryout-container tryout-hasil">
         <div className="hasil-card">
           <h2>Hasil Try Out BASARNAS</h2>
 
