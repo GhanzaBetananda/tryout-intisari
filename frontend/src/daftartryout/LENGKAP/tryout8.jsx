@@ -465,7 +465,7 @@ const soalTIUAsli = [
       B: "A = B",
       C: "B - A = 5",
       D: "2B - A < 30",
-      E: "A + 1B = 78",
+      E: "A + 1/B = 7/8",
     },
     jawaban: "C",
   },
@@ -1469,44 +1469,6 @@ const soalTKP = [...soalTKPAsli];
 const soalData = [...soalTWK, ...soalTIU, ...soalTKP];
 
 // ========================================================================
-// UTIL PENGACAKAN SOAL — susunan soal berbeda di setiap pengerjaan baru
-// ========================================================================
-// Fisher–Yates shuffle (mengembalikan array baru, array asal tidak diubah).
-const acakArray = (arr) => {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-};
-
-// Soal 58-60 TIU berbagi satu uraian ("Perhatikan uraian berikut untuk menjawab
-// soal nomor 58 sampai dengan nomor 60"), sehingga ketiganya dijadikan SATU blok
-// dan boleh dipindah tapi tidak boleh terpisah satu sama lain.
-const buatSoalTeracak = () => {
-  const blokTIU = [
-    ...acakArray(soalTIUAsli.slice(0, 27)),
-    soalTIUAsli.slice(27, 30), // blok soal 58-60 (podium cerdas cermat)
-    ...acakArray(soalTIUAsli.slice(30, 35)),
-  ];
-  return [
-    ...acakArray(soalTWKAsli),
-    ...acakArray(blokTIU),
-    ...acakArray(soalTKPAsli),
-  ];
-};
-
-// Susun ulang soal berdasarkan daftar ID urutan yang tersimpan (untuk melanjutkan
-// pengerjaan yang belum selesai). Return null jika daftar tidak valid/berubah.
-const urutkanDariOrder = (ids) => {
-  if (!Array.isArray(ids) || ids.length !== soalData.length) return null;
-  const map = new Map(soalData.map((s) => [s.id, s]));
-  const hasil = ids.map((id) => map.get(id)).filter(Boolean);
-  return hasil.length === soalData.length ? hasil : null;
-};
-
-// ========================================================================
 // KONFIGURASI
 // ========================================================================
 const DURASI_MENIT = 110;
@@ -1551,9 +1513,6 @@ const TryOut8 = () => {
       TIME_LEFT: `tryout_${TRYOUT_ID}_time_left_${userId}`,
       CURRENT_INDEX: `tryout_${TRYOUT_ID}_current_index_${userId}`,
       IS_FINISHED: `tryout_${TRYOUT_ID}_is_finished_${userId}`,
-      // Urutan soal hasil pengacakan (array id). Disimpan agar saat user
-      // melanjutkan pengerjaan (reload) urutannya tidak berubah.
-      ORDER: `tryout_${TRYOUT_ID}_order_${userId}`,
     }),
     [userId],
   );
@@ -1609,23 +1568,9 @@ const TryOut8 = () => {
   const [panelOpen, setPanelOpen] = useState(
     () => typeof window === "undefined" || window.innerWidth >= 1024,
   );
-  // ==================== URUTAN SOAL (DIACAK PER PENGERJAAN) ====================
-  // Setiap user yang MEMBUKA pengerjaan BARU mendapat susunan soal berbeda
-  // (diacak Fisher–Yates). Urutannya disimpan ke localStorage dan dipakai lagi
-  // selama pengerjaan masih berjalan (reload/keluar-masuk) supaya jawaban yang
-  // sudah dipilih tetap terhubung ke soal yang benar. Setelah "Selesai Try Out"
-  // urutan dihapus di handleFinish → buka lagi = susunan baru.
-  const [soalList] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEYS.ORDER);
-    const dariOrder = saved ? urutkanDariOrder(JSON.parse(saved)) : null;
-    if (dariOrder) return dariOrder;
-    const baru = buatSoalTeracak();
-    localStorage.setItem(
-      STORAGE_KEYS.ORDER,
-      JSON.stringify(baru.map((s) => s.id)),
-    );
-    return baru;
-  });
+  // ==================== URUTAN SOAL (TETAP SESUAI ID) ====================
+  // Soal selalu ditampilkan berurutan sesuai ID (TWK 1-30, TIU 31-65, TKP 66-110).
+  const [soalList] = useState(() => soalData);
 
   const totalSoal = soalList.length;
   const currentSoal = soalList[currentIndex];
@@ -1807,9 +1752,6 @@ const TryOut8 = () => {
       localStorage.removeItem(STORAGE_KEYS.ANSWERS);
       localStorage.removeItem(STORAGE_KEYS.TIME_LEFT);
       localStorage.removeItem(STORAGE_KEYS.CURRENT_INDEX);
-      // Hapus juga urutan teracak → akses berikutnya (pengerjaan baru)
-      // mendapat susunan soal yang berbeda lagi.
-      localStorage.removeItem(STORAGE_KEYS.ORDER);
     } catch (error) {
       console.log(error);
       alert("Gagal menyimpan hasil tryout");
