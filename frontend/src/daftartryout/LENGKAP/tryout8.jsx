@@ -20,7 +20,7 @@ const soalTWKAsli = [
       D: "Tidak terlibat dalam aktivitas yang dapat merugikan keamanan negara",
       E: "Mendukung kebijakan dan keputusan pemerintah dalam menjaga kedaulatan negara",
     },
-    jawaban: "A",
+    jawaban: "C",
   },
   {
     id: 2,
@@ -46,7 +46,7 @@ const soalTWKAsli = [
       D: "Menggunakan produk-produk buatan lokal",
       E: "Menggunakan fasilitas negara dengan baik dan bertanggung jawab",
     },
-    jawaban: "A",
+    jawaban: "B",
   },
   {
     id: 4,
@@ -137,7 +137,7 @@ const soalTWKAsli = [
       D: "Nadia tidak suka bau durian",
       E: "Harga deterjen semakin mahal di pasaran",
     },
-    jawaban: "E",
+    jawaban: "D",
   },
   {
     id: 11,
@@ -406,13 +406,13 @@ const soalTIUAsli = [
   {
     id: 31,
     section: "TIU",
-    soal: "27, 49, 611, 813, 1015, 1217, ...",
+    soal: "2/7, 4/9, 6/11, 8/13, 10/15, 12/17, ...",
     opsi: {
-      A: "1419",
-      B: "1519",
-      C: "1619",
-      D: "1719",
-      E: "1819",
+      A: "14/19",
+      B: "15/19",
+      C: "16/19",
+      D: "17/19",
+      E: "18/19",
     },
     jawaban: "A",
   },
@@ -459,6 +459,7 @@ const soalTIUAsli = [
     id: 35,
     section: "TIU",
     soal: "Dalam kegiatan pemilu serentak setiap TPS akan diberikan kewenangan untuk mengurus 250 orang pemilih.\n\nA = Banyak TPS yang ada dalam suatu kecamatan jika terdapat 8.750 orang pemilih\nB = 40\n\nManakah hubungan yang benar berdasarkan informasi yang diberikan?",
+    gambar: "/tryout8/TO8.35.png",
     opsi: {
       A: "A > B",
       B: "A = B",
@@ -472,6 +473,7 @@ const soalTIUAsli = [
     id: 36,
     section: "TIU",
     soal: "Jarak kota A ke kota B 240 km. Sebuah bus berangkat dari kota A ke kota B dengan laju atau speed 60 km/jam. Bus tidak berhenti untuk istirahat.\n\nA = Waktu (dalam jam) yang diperlukan untuk sampai di Kota B\nB = 10 jam\n\nManakah hubungan yang benar berdasarkan informasi yang diberikan?",
+    gambar: "/tryout8/TO8.36.png",
     opsi: {
       A: "A + 8 > B",
       B: "18 - A < B",
@@ -493,7 +495,7 @@ const soalTIUAsli = [
       D: "5A = 2B",
       E: "3A = 12B",
     },
-    jawaban: "A",
+    jawaban: "B",
   },
   {
     id: 38,
@@ -533,7 +535,7 @@ const soalTIUAsli = [
       D: "Tahun 2008 subsidi BBM meningkat dari tahun sebelumnya",
       E: "Dari tahun 2009 sampai tahun 2013 subsidi BBM selalu meningkat",
     },
-    jawaban: "A",
+    jawaban: "D",
   },
   {
     id: 41,
@@ -1467,6 +1469,44 @@ const soalTKP = [...soalTKPAsli];
 const soalData = [...soalTWK, ...soalTIU, ...soalTKP];
 
 // ========================================================================
+// UTIL PENGACAKAN SOAL — susunan soal berbeda di setiap pengerjaan baru
+// ========================================================================
+// Fisher–Yates shuffle (mengembalikan array baru, array asal tidak diubah).
+const acakArray = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+// Soal 58-60 TIU berbagi satu uraian ("Perhatikan uraian berikut untuk menjawab
+// soal nomor 58 sampai dengan nomor 60"), sehingga ketiganya dijadikan SATU blok
+// dan boleh dipindah tapi tidak boleh terpisah satu sama lain.
+const buatSoalTeracak = () => {
+  const blokTIU = [
+    ...acakArray(soalTIUAsli.slice(0, 27)),
+    soalTIUAsli.slice(27, 30), // blok soal 58-60 (podium cerdas cermat)
+    ...acakArray(soalTIUAsli.slice(30, 35)),
+  ];
+  return [
+    ...acakArray(soalTWKAsli),
+    ...acakArray(blokTIU),
+    ...acakArray(soalTKPAsli),
+  ];
+};
+
+// Susun ulang soal berdasarkan daftar ID urutan yang tersimpan (untuk melanjutkan
+// pengerjaan yang belum selesai). Return null jika daftar tidak valid/berubah.
+const urutkanDariOrder = (ids) => {
+  if (!Array.isArray(ids) || ids.length !== soalData.length) return null;
+  const map = new Map(soalData.map((s) => [s.id, s]));
+  const hasil = ids.map((id) => map.get(id)).filter(Boolean);
+  return hasil.length === soalData.length ? hasil : null;
+};
+
+// ========================================================================
 // KONFIGURASI
 // ========================================================================
 const DURASI_MENIT = 110;
@@ -1511,6 +1551,9 @@ const TryOut8 = () => {
       TIME_LEFT: `tryout_${TRYOUT_ID}_time_left_${userId}`,
       CURRENT_INDEX: `tryout_${TRYOUT_ID}_current_index_${userId}`,
       IS_FINISHED: `tryout_${TRYOUT_ID}_is_finished_${userId}`,
+      // Urutan soal hasil pengacakan (array id). Disimpan agar saat user
+      // melanjutkan pengerjaan (reload) urutannya tidak berubah.
+      ORDER: `tryout_${TRYOUT_ID}_order_${userId}`,
     }),
     [userId],
   );
@@ -1560,8 +1603,26 @@ const TryOut8 = () => {
   const [timeLeft, setTimeLeft] = useState(getInitialTimeLeft);
   const [isFinished, setIsFinished] = useState(getInitialIsFinished);
   const [showConfirm, setShowConfirm] = useState(false);
-  const totalSoal = soalData.length;
-  const currentSoal = soalData[currentIndex];
+  // ==================== URUTAN SOAL (DIACAK PER PENGERJAAN) ====================
+  // Setiap user yang MEMBUKA pengerjaan BARU mendapat susunan soal berbeda
+  // (diacak Fisher–Yates). Urutannya disimpan ke localStorage dan dipakai lagi
+  // selama pengerjaan masih berjalan (reload/keluar-masuk) supaya jawaban yang
+  // sudah dipilih tetap terhubung ke soal yang benar. Setelah "Selesai Try Out"
+  // urutan dihapus di handleFinish → buka lagi = susunan baru.
+  const [soalList] = useState(() => {
+    const saved = localStorage.getItem(STORAGE_KEYS.ORDER);
+    const dariOrder = saved ? urutkanDariOrder(JSON.parse(saved)) : null;
+    if (dariOrder) return dariOrder;
+    const baru = buatSoalTeracak();
+    localStorage.setItem(
+      STORAGE_KEYS.ORDER,
+      JSON.stringify(baru.map((s) => s.id)),
+    );
+    return baru;
+  });
+
+  const totalSoal = soalList.length;
+  const currentSoal = soalList[currentIndex];
 
   // ==================== SIMPAN KE STORAGE ====================
   useEffect(() => {
@@ -1740,6 +1801,9 @@ const TryOut8 = () => {
       localStorage.removeItem(STORAGE_KEYS.ANSWERS);
       localStorage.removeItem(STORAGE_KEYS.TIME_LEFT);
       localStorage.removeItem(STORAGE_KEYS.CURRENT_INDEX);
+      // Hapus juga urutan teracak → akses berikutnya (pengerjaan baru)
+      // mendapat susunan soal yang berbeda lagi.
+      localStorage.removeItem(STORAGE_KEYS.ORDER);
     } catch (error) {
       console.log(error);
       alert("Gagal menyimpan hasil tryout");
@@ -1853,10 +1917,10 @@ const TryOut8 = () => {
             <div key={section} className="nomor-group">
               <p className={`nomor-group-title badge-${section.toLowerCase()}`}>
                 {section} (
-                {soalData.filter((s) => s.section === section).length} soal)
+                {soalList.filter((s) => s.section === section).length} soal)
               </p>
               <div className="nomor-grid">
-                {soalData
+                {soalList
                   .map((soal, idx) => ({ soal, idx }))
                   .filter(({ soal }) => soal.section === section)
                   .map(({ soal, idx }) => (
@@ -1867,7 +1931,7 @@ const TryOut8 = () => {
                       } ${answers[soal.id] ? "terjawab" : ""}`}
                       onClick={() => goToQuestion(idx)}
                     >
-                      {soal.id}
+                      {idx + 1}
                     </button>
                   ))}
               </div>
@@ -1884,7 +1948,7 @@ const TryOut8 = () => {
 
         <div className="soal-panel">
           <p className="soal-nomor">
-            Soal {currentSoal.id} dari {totalSoal} ({currentSoal.section})
+            Soal {currentIndex + 1} dari {totalSoal} ({currentSoal.section})
           </p>
           <div className="soal-teks">
             {Array.isArray(currentSoal.soal) ? (
