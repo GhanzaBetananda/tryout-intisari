@@ -783,7 +783,7 @@ const soalTIUAsli = [
   {
     id: 59,
     section: "TIU",
-    soal: "Urutan podium cerdas cermat dari sebelah kanan ke kiri adalah ....",
+    soal: "Perhatikan uraian berikut untuk menjawab soal nomor 58 sampai dengan nomor 60.\n\nDalam sebuah kompetisi cerdas cermat diikuti oleh lima tim yang akan ditempatkan di podium A, B, C, D, dan E yang tidak berurutan dalam deretannya. Masing-masing podium untuk satu tim terdiri dari dua orang peserta. Sepuluh orang peserta cerdas cermat tersebut adalah Ciko, Dita, Hana, Arif, Iqbal, Dion, Velin, Eva, Lutfi, dan Rara.\n\nKetentuan penempatan tim adalah sebagai berikut:\n\n- Podium E berada di paling kiri\n- Dion berada di podium D dan bersebelahan dengan Velin, tetapi tidak satu tim dengannya\n- Iqbal dan Hana menjadi satu tim dan posisi podiumnya persis di sebelah podium E\n- Podium tim Rara dan Ciko berada di posisi podium ke empat setelah podium tim Dita dan Arif\n- Eva sudah pasti tidak satu tim dengan Lutfi\n- Tim Velin berada di podium C yang posisinya setelah podium A dan D\n\nEva satu tim dengan ....",
     opsi: {
       A: "B, C, D, A, E",
       B: "B, D, C, A, E",
@@ -796,7 +796,7 @@ const soalTIUAsli = [
   {
     id: 60,
     section: "TIU",
-    soal: "Pernyataan berikut yang salah adalah ....",
+    soal: "Perhatikan uraian berikut untuk menjawab soal nomor 58 sampai dengan nomor 60.\n\nDalam sebuah kompetisi cerdas cermat diikuti oleh lima tim yang akan ditempatkan di podium A, B, C, D, dan E yang tidak berurutan dalam deretannya. Masing-masing podium untuk satu tim terdiri dari dua orang peserta. Sepuluh orang peserta cerdas cermat tersebut adalah Ciko, Dita, Hana, Arif, Iqbal, Dion, Velin, Eva, Lutfi, dan Rara.\n\nKetentuan penempatan tim adalah sebagai berikut:\n\n- Podium E berada di paling kiri\n- Dion berada di podium D dan bersebelahan dengan Velin, tetapi tidak satu tim dengannya\n- Iqbal dan Hana menjadi satu tim dan posisi podiumnya persis di sebelah podium E\n- Podium tim Rara dan Ciko berada di posisi podium ke empat setelah podium tim Dita dan Arif\n- Eva sudah pasti tidak satu tim dengan Lutfi\n- Tim Velin berada di podium C yang posisinya setelah podium A dan D\n\nEva satu tim dengan ....",
     opsi: {
       A: "Podium tim Eva berada di antara podium A dan C",
       B: "Dita satu tim dengan Dion",
