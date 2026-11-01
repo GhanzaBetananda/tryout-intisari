@@ -64,13 +64,23 @@ export default function Peserta() {
     setExpandedId(expandedId === id ? null : id);
   };
 
+  // Paket BASARNAS mencakup semua tryout berskala maks 100 dengan passing
+  // grade 70: jenis yang mengandung kata "basarnas" (Try Out Basarnas,
+  // Kompetensi Umum/Khusus BASARNAS, dll.) DAN paket "Paket Khusus Operasi
+  // SAR 1/2" yang dikirim dari basarnas6.jsx / basarnas7.jsx tetapi TIDAK
+  // mengandung kata "basarnas".
+  const isBasarnas = (jenis) => {
+    const j = String(jenis || "").toLowerCase();
+    return j.includes("basarnas") || j.includes("operasi sar");
+  };
+
   // Passing grade per jenis tryout.
   // BUG lama: semua jenis memakai >= 300, sehingga nilai Basarnas
   // (maks 100, lulus >= 70) selalu terbaca "Tidak Lulus".
   const getPassingGrade = (jenis) => {
     if (!jenis) return 300;
+    if (isBasarnas(jenis)) return 70;
     const j = String(jenis).toLowerCase();
-    if (j.includes("basarnas")) return 70;
     if (j === "twk") return 65;
     if (j === "tiu") return 80;
     if (j === "tkp") return 166;
@@ -82,11 +92,7 @@ export default function Peserta() {
 
   const getScoreColor = (score, jenis) => {
     const nilai = Number(score) || 0;
-    if (
-      String(jenis || "")
-        .toLowerCase()
-        .includes("basarnas")
-    ) {
+    if (isBasarnas(jenis)) {
       if (nilai >= 85) return "#2563EB";
       if (nilai >= 70) return "#10b981";
       if (nilai >= 50) return "#f59e0b";
@@ -100,11 +106,7 @@ export default function Peserta() {
 
   const getScoreLabel = (score, jenis) => {
     const nilai = Number(score) || 0;
-    if (
-      String(jenis || "")
-        .toLowerCase()
-        .includes("basarnas")
-    ) {
+    if (isBasarnas(jenis)) {
       if (nilai >= 85) return "Excellent";
       if (nilai >= 70) return "Good";
       if (nilai >= 50) return "Average";
