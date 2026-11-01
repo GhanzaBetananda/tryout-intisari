@@ -309,6 +309,11 @@ export default function Peserta() {
       releaseDate: "2026-10-24",
     },
 
+    "Paket Khusus Operasi SAR 2": {
+      file: "/pdf/basarnas7.pdf",
+      releaseDate: "2026-10-31",
+    },
+
     TWK: {
       file: "/pdf/pdf",
       releaseDate: "2026-08-03",
