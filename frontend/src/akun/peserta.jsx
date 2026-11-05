@@ -28,7 +28,7 @@ export default function Peserta() {
   }, []);
 
   const fetchRiwayat = async () => {
-    setLoading(true);-
+    setLoading(true);
     setError(null);
 
     const isLoggedIn = sessionStorage.getItem("isLoggedIn");
