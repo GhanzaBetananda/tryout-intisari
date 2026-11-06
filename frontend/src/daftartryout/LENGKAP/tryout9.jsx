@@ -446,6 +446,7 @@ const soalTIUAsli = [
     id: 34,
     section: "TIU",
     soal: "Perhatikan tabel berikut!\n\nA: y\u00b2 \u2212 x\u00b2\nB: x/y\n\nJika x = \u22124 dan y = 2, manakah hubungan yang benar berdasarkan informasi yang diberikan?",
+    gambar: "/tryout9/TO9.34.png",
     opsi: {
       A: "2A \u2212 3B \u2265 0",
       B: "4B \u2212 3A \u2264 0",
@@ -459,6 +460,7 @@ const soalTIUAsli = [
     id: 35,
     section: "TIU",
     soal: "Rani berjalan kaki selama 3 jam dengan laju atau speed rata-rata berjalan yaitu 4 km/jam.\n\nA = Jarak yang ditempuh Rani (dalam km)\nB = 10 km\n\nManakah hubungan yang benar berdasarkan informasi yang diberikan?",
+    gambar: "/tryout9/TO9.35.png",
     opsi: {
       A: "A = B",
       B: "2A < B",
@@ -472,6 +474,7 @@ const soalTIUAsli = [
     id: 36,
     section: "TIU",
     soal: "Tiga buah mesin fotokopi yang sejenis mampu mencetak 420 lembar per menit.\n\nA = Banyak lembar kertas yang dapat dicetak oleh sebuah mesin fotokopi dalam waktu 18 detik\nB = 42 lembar\n\nManakah hubungan yang benar berdasarkan informasi yang diberikan?",
+    gambar: "/tryout9/TO9.36.png",
     opsi: {
       A: "2A > 2B",
       B: "3A = 3B",
@@ -818,7 +821,7 @@ const soalTIUAsli = [
   {
     id: 62,
     section: "TIU",
-    soal: "Hasil dari (\u22124)\u00b2 \u2212 8 \u00d7 3 \u2212 2/3 adalah ....",
+    gambar: "/tryout9/TO9.62.png",
     opsi: {
       A: "\u22128 2/3",
       B: "\u22124 2/3",
