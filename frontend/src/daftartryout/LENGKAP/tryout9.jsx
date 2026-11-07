@@ -1467,6 +1467,18 @@ const soalTIU = [...soalTIUAsli];
 const soalTKP = [...soalTKPAsli];
 const soalData = [...soalTWK, ...soalTIU, ...soalTKP];
 
+// ==================== PENGACAKAN (FISHER-YATES) ====================
+// Mengembalikan salinan array yang urutannya diacak tanpa mengubah array asli.
+// Dipakai untuk mengacak urutan soal setiap peserta memulai ("Kerjakan Tryout").
+const shuffleArray = (array) => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
 // ========================================================================
 // KONFIGURASI
 // ========================================================================
@@ -1512,6 +1524,7 @@ const TryOut9 = () => {
       TIME_LEFT: `tryout_${TRYOUT_ID}_time_left_${userId}`,
       CURRENT_INDEX: `tryout_${TRYOUT_ID}_current_index_${userId}`,
       IS_FINISHED: `tryout_${TRYOUT_ID}_is_finished_${userId}`,
+      ORDER: `tryout_${TRYOUT_ID}_order_${userId}`,
     }),
     [userId],
   );
@@ -1555,6 +1568,34 @@ const TryOut9 = () => {
     return saved ? JSON.parse(saved) : false;
   };
 
+  // ==================== PENGACAKAN URUTAN SOAL ====================
+  // Setiap peserta klik "Kerjakan Tryout", urutan soal diacak (Fisher-Yates).
+  // Urutan acak disimpan di localStorage agar refresh halaman di tengah sesi
+  // TIDAK mengacak ulang (jawaban yang tersimpan tetap sesuai soalnya).
+  // Setelah tryout selesai, urutan ini dihapus sehingga attempt berikutnya
+  // ("Kerjakan Tryout" lagi) mendapat urutan acak yang baru.
+  const getInitialOrder = () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.ORDER);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (
+          Array.isArray(parsed) &&
+          parsed.length === soalData.length &&
+          new Set(parsed).size === parsed.length &&
+          parsed.every((id) => soalData.some((s) => s.id === id))
+        ) {
+          return parsed;
+        }
+      } catch {
+        // fallback ke pengacakan baru jika data rusak
+      }
+    }
+    const urutanBaru = shuffleArray(soalData).map((s) => s.id);
+    localStorage.setItem(STORAGE_KEYS.ORDER, JSON.stringify(urutanBaru));
+    return urutanBaru;
+  };
+
   // ==================== STATE ====================
   const [currentIndex, setCurrentIndex] = useState(getInitialIndex);
   const [answers, setAnswers] = useState(getInitialAnswers);
@@ -1567,12 +1608,17 @@ const TryOut9 = () => {
   const [panelOpen, setPanelOpen] = useState(
     () => typeof window === "undefined" || window.innerWidth >= 1024,
   );
-  // ==================== URUTAN SOAL (TETAP SESUAI ID) ====================
-  // Soal selalu ditampilkan berurutan sesuai ID (TWK 1-30, TIU 31-65, TKP 66-110).
-  const [soalList] = useState(() => soalData);
+  // ==================== URUTAN SOAL (ACAK PER ATTEMPT) ====================
+  // Soal ditampilkan sesuai urutan acak yang sudah tersimpan di storage.
+  const [order] = useState(getInitialOrder);
 
-  const totalSoal = soalList.length;
-  const currentSoal = soalList[currentIndex];
+  const soalTeracak = useMemo(
+    () => order.map((id) => soalData.find((s) => s.id === id)),
+    [order],
+  );
+
+  const totalSoal = soalTeracak.length;
+  const currentSoal = soalTeracak[currentIndex];
 
   // ==================== SIMPAN KE STORAGE ====================
   useEffect(() => {
@@ -1751,6 +1797,9 @@ const TryOut9 = () => {
       localStorage.removeItem(STORAGE_KEYS.ANSWERS);
       localStorage.removeItem(STORAGE_KEYS.TIME_LEFT);
       localStorage.removeItem(STORAGE_KEYS.CURRENT_INDEX);
+      // Hapus juga urutan acak agar "Kerjakan Tryout" berikutnya
+      // mendapatkan urutan soal yang baru.
+      localStorage.removeItem(STORAGE_KEYS.ORDER);
     } catch (error) {
       console.log(error);
       alert("Gagal menyimpan hasil tryout");
@@ -1880,10 +1929,10 @@ const TryOut9 = () => {
             <div key={section} className="nomor-group">
               <p className={`nomor-group-title badge-${section.toLowerCase()}`}>
                 {section} (
-                {soalList.filter((s) => s.section === section).length} soal)
+                {soalData.filter((s) => s.section === section).length} soal)
               </p>
               <div className="nomor-grid">
-                {soalList
+                {soalTeracak
                   .map((soal, idx) => ({ soal, idx }))
                   .filter(({ soal }) => soal.section === section)
                   .map(({ soal, idx }) => (
