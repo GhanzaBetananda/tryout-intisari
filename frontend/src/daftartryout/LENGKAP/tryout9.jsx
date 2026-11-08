@@ -1617,6 +1617,17 @@ const TryOut9 = () => {
     [order],
   );
 
+  // ==================== NOMOR ASLI SOAL ====================
+  // Nomor tampilan soal mengikuti posisi asli di soalData (1-110),
+  // jadi panel nomor selalu terlihat urut 1-110 walaupun urutan kerjanya diacak.
+  const nomorAsli = useMemo(() => {
+    const map = {};
+    soalData.forEach((soal, i) => {
+      map[soal.id] = i + 1;
+    });
+    return map;
+  }, []);
+
   const totalSoal = soalTeracak.length;
   const currentSoal = soalTeracak[currentIndex];
 
@@ -1932,20 +1943,25 @@ const TryOut9 = () => {
                 {soalData.filter((s) => s.section === section).length} soal)
               </p>
               <div className="nomor-grid">
-                {soalTeracak
-                  .map((soal, idx) => ({ soal, idx }))
-                  .filter(({ soal }) => soal.section === section)
-                  .map(({ soal, idx }) => (
-                    <button
-                      key={soal.id}
-                      className={`nomor-btn ${
-                        idx === currentIndex ? "active" : ""
-                      } ${answers[soal.id] ? "terjawab" : ""}`}
-                      onClick={() => goToQuestion(idx)}
-                    >
-                      {idx + 1}
-                    </button>
-                  ))}
+                {soalData
+                  .filter((s) => s.section === section)
+                  .map((soal) => {
+                    // Posisi soal ini di urutan kerja (acak)
+                    const idx = soalTeracak.findIndex(
+                      (s) => s.id === soal.id,
+                    );
+                    return (
+                      <button
+                        key={soal.id}
+                        className={`nomor-btn ${
+                          idx === currentIndex ? "active" : ""
+                        } ${answers[soal.id] ? "terjawab" : ""}`}
+                        onClick={() => goToQuestion(idx)}
+                      >
+                        {nomorAsli[soal.id]}
+                      </button>
+                    );
+                  })}
               </div>
             </div>
           ))}
@@ -1960,7 +1976,8 @@ const TryOut9 = () => {
 
         <div className="soal-panel">
           <p className="soal-nomor">
-            Soal {currentIndex + 1} dari {totalSoal} ({currentSoal.section})
+            Soal {nomorAsli[currentSoal.id] ?? currentIndex + 1} dari{" "}
+            {totalSoal} ({currentSoal.section})
           </p>
           <div className="soal-teks">
             {Array.isArray(currentSoal.soal) ? (
