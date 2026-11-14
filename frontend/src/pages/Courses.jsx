@@ -49,8 +49,8 @@ function Courses() {
     },
     {
       id: 2,
-      title: "Paket BKN Paket 9",
-      subtitle: "TO BKN Paket 9",
+      title: "Paket BKN Paket 10",
+      subtitle: "TO BKN Paket 10",
       category: "CAT BKN",
       date: "15/11/2026",
       duration: 110,
