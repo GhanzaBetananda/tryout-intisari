@@ -1778,32 +1778,17 @@ const TryOut11 = () => {
             </button>
           </p>
 
-          {["TWK", "TIU", "TKP"].map((section) => (
-            <div key={section} className="nomor-group">
-              <p className={`nomor-group-title badge-${section.toLowerCase()}`}>
-                {section} (
-                {soalData.filter((s) => s.section === section).length} soal)
-              </p>
-              <div className="nomor-grid">
-                {soalData
-                  .filter((s) => s.section === section)
-                  .map((soal) => {
-                    const idx = soalTeracak.findIndex(
-                      (s) => s.id === soal.id,
-                    );
-                    return (
-                      <button
-                        key={soal.id}
-                        className={`nomor-btn ${idx === currentIndex ? "active" : ""} ${answers[soal.id] ? "terjawab" : ""}`}
-                        onClick={() => goToQuestion(idx)}
-                      >
-                        {idx + 1}
-                      </button>
-                    );
-                  })}
-              </div>
-            </div>
-          ))}
+          <div className="nomor-grid">
+            {soalTeracak.map((soal, i) => (
+              <button
+                key={soal.id}
+                className={`nomor-btn ${i === currentIndex ? "active" : ""} ${answers[soal.id] ? "terjawab" : ""}`}
+                onClick={() => goToQuestion(i)}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
 
           <button className="btn btn-selesai" onClick={() => setShowConfirm(true)}>
             Selesai Try Out
