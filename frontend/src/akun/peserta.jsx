@@ -284,6 +284,11 @@ export default function Peserta() {
       releaseDate: "2026-11-14",
     },
 
+     "TO BKN Paket 10": {
+      file: "/pdf/pembahasan10.pdf",
+      releaseDate: "2026-11-22",
+    },
+
     "Try Out Basarnas 1": {
       file: "/pdf/basarnas1.pdf",
       releaseDate: "2026-09-20",
