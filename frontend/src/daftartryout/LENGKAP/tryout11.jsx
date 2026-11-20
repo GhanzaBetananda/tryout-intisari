@@ -1489,14 +1489,6 @@ const TryOut11 = () => {
     [order],
   );
 
-  const nomorAsli = useMemo(() => {
-    const map = {};
-    soalData.forEach((soal, i) => {
-      map[soal.id] = i + 1;
-    });
-    return map;
-  }, []);
-
   const totalSoal = soalTeracak.length;
   const currentSoal = soalTeracak[currentIndex];
 
@@ -1805,7 +1797,7 @@ const TryOut11 = () => {
                         className={`nomor-btn ${idx === currentIndex ? "active" : ""} ${answers[soal.id] ? "terjawab" : ""}`}
                         onClick={() => goToQuestion(idx)}
                       >
-                        {nomorAsli[soal.id]}
+                        {idx + 1}
                       </button>
                     );
                   })}
@@ -1820,7 +1812,7 @@ const TryOut11 = () => {
 
         <div className="soal-panel">
           <p className="soal-nomor">
-            Soal {nomorAsli[currentSoal.id] ?? currentIndex + 1} dari {totalSoal} ({currentSoal.section})
+            Soal {currentIndex + 1} dari {totalSoal} ({currentSoal.section})
           </p>
           <div className="soal-teks">
             {Array.isArray(currentSoal.soal) ? (
