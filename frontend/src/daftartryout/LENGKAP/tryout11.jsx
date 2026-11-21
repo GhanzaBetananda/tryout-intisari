@@ -743,7 +743,7 @@ const soalTIUAsli = [
   {
     id: 62,
     section: "TIU",
-    soal: "4 + 23 ÷ 16 = ...",
+    soal: "4 + 2/3 ÷ 1/6 = ...",
     opsi: { A: "10", B: "9", C: "8", D: "7", E: "6" },
     jawaban: "C",
   },
@@ -765,7 +765,7 @@ const soalTIUAsli = [
     id: 65,
     section: "TIU",
     soal: "−3² × 1/2 + 50% ÷ 0,02 = ....",
-    opsi: { A: "2012", B: "2412", C: "2712", D: "2812", E: "2912" },
+    opsi: { A: "20 1/2", B: "24 1/2", C: "27 1/2", D: "28 1/2", E: "29 1/2" },
     jawaban: "A",
   },
 ];
