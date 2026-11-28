@@ -24,6 +24,7 @@ import TryOut8 from "./daftartryout/LENGKAP/tryout8";
 import TryOut9 from "./daftartryout/LENGKAP/tryout9";
 import TryOut10 from "./daftartryout/LENGKAP/tryout10";
 import TryOut11 from "./daftartryout/LENGKAP/tryout11";
+import TryOut12 from "./daftartryout/LENGKAP/tryout12";
 import BASARNAS1 from "./daftartryout/BASARNAS/basarnas1";
 import BASARNAS2 from "./daftartryout/BASARNAS/basarnas2";
 import BASARNAS3 from "./daftartryout/BASARNAS/basarnas3";
@@ -124,6 +125,7 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
     "/tryout9",
     "/tryout10",
     "/tryout11",
+    "/tryout12",
     "/basarnas1",
     "/basarnas2",
     "/basarnas3",
@@ -236,6 +238,10 @@ function AppContent({ isLoggedIn, setIsLoggedIn }) {
         <Route
           path="/tryout11"
           element={isLoggedIn ? <TryOut11 /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/tryout12"
+          element={isLoggedIn ? <TryOut12 /> : <Navigate to="/login" replace />}
         />
         <Route
           path="/basarnas1"
